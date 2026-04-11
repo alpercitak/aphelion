@@ -120,12 +120,18 @@
   color: #88ff88;
 }
 
+.title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .glossaryBtn {
-  position: absolute;
-  top: 52px;
-  right: 28px;
-  width: 22px;
-  height: 22px;
+  /* position: absolute; */
+  /* top: 52px; */
+  /* right: 28px; */
+  width: 16px;
+  height: 16px;
   border: 1px solid rgba(255, 107, 26, 0.4);
   background: var(--panel);
   color: var(--accent);

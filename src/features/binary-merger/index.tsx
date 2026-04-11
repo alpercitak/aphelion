@@ -420,7 +420,13 @@ export default function BinaryMerger() {
         {/* Top bar */}
         <div className={styles.topbar}>
           <div className={styles.titleBlock}>
-            <h1>BINARY MERGER</h1>
+            <div className={styles.title}>
+              <h1>BINARY MERGER</h1>
+              <button className={styles.glossaryBtn} onClick={() => setGlossaryOpen((o) => !o)}>
+                ?
+              </button>
+            </div>
+
             <p>GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914</p>
           </div>
           <div className={styles.topRight}>
@@ -437,9 +443,6 @@ export default function BinaryMerger() {
         </div>
 
         {/* Glossary button */}
-        <button className={styles.glossaryBtn} onClick={() => setGlossaryOpen((o) => !o)}>
-          ?
-        </button>
 
         {/* Controls */}
         <div className={styles.controlsWrap}>
