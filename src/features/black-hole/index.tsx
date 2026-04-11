@@ -19,6 +19,7 @@ import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
 import Hint from '@/components/app/hint';
+import Crosshair from '@/components/app/crosshair';
 
 const DEFAULTS = {
   mass: 10,
@@ -331,12 +332,9 @@ export default function BlackHole() {
           onGlossaryClick={() => setGlossaryOpen((o) => !o)}
           statsItems={statsItems}
         />
-
         <Controls sliders={sliders} toggles={toggles} />
-
         <Hint items={HINT_ITEMS} />
-
-        <div className={styles.crosshair} />
+        <Crosshair />
       </Hud>
 
       {/* Glossary */}

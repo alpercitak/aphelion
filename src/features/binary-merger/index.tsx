@@ -23,6 +23,7 @@ import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
 import Hint from '@/components/app/hint';
+import Crosshair from '@/components/app/crosshair';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -487,8 +488,7 @@ export default function BinaryMerger() {
         </div>
 
         <Hint items={HINT_ITEMS} />
-
-        <div className={styles.crosshair} />
+        <Crosshair />
       </Hud>
 
       <Glossary isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} entries={BINARY_MERGER_GLOSSARY} />
