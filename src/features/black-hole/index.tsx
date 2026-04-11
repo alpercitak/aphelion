@@ -16,6 +16,7 @@ import { createRelativisticJets } from './utils/relativistic-jets';
 import { BLACK_HOLE_GLOSSARY } from './constants';
 import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
+import Hud from '@/components/app/hud';
 
 const DEFAULTS = {
   mass: 10,
@@ -316,13 +317,7 @@ export default function BlackHole() {
 
       <div className={styles.scanlines} />
 
-      <div className={styles.hud}>
-        {/* Corners */}
-        <span className={`${styles.corner} ${styles.tl}`} />
-        <span className={`${styles.corner} ${styles.tr}`} />
-        <span className={`${styles.corner} ${styles.bl}`} />
-        <span className={`${styles.corner} ${styles.br}`} />
-
+      <Hud>
         <TopBar
           title={'Black Hole'}
           subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
@@ -353,7 +348,7 @@ export default function BlackHole() {
 
         {/* Crosshair */}
         <div className={styles.crosshair} />
-      </div>
+      </Hud>
 
       {/* Glossary */}
       <Glossary isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} entries={BLACK_HOLE_GLOSSARY} />

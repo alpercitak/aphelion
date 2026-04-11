@@ -1,0 +1,39 @@
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+.hud__corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+.hud__corner--tl {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid rgba(255, 107, 26, 0.4);
+  border-left: 1px solid rgba(255, 107, 26, 0.4);
+}
+.hud__corner--tr {
+  top: 12px;
+  right: 12px;
+  border-top: 1px solid rgba(255, 107, 26, 0.4);
+  border-right: 1px solid rgba(255, 107, 26, 0.4);
+}
+.hud__corner--bl {
+  bottom: 12px;
+  left: 12px;
+  border-bottom: 1px solid rgba(255, 107, 26, 0.4);
+  border-left: 1px solid rgba(255, 107, 26, 0.4);
+}
+.hud__corner--br {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid rgba(255, 107, 26, 0.4);
+  border-right: 1px solid rgba(255, 107, 26, 0.4);
+}
