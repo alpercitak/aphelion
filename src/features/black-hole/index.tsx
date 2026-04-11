@@ -18,6 +18,7 @@ import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
+import Hint from '@/components/app/hint';
 
 const DEFAULTS = {
   mass: 10,
@@ -29,6 +30,11 @@ const DEFAULTS = {
   showStars: true,
   dopplerShift: false,
 };
+
+const HINT_ITEMS = [
+  { title: 'SCHWARZSCHILD RADIUS', values: ['rₛ = 2GM/c²'] },
+  { title: 'PHOTON SPHERE', values: ['r = 1.5 rₛ'] },
+];
 
 export default function BlackHole() {
   const canvasRef = useRef(null);
@@ -328,23 +334,8 @@ export default function BlackHole() {
 
         <Controls sliders={sliders} toggles={toggles} />
 
-        {/* Bottom right hint */}
-        <div className={styles.hint}>
-          DRAG TO ORBIT
-          <br />
-          SCROLL TO ZOOM
-          <br />
-          <br />
-          <span>SCHWARZSCHILD RADIUS</span>
-          <br />
-          rₛ = 2GM/c²
-          <br />
-          <br />
-          <span>PHOTON SPHERE</span>
-          <br />r = 1.5 rₛ
-        </div>
+        <Hint items={HINT_ITEMS} />
 
-        {/* Crosshair */}
         <div className={styles.crosshair} />
       </Hud>
 

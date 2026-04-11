@@ -19,23 +19,6 @@
   gap: 8px;
 }
 
-/* Bottom right hint */
-.hint {
-  position: absolute;
-  bottom: 28px;
-  right: 28px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.2);
-  line-height: 2;
-  text-align: right;
-}
-
-.hint span {
-  color: var(--cold);
-}
-
 /* Crosshair */
 .crosshair {
   position: absolute;

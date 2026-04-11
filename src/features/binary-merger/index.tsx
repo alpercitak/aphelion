@@ -22,6 +22,7 @@ import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
+import Hint from '@/components/app/hint';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -40,6 +41,8 @@ const DEFAULTS = {
 
 // Merger phases
 const PHASE = { ORBIT: 'orbit', MERGING: 'merging', MERGED: 'merged' };
+
+const HINT_ITEMS = [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }];
 
 export default function BinaryMerger() {
   const canvasRef = useRef(null);
@@ -483,18 +486,7 @@ export default function BinaryMerger() {
           {phase === PHASE.MERGED && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
         </div>
 
-        {/* Bottom right hint */}
-        <div className={styles.hint}>
-          DRAG TO ORBIT
-          <br />
-          SCROLL TO ZOOM
-          <br />
-          <br />
-          <span>GW150914</span>
-          <br />
-          36 + 29 → 62 M☉
-          <br />3 M☉ RADIATED
-        </div>
+        <Hint items={HINT_ITEMS} />
 
         <div className={styles.crosshair} />
       </Hud>
