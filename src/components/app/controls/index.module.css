@@ -1,13 +1,4 @@
-.panel {
-  width: 240px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 18px 20px;
-  backdrop-filter: blur(8px);
-  pointer-events: all;
-}
-
-.panel::before {
+.controls::before {
   content: 'PARAMETERS';
   display: block;
   font-family: var(--font-mono);
@@ -15,6 +6,6 @@
   letter-spacing: 0.35em;
   color: var(--accent);
   margin-bottom: 16px;
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }

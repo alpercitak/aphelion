@@ -1,3 +1,4 @@
+import Panel from '@/components/ui/panel';
 import styles from './index.module.css';
 
 interface GlossaryItem {
@@ -19,7 +20,7 @@ interface GlossaryProps {
 
 export default function Glossary({ isOpen, onClose, entries = [] }: GlossaryProps) {
   return (
-    <aside className={`${styles.panel} ${isOpen ? styles.open : ''}`} aria-hidden={!isOpen}>
+    <Panel className={`${styles.panel} ${isOpen ? styles.open : ''}`} aria-hidden={!isOpen}>
       <div className={styles.inner}>
         <div className={styles.header}>
           <h2>PHYSICS GLOSSARY</h2>
@@ -43,6 +44,6 @@ export default function Glossary({ isOpen, onClose, entries = [] }: GlossaryProp
           </div>
         ))}
       </div>
-    </aside>
+    </Panel>
   );
 }
