@@ -228,46 +228,6 @@ input[type='range']::-webkit-slider-thumb {
   background: rgba(255, 107, 26, 0.08);
 }
 
-/* Toggles */
-.toggles {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.toggleBtn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
-  padding: 5px 10px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-transform: uppercase;
-}
-
-.toggleBtn.active {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(255, 107, 26, 0.06);
-}
-
-.toggleDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 6px currentColor;
-}
-
 /* Reset button */
 .resetBtn {
   width: 100%;

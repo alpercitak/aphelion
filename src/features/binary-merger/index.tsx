@@ -17,6 +17,7 @@ import {
 import { BINARY_MERGER_GLOSSARY } from './constants';
 import { schwarzschildRadius } from '@/utils/physics';
 import styles from './index.module.css';
+import ToggleGroup from '@/components/ui/toggle-group';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -490,19 +491,7 @@ export default function BinaryMerger() {
               </div>
             </div>
 
-            {/* Toggles */}
-            <div className={styles.toggles}>
-              {toggles.map((t) => (
-                <button
-                  key={t.id}
-                  className={`${styles.toggleBtn} ${t.active ? styles.active : ''}`}
-                  onClick={t.onClick}
-                >
-                  {t.label}
-                  <span className={styles.toggleDot} />
-                </button>
-              ))}
-            </div>
+            <ToggleGroup items={toggles} />
 
             {/* Reset */}
             <button className={styles.resetBtn} onClick={resetScene}>
