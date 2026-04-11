@@ -326,9 +326,7 @@ export default function BlackHole() {
         {/* Top bar */}
         <div className={styles.topbar}>
           <FeatureHeader title={'Black Hole'} subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'} />
-          <div className={styles.topRight}>
-            <Stats items={statsItems} />
-          </div>
+          <Stats items={statsItems} />
         </div>
 
         {/* Glossary button */}

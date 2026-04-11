@@ -432,9 +432,7 @@ export default function BinaryMerger() {
         {/* Top bar */}
         <div className={styles.topbar}>
           <FeatureHeader title={'Binary Merger'} subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'} />
-          <div className={styles.topRight}>
-            <Stats items={statsItems} />
-          </div>
+          <Stats items={statsItems} />
         </div>
 
         {/* Glossary button */}
