@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import Glossary from '@/components/app/glossary';
+import FeatureHeader from '@/components/app/feature-header';
 import {
   createSpacetimeGrid,
   createBlackHoleUnit,
@@ -419,16 +420,7 @@ export default function BinaryMerger() {
 
         {/* Top bar */}
         <div className={styles.topbar}>
-          <div className={styles.titleBlock}>
-            <div className={styles.title}>
-              <h1>BINARY MERGER</h1>
-              <button className={styles.glossaryBtn} onClick={() => setGlossaryOpen((o) => !o)}>
-                ?
-              </button>
-            </div>
-
-            <p>GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914</p>
-          </div>
+          <FeatureHeader title={'Binary Merger'} subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'} />
           <div className={styles.topRight}>
             <div className={styles.stats}>
               M1 <span>{params.mass1.toFixed(1)}</span> M☉ &nbsp; M2 <span>{params.mass2.toFixed(1)}</span> M☉

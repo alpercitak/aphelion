@@ -15,6 +15,7 @@ import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
 import { BLACK_HOLE_GLOSSARY } from './constants';
 import styles from './index.module.css';
+import FeatureHeader from '@/components/app/feature-header';
 
 const DEFAULTS = {
   mass: 10,
@@ -307,10 +308,7 @@ export default function BlackHole() {
 
         {/* Top bar */}
         <div className={styles.topbar}>
-          <div className={styles.titleBlock}>
-            <h1>BLACK HOLE</h1>
-            <p>SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING</p>
-          </div>
+          <FeatureHeader title={'Black Hole'} subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'} />
           <div className={styles.topRight}>
             <Stats mass={params.mass} spin={params.spin} hawkingTemp={hTemp} schwarzschildKm={rs} />
           </div>

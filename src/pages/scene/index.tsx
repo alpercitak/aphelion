@@ -29,9 +29,6 @@ export default function ScenePage() {
 
   return (
     <div className={styles.root}>
-      <button className={styles.back} onClick={() => navigate('/')}>
-        ← APHELION
-      </button>
       <Suspense fallback={<Loading />}>
         <SceneComponent />
       </Suspense>

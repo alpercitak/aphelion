@@ -1,0 +1,31 @@
+.feature-header__title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: var(--accent);
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+.feature-header__subtitle {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 3px;
+}
+.feature-header__back {
+  z-index: 20;
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s;
+  pointer-events: all;
+}
+.feature-header__back:hover {
+  color: var(--accent);
+}
