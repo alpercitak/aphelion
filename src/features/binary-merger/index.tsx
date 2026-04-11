@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as THREE from 'three';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
-import Glossary from '@/components/app/glossary';
 import ToggleGroup from '@/components/ui/toggle-group';
 import SliderGroup from '@/components/ui/slider-group';
 import {
@@ -58,7 +57,6 @@ export default function BinaryMerger() {
 
   const [params, setParams] = useState(DEFAULTS);
   const [phase, setPhase] = useState(PHASE.ORBIT);
-  const [glossaryOpen, setGlossaryOpen] = useState(false);
 
   const set = useCallback((key, value) => {
     setParams((prev) => {
@@ -434,8 +432,8 @@ export default function BinaryMerger() {
         <TopBar
           title={'Binary Merger'}
           subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
-          onGlossaryClick={() => setGlossaryOpen((o) => !o)}
           statsItems={statsItems}
+          glossaryItems={BINARY_MERGER_GLOSSARY}
         />
 
         {/* Controls */}
@@ -486,8 +484,6 @@ export default function BinaryMerger() {
 
         <Hint items={HINT_ITEMS} />
       </Hud>
-
-      <Glossary isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} entries={BINARY_MERGER_GLOSSARY} />
     </div>
   );
 }

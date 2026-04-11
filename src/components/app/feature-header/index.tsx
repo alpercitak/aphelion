@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './index.module.css';
+import Glossary from '../glossary';
 
 interface FeatureHeaderProps {
   title: string;
@@ -7,13 +9,15 @@ interface FeatureHeaderProps {
   onGlossaryClick: () => void;
 }
 
-export default function FeatureHeader({ title, subtitle, onGlossaryClick }: FeatureHeaderProps) {
+export default function FeatureHeader({ title, subtitle, glossaryItems }: FeatureHeaderProps) {
   const navigate = useNavigate();
+  const [glossaryOpen, setGlossaryOpen] = useState(false);
+
   return (
     <div className={styles['feature-header']}>
       <div className={styles['feature-header__title-wrapper']}>
         <h1 className={styles['feature-header__title']}>{title}</h1>
-        <button className={styles['feature-header__glossary-button']} onClick={() => onGlossaryClick()}>
+        <button className={styles['feature-header__glossary-button']} onClick={() => setGlossaryOpen((o) => !o)}>
           ?
         </button>
       </div>
@@ -21,6 +25,7 @@ export default function FeatureHeader({ title, subtitle, onGlossaryClick }: Feat
       <button className={styles['feature-header__back']} onClick={() => navigate('/')}>
         ← APHELION
       </button>
+      <Glossary isOpen={glossaryOpen} entries={glossaryItems} onClose={() => setGlossaryOpen(false)} />
     </div>
   );
 }

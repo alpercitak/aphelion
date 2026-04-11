@@ -4,7 +4,6 @@ import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import { schwarzschildRadius, hawkingTemperature } from '@/utils/physics';
 import Controls from '@/components/app/controls';
-import Glossary from '@/components/app/glossary';
 import { applyMassScale } from './utils/mass-scale';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
@@ -39,7 +38,6 @@ export default function BlackHole() {
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
   const [params, setParams] = useState(DEFAULTS);
-  const [glossaryOpen, setGlossaryOpen] = useState(false);
   const paramsRef = useRef(params);
 
   // Keep ref in sync for use inside animation loop
@@ -319,14 +317,12 @@ export default function BlackHole() {
         <TopBar
           title={'Black Hole'}
           subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
-          onGlossaryClick={() => setGlossaryOpen((o) => !o)}
           statsItems={statsItems}
+          glossaryItems={BLACK_HOLE_GLOSSARY}
         />
         <Controls sliders={sliders} toggles={toggles} />
         <Hint items={HINT_ITEMS} />
       </Hud>
-
-      <Glossary isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} entries={BLACK_HOLE_GLOSSARY} />
     </div>
   );
 }
