@@ -1,4 +1,4 @@
-export const BLACK_HOLE_GLOSSARY = [
+export const GLOSSARY_ITEMS = [
   {
     title: 'THE OBJECT',
     items: [
@@ -82,4 +82,9 @@ export const BLACK_HOLE_GLOSSARY = [
       },
     ],
   },
+];
+
+export const HINT_ITEMS = [
+  { title: 'SCHWARZSCHILD RADIUS', values: ['rₛ = 2GM/c²'] },
+  { title: 'PHOTON SPHERE', values: ['r = 1.5 rₛ'] },
 ];

@@ -1,4 +1,4 @@
-export const BINARY_MERGER_GLOSSARY = [
+export const GLOSSARY_ITEMS = [
   {
     title: 'THE EVENT',
     items: [
@@ -65,3 +65,5 @@ export const BINARY_MERGER_GLOSSARY = [
     ],
   },
 ];
+
+export const HINT_ITEMS = [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }];

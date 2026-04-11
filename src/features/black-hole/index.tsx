@@ -11,7 +11,7 @@ import { createLensingRings } from './utils/lensing-rings';
 import { createOuterGlow } from './utils/outer-glow';
 import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
-import { BLACK_HOLE_GLOSSARY } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS } from './constants';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
@@ -28,11 +28,6 @@ const DEFAULTS = {
   showStars: true,
   dopplerShift: false,
 };
-
-const HINT_ITEMS = [
-  { title: 'SCHWARZSCHILD RADIUS', values: ['rₛ = 2GM/c²'] },
-  { title: 'PHOTON SPHERE', values: ['r = 1.5 rₛ'] },
-];
 
 export default function BlackHole() {
   const canvasRef = useRef(null);
@@ -318,7 +313,7 @@ export default function BlackHole() {
           title={'Black Hole'}
           subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
           statsItems={statsItems}
-          glossaryItems={BLACK_HOLE_GLOSSARY}
+          glossaryItems={GLOSSARY_ITEMS}
         />
         <Controls sliders={sliders} toggles={toggles} />
         <Hint items={HINT_ITEMS} />

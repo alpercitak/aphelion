@@ -13,7 +13,7 @@ import {
   orbitalPositions,
   orbitalOmega,
 } from './utils';
-import { BINARY_MERGER_GLOSSARY } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS } from './constants';
 import { schwarzschildRadius } from '@/utils/physics';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
@@ -38,8 +38,6 @@ const DEFAULTS = {
 
 // Merger phases
 const PHASE = { ORBIT: 'orbit', MERGING: 'merging', MERGED: 'merged' };
-
-const HINT_ITEMS = [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }];
 
 export default function BinaryMerger() {
   const canvasRef = useRef(null);
@@ -433,7 +431,7 @@ export default function BinaryMerger() {
           title={'Binary Merger'}
           subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
           statsItems={statsItems}
-          glossaryItems={BINARY_MERGER_GLOSSARY}
+          glossaryItems={GLOSSARY_ITEMS}
         />
 
         {/* Controls */}
