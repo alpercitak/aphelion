@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { tempToColor, massScale } from '../../shared/utils/physics';
+import { tempToColor, massScale } from '@/utils/physics';
 
 // ─── SHADERS ─────────────────────────────────────────────────────────────────
 const fresnelVert = `

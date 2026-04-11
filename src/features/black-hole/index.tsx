@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
-import { createOrbitControls } from '../../shared/utils/camera';
-import { createStarField } from '../../shared/utils/starfield';
-import { schwarzschildRadius, hawkingTemperature } from '../../shared/utils/physics';
-import Controls from '../../shared/hud/controls';
-import Stats from '../../shared/hud/stats';
-import Glossary from '../../shared/hud/glossary';
+import { createOrbitControls } from '@/utils/camera';
+import { createStarField } from '@/utils/starfield';
+import { schwarzschildRadius, hawkingTemperature } from '@/utils/physics';
+import Controls from '@/components/app/controls';
+import Stats from '@/components/app/stats';
+import Glossary from '@/components/app/glossary';
 import {
   createEventHorizon,
   createPhotonSphere,

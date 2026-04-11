@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getScene } from '@/shared/utils/scene';
+import { getScene } from '@/utils/scene';
 import styles from './index.module.css';
 
 function Loading() {

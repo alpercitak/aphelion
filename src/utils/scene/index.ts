@@ -7,7 +7,7 @@ export const SCENES = [
     subtitle: 'Schwarzschild · Kerr Metric',
     description: 'Event horizon, accretion disk, relativistic jets and gravitational lensing.',
     status: 'available',
-    component: lazy(() => import('@/scenes/black-hole')),
+    component: lazy(() => import('@/features/black-hole')),
   },
 ];
 

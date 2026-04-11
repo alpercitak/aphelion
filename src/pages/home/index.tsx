@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { SCENES } from '@/shared/utils/scene';
+import { SCENES } from '@/utils/scene';
 import styles from './index.module.css';
 
 export default function Home() {
