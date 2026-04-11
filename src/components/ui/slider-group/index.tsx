@@ -6,6 +6,10 @@ export interface SliderGroupProps {
 }
 
 export default function SliderGroup({ items }: SliderGroupProps) {
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <div className={styles['slider-group']}>
       {items.map((item) => (
