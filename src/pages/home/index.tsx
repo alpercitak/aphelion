@@ -1,0 +1,53 @@
+import { useNavigate } from 'react-router-dom';
+import { SCENES } from '@/shared/utils/scene';
+import styles from './index.module.css';
+
+export default function Home() {
+  const navigate = useNavigate();
+
+  return (
+    <div className={styles.root}>
+      <div className={styles.scanlines} />
+
+      {/* Corners */}
+      <span className={`${styles.corner} ${styles.tl}`} />
+      <span className={`${styles.corner} ${styles.tr}`} />
+      <span className={`${styles.corner} ${styles.bl}`} />
+      <span className={`${styles.corner} ${styles.br}`} />
+
+      <header className={styles.header}>
+        <div className={styles.logo}>APHELION</div>
+        <p className={styles.tagline}>DEEP-SPACE PHYSICS RENDERER</p>
+      </header>
+
+      <main className={styles.grid}>
+        {SCENES.map((scene, i) => (
+          <button
+            key={scene.id}
+            className={`${styles.card} ${scene.status === 'coming-soon' ? styles.locked : ''}`}
+            onClick={() => scene.status === 'available' && navigate(`/${scene.id}`)}
+            disabled={scene.status !== 'available'}
+          >
+            <div className={styles.cardIndex}>0{i + 1}</div>
+            <div className={styles.cardBody}>
+              <div className={styles.cardTitle}>{scene.title}</div>
+              <div className={styles.cardSubtitle}>{scene.subtitle}</div>
+              <div className={styles.cardDesc}>{scene.description}</div>
+            </div>
+            <div className={styles.cardStatus}>
+              {scene.status === 'available' ? (
+                <span className={styles.available}>ENTER →</span>
+              ) : (
+                <span className={styles.soon}>SOON</span>
+              )}
+            </div>
+          </button>
+        ))}
+      </main>
+
+      <footer className={styles.footer}>
+        <span>SCHWARZSCHILD · KERR · PENROSE · HAWKING</span>
+      </footer>
+    </div>
+  );
+}

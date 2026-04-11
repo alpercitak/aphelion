@@ -7,8 +7,10 @@ interface Props {
   schwarzschildKm: number; // Radius in Kilometers (km)
 }
 
+const THERMAL_THRESHOLD = 1e10;
+
 export default function Stats({ mass, spin, hawkingTemp, schwarzschildKm }: Props) {
-  const tempDisplay = hawkingTemp > 1e10 ? (hawkingTemp / 1e10).toExponential(1) : '~0';
+  const tempDisplay = hawkingTemp > THERMAL_THRESHOLD ? (hawkingTemp / THERMAL_THRESHOLD).toExponential(1) : '~0';
 
   return (
     <div className={styles.stats}>

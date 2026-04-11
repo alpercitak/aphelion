@@ -1,10 +1,21 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/home';
+import ScenePage from './pages/scene';
+import './styles/global.css';
 
-createRoot(document.getElementById('root')!).render(
+const elem = document.getElementById('root')!;
+
+const app = (
   <StrictMode>
-    <App />
-  </StrictMode>,
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:sceneId" element={<ScenePage />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
 );
+
+createRoot(elem).render(app);

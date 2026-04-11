@@ -1,12 +1,12 @@
 import styles from './index.module.css';
 
-export interface GlossaryItem {
+interface GlossaryItem {
   term: string;
   def: string;
   formula?: string;
 }
 
-export interface GlossarySection {
+interface GlossarySection {
   title: string;
   items: Array<GlossaryItem>;
 }

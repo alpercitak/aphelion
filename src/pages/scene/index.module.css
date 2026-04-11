@@ -1,0 +1,72 @@
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.back {
+  position: fixed;
+  top: 18px;
+  left: 28px;
+  z-index: 20;
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s;
+  pointer-events: all;
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.loading span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  color: var(--accent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.loading button {
+  background: none;
+  border: 1px solid var(--border);
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.loading button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}

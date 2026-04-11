@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --void: #000000;
+  --deep: #020408;
+  --accent: #ff6b1a;
+  --accent2: #ffaa44;
+  --cold: #4fc3f7;
+  --panel: rgba(2, 6, 12, 0.85);
+  --border: rgba(255, 107, 26, 0.2);
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Rajdhani', sans-serif;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  background: var(--void);
+  color: white;
+  font-family: var(--font-body);
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
