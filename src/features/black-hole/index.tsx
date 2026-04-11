@@ -326,10 +326,8 @@ export default function BlackHole() {
         />
         <Controls sliders={sliders} toggles={toggles} />
         <Hint items={HINT_ITEMS} />
-        <Crosshair />
       </Hud>
 
-      {/* Glossary */}
       <Glossary isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} entries={BLACK_HOLE_GLOSSARY} />
     </div>
   );

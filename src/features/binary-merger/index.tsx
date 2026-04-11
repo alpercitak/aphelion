@@ -488,7 +488,6 @@ export default function BinaryMerger() {
         </div>
 
         <Hint items={HINT_ITEMS} />
-        <Crosshair />
       </Hud>
 
       <Glossary isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} entries={BINARY_MERGER_GLOSSARY} />

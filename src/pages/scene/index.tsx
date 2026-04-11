@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getScene } from '@/utils/scene';
 import styles from './index.module.css';
+import Crosshair from '@/components/app/crosshair';
 
 function Loading() {
   return (
@@ -31,6 +32,7 @@ export default function ScenePage() {
     <div className={styles.root}>
       <Suspense fallback={<Loading />}>
         <SceneComponent />
+        <Crosshair />
       </Suspense>
     </div>
   );
