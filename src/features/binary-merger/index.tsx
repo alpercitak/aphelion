@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as THREE from 'three';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
@@ -408,6 +408,16 @@ export default function BinaryMerger() {
 
   const inspiralOptions = ['slow', 'medium', 'fast'];
 
+  const statsItems = useMemo(() => {
+    return [
+      { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
+      { label: 'M2', value: params.mass2.toFixed(1), unit: 'M☉' },
+      { label: 'Total', value: totalMass.toFixed(1), unit: 'M☉' },
+      { label: 'Chirp', value: chirpMass.toFixed(1), unit: 'M☉' },
+      { label: 'Phase', value: phase.toUpperCase() },
+    ];
+  }, [params.mass1, params.mass2, totalMass, chirpMass, phase]);
+
   return (
     <div className={styles.root}>
       <canvas ref={canvasRef} className={styles.canvas} />
@@ -423,15 +433,7 @@ export default function BinaryMerger() {
         <div className={styles.topbar}>
           <FeatureHeader title={'Binary Merger'} subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'} />
           <div className={styles.topRight}>
-            <Stats
-              items={[
-                { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
-                { label: 'M2', value: params.mass2.toFixed(1), unit: 'M☉' },
-                { label: 'Total', value: totalMass.toFixed(1), unit: 'M☉' },
-                { label: 'Chirp', value: chirpMass.toFixed(1), unit: 'M☉' },
-                { label: 'Phase', value: phase.toUpperCase() },
-              ]}
-            />
+            <Stats items={statsItems} />
           </div>
         </div>
 

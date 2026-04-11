@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as THREE from 'three';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
@@ -293,6 +293,23 @@ export default function BlackHole() {
   const rs = schwarzschildRadius(params.mass);
   const hTemp = hawkingTemperature(params.mass);
 
+  const statsItems = useMemo(() => {
+    return [
+      { label: 'mass', value: params.mass.toFixed(1), unit: 'M☉' },
+      { label: 'spin', value: params.spin.toFixed(2), unit: 'a' },
+      { label: 'temp', value: hTemp > 1e10 ? (hTemp / 1e10).toExponential(1) : '~0', unit: 'K' },
+      {
+        label: (
+          <>
+            R<sub>s</sub>
+          </>
+        ),
+        value: rs.toFixed(1),
+        unit: 'km',
+      },
+    ];
+  }, [params.mass, params.spin, hTemp, rs]);
+
   return (
     <div className={styles.root}>
       <canvas ref={canvasRef} className={styles.canvas} />
@@ -310,22 +327,7 @@ export default function BlackHole() {
         <div className={styles.topbar}>
           <FeatureHeader title={'Black Hole'} subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'} />
           <div className={styles.topRight}>
-            <Stats
-              items={[
-                { label: 'mass', value: params.mass.toFixed(1), unit: 'M☉' },
-                { label: 'spin', value: params.spin.toFixed(2), unit: 'a' },
-                { label: 'temp', value: hTemp > 1e10 ? (hTemp / 1e10).toExponential(1) : '~0', unit: 'K' },
-                {
-                  label: (
-                    <>
-                      R<sub>s</sub>
-                    </>
-                  ),
-                  value: rs.toFixed(1),
-                  unit: 'km',
-                },
-              ]}
-            />
+            <Stats items={statsItems} />
           </div>
         </div>
 
