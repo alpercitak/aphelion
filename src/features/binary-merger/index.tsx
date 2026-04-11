@@ -422,64 +422,61 @@ export default function BinaryMerger() {
   }, [params.mass1, params.mass2, totalMass, chirpMass, phase]);
 
   return (
-    <div className={styles.root}>
+    <SceneLayout
+      className={styles.root}
+      title={'Binary Merger'}
+      subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
+      statsItems={statsItems}
+      glossaryItems={GLOSSARY_ITEMS}
+      hintItems={HINT_ITEMS}
+    >
       <canvas ref={canvasRef} className={styles.canvas} />
 
-      <Scanlines />
+      {/* Controls */}
+      <div className={styles.controlsWrap}>
+        <div className={styles.panel}>
+          <div className={styles.panelTitle}>PARAMETERS</div>
 
-      <SceneLayout
-        title={'Binary Merger'}
-        subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
-        statsItems={statsItems}
-        glossaryItems={GLOSSARY_ITEMS}
-        hintItems={HINT_ITEMS}
-      >
-        {/* Controls */}
-        <div className={styles.controlsWrap}>
-          <div className={styles.panel}>
-            <div className={styles.panelTitle}>PARAMETERS</div>
+          <SliderGroup items={sliders} />
 
-            <SliderGroup items={sliders} />
-
-            {/* Inspiral rate selector */}
-            <div className={styles.param}>
-              <div className={styles.paramHeader}>
-                <span
-                  className={styles.paramLabel}
-                  data-tip="How fast the orbit decays. Real inspiral takes millions of years — compressed here."
-                >
-                  INSPIRAL
-                </span>
-              </div>
-              <div className={styles.rateButtons}>
-                {inspiralOptions.map((opt) => (
-                  <button
-                    key={opt}
-                    className={`${styles.rateBtn} ${params.inspiralRate === opt ? styles.rateActive : ''}`}
-                    onClick={() => set('inspiralRate', opt)}
-                  >
-                    {opt.toUpperCase()}
-                  </button>
-                ))}
-              </div>
+          {/* Inspiral rate selector */}
+          <div className={styles.param}>
+            <div className={styles.paramHeader}>
+              <span
+                className={styles.paramLabel}
+                data-tip="How fast the orbit decays. Real inspiral takes millions of years — compressed here."
+              >
+                INSPIRAL
+              </span>
             </div>
-
-            <ToggleGroup items={toggles} />
-
-            {/* Reset */}
-            <button className={styles.resetBtn} onClick={resetScene}>
-              ↺ RESET
-            </button>
+            <div className={styles.rateButtons}>
+              {inspiralOptions.map((opt) => (
+                <button
+                  key={opt}
+                  className={`${styles.rateBtn} ${params.inspiralRate === opt ? styles.rateActive : ''}`}
+                  onClick={() => set('inspiralRate', opt)}
+                >
+                  {opt.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Phase indicator */}
-        <div className={styles.phaseBlock}>
-          {phase === PHASE.ORBIT && <span className={styles.phaseOrbit}>● INSPIRAL IN PROGRESS</span>}
-          {phase === PHASE.MERGING && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
-          {phase === PHASE.MERGED && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
+          <ToggleGroup items={toggles} />
+
+          {/* Reset */}
+          <button className={styles.resetBtn} onClick={resetScene}>
+            ↺ RESET
+          </button>
         </div>
-      </SceneLayout>
-    </div>
+      </div>
+
+      {/* Phase indicator */}
+      <div className={styles.phaseBlock}>
+        {phase === PHASE.ORBIT && <span className={styles.phaseOrbit}>● INSPIRAL IN PROGRESS</span>}
+        {phase === PHASE.MERGING && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
+        {phase === PHASE.MERGED && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
+      </div>
+    </SceneLayout>
   );
 }

@@ -304,20 +304,16 @@ export default function BlackHole() {
   }, [params.mass, params.spin, hTemp, rs]);
 
   return (
-    <div className={styles.root}>
+    <SceneLayout
+      className={styles.root}
+      title={'Black Hole'}
+      subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
+      statsItems={statsItems}
+      glossaryItems={GLOSSARY_ITEMS}
+      hintItems={HINT_ITEMS}
+    >
       <canvas ref={canvasRef} className={styles.canvas} />
-
-      <Scanlines />
-
-      <SceneLayout
-        title={'Black Hole'}
-        subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
-        statsItems={statsItems}
-        glossaryItems={GLOSSARY_ITEMS}
-        hintItems={HINT_ITEMS}
-      >
-        <Controls sliders={sliders} toggles={toggles} />
-      </SceneLayout>
-    </div>
+      <Controls sliders={sliders} toggles={toggles} />
+    </SceneLayout>
   );
 }
