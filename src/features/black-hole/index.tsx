@@ -6,16 +6,14 @@ import { schwarzschildRadius, hawkingTemperature } from '@/utils/physics';
 import Controls from '@/components/app/controls';
 import Stats from '@/components/app/stats';
 import Glossary from '@/components/app/glossary';
-import {
-  createEventHorizon,
-  createPhotonSphere,
-  createOuterGlow,
-  createLensingRings,
-  createAccretionDisk,
-  createJets,
-  applyMassScale,
-} from './blackhole';
-import { BLACK_HOLE_GLOSSARY } from './glossary';
+import { applyMassScale } from './utils/mass-scale';
+import { createAccretionDisk } from './utils/accretion-disk';
+import { createEventHorizon } from './utils/event-horizon';
+import { createLensingRings } from './utils/lensing-rings';
+import { createOuterGlow } from './utils/outer-glow';
+import { createPhotonSphere } from './utils/photon-sphere';
+import { createRelativisticJets } from './utils/relativistic-jets';
+import { BLACK_HOLE_GLOSSARY } from './constants';
 import styles from './index.module.css';
 
 const DEFAULTS = {
@@ -83,7 +81,7 @@ export default function BlackHole() {
     let diskGroup = createAccretionDisk(DEFAULTS.temp, false);
     scene.add(diskGroup);
 
-    let jetsGroup = createJets();
+    let jetsGroup = createRelativisticJets();
     scene.add(jetsGroup);
 
     // Store refs for external param changes
@@ -164,7 +162,9 @@ export default function BlackHole() {
   // ── React to param changes ────────────────────────────────────────────────
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs) return;
+    if (!refs) {
+      return;
+    }
     const { scene, blackHole, photonSphere, outerGlow, photonRing, einsteinRing } = refs;
 
     applyMassScale({ blackHole, photonSphere, outerGlow, photonRing, einsteinRing }, params.mass, params.spin);
