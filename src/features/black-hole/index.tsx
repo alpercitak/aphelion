@@ -326,10 +326,7 @@ export default function BlackHole() {
           statsItems={statsItems}
         />
 
-        {/* Controls */}
-        <div className={styles.controlsWrap}>
-          <Controls sliders={sliders} toggles={toggles} />
-        </div>
+        <Controls sliders={sliders} toggles={toggles} />
 
         {/* Bottom right hint */}
         <div className={styles.hint}>
