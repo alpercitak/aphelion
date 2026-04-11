@@ -4,6 +4,7 @@ import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import Glossary from '@/components/app/glossary';
 import FeatureHeader from '@/components/app/feature-header';
+import Stats from '@/components/app/stats';
 import {
   createSpacetimeGrid,
   createBlackHoleUnit,
@@ -422,15 +423,15 @@ export default function BinaryMerger() {
         <div className={styles.topbar}>
           <FeatureHeader title={'Binary Merger'} subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'} />
           <div className={styles.topRight}>
-            <div className={styles.stats}>
-              M1 <span>{params.mass1.toFixed(1)}</span> M☉ &nbsp; M2 <span>{params.mass2.toFixed(1)}</span> M☉
-              <br />
-              TOTAL <span>{totalMass.toFixed(1)}</span> M☉
-              <br />
-              CHIRP <span>{chirpMass.toFixed(1)}</span> M☉
-              <br />
-              PHASE <span className={styles[phase]}>{phase.toUpperCase()}</span>
-            </div>
+            <Stats
+              items={[
+                { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
+                { label: 'M2', value: params.mass2.toFixed(1), unit: 'M☉' },
+                { label: 'Total', value: totalMass.toFixed(1), unit: 'M☉' },
+                { label: 'Chirp', value: chirpMass.toFixed(1), unit: 'M☉' },
+                { label: 'Phase', value: phase.toUpperCase() },
+              ]}
+            />
           </div>
         </div>
 

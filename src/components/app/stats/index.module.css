@@ -7,6 +7,14 @@
   line-height: 1.8;
   pointer-events: none;
 }
-.stats span {
+.stats__item {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.stats__item-label {
+  text-transform: uppercase;
+}
+.stats__item-value {
   color: var(--cold);
 }
