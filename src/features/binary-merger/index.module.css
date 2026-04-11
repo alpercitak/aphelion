@@ -109,30 +109,6 @@
   align-items: center;
 }
 
-.glossaryBtn {
-  /* position: absolute; */
-  /* top: 52px; */
-  /* right: 28px; */
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(255, 107, 26, 0.4);
-  background: var(--panel);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: all;
-  transition: all 0.2s;
-  backdrop-filter: blur(8px);
-}
-.glossaryBtn:hover {
-  background: rgba(255, 107, 26, 0.15);
-  box-shadow: 0 0 12px rgba(255, 107, 26, 0.3);
-}
-
 /* Controls panel */
 .controlsWrap {
   position: absolute;

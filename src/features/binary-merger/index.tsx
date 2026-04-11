@@ -431,11 +431,13 @@ export default function BinaryMerger() {
 
         {/* Top bar */}
         <div className={styles.topbar}>
-          <FeatureHeader title={'Binary Merger'} subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'} />
+          <FeatureHeader
+            title={'Binary Merger'}
+            subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
+            onGlossaryClick={() => setGlossaryOpen((o) => !o)}
+          />
           <Stats items={statsItems} />
         </div>
-
-        {/* Glossary button */}
 
         {/* Controls */}
         <div className={styles.controlsWrap}>

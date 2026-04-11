@@ -325,14 +325,13 @@ export default function BlackHole() {
 
         {/* Top bar */}
         <div className={styles.topbar}>
-          <FeatureHeader title={'Black Hole'} subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'} />
+          <FeatureHeader
+            title={'Black Hole'}
+            subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
+            onGlossaryClick={() => setGlossaryOpen((o) => !o)}
+          />
           <Stats items={statsItems} />
         </div>
-
-        {/* Glossary button */}
-        {/* <button className={styles.glossaryBtn} onClick={() => setGlossaryOpen((o) => !o)}>
-          ?
-        </button> */}
 
         {/* Controls */}
         <div className={styles.controlsWrap}>
