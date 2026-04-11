@@ -1,0 +1,12 @@
+import FeatureHeader from '@/components/app/feature-header';
+import Stats from '@/components/app/stats';
+import styles from './index.module.css';
+
+export default function TopBar({ title, subtitle, onGlossaryClick, statsItems }) {
+  return (
+    <div className={styles['top-bar']}>
+      <FeatureHeader title={title} subtitle={subtitle} onGlossaryClick={onGlossaryClick} />
+      <Stats items={statsItems} />
+    </div>
+  );
+}

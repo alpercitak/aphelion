@@ -19,6 +19,7 @@ import {
 import { BINARY_MERGER_GLOSSARY } from './constants';
 import { schwarzschildRadius } from '@/utils/physics';
 import styles from './index.module.css';
+import TopBar from '@/components/app/top-bar';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -431,15 +432,12 @@ export default function BinaryMerger() {
         <span className={`${styles.corner} ${styles.bl}`} />
         <span className={`${styles.corner} ${styles.br}`} />
 
-        {/* Top bar */}
-        <div className={styles.topbar}>
-          <FeatureHeader
-            title={'Binary Merger'}
-            subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
-            onGlossaryClick={() => setGlossaryOpen((o) => !o)}
-          />
-          <Stats items={statsItems} />
-        </div>
+        <TopBar
+          title={'Binary Merger'}
+          subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
+          onGlossaryClick={() => setGlossaryOpen((o) => !o)}
+          statsItems={statsItems}
+        />
 
         {/* Controls */}
         <div className={styles.controlsWrap}>
