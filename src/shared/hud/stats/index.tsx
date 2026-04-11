@@ -1,4 +1,4 @@
-import styles from './Stats.module.css';
+import styles from './index.module.css';
 
 interface Props {
   mass: number; // Solar masses (M☉)
