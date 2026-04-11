@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { SCENES } from '@/utils/scene';
 import styles from './index.module.css';
+import Scanlines from '@/components/app/scanlines';
 
 export default function Home() {
   const navigate = useNavigate();
 
   return (
     <div className={styles.root}>
-      <div className={styles.scanlines} />
+      <Scanlines />
 
       {/* Corners */}
       <span className={`${styles.corner} ${styles.tl}`} />

@@ -17,6 +17,7 @@ import { BLACK_HOLE_GLOSSARY } from './constants';
 import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
+import Scanlines from '@/components/app/scanlines';
 
 const DEFAULTS = {
   mass: 10,
@@ -315,7 +316,7 @@ export default function BlackHole() {
     <div className={styles.root}>
       <canvas ref={canvasRef} className={styles.canvas} />
 
-      <div className={styles.scanlines} />
+      <Scanlines />
 
       <Hud>
         <TopBar

@@ -21,6 +21,7 @@ import { schwarzschildRadius } from '@/utils/physics';
 import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
+import Scanlines from '@/components/app/scanlines';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -425,7 +426,8 @@ export default function BinaryMerger() {
   return (
     <div className={styles.root}>
       <canvas ref={canvasRef} className={styles.canvas} />
-      <div className={styles.scanlines} />
+
+      <Scanlines />
 
       <Hud>
         <TopBar
