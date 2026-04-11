@@ -8,38 +8,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   cursor: default;
-}
-
-.corner {
-  position: fixed;
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-  z-index: 5;
-}
-.tl {
-  top: 12px;
-  left: 12px;
-  border-top: 1px solid rgba(255, 107, 26, 0.4);
-  border-left: 1px solid rgba(255, 107, 26, 0.4);
-}
-.tr {
-  top: 12px;
-  right: 12px;
-  border-top: 1px solid rgba(255, 107, 26, 0.4);
-  border-right: 1px solid rgba(255, 107, 26, 0.4);
-}
-.bl {
-  bottom: 12px;
-  left: 12px;
-  border-bottom: 1px solid rgba(255, 107, 26, 0.4);
-  border-left: 1px solid rgba(255, 107, 26, 0.4);
-}
-.br {
-  bottom: 12px;
-  right: 12px;
-  border-bottom: 1px solid rgba(255, 107, 26, 0.4);
-  border-right: 1px solid rgba(255, 107, 26, 0.4);
+  pointer-events: all !important;
 }
 
 .header {

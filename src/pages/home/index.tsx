@@ -2,19 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { SCENES } from '@/utils/scene';
 import styles from './index.module.css';
 import Scanlines from '@/components/app/scanlines';
+import Hud from '@/components/app/hud';
 
 export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.root}>
+    <Hud className={styles.root}>
       <Scanlines />
-
-      {/* Corners */}
-      <span className={`${styles.corner} ${styles.tl}`} />
-      <span className={`${styles.corner} ${styles.tr}`} />
-      <span className={`${styles.corner} ${styles.bl}`} />
-      <span className={`${styles.corner} ${styles.br}`} />
 
       <header className={styles.header}>
         <div className={styles.logo}>APHELION</div>
@@ -49,6 +44,6 @@ export default function Home() {
       <footer className={styles.footer}>
         <span>SCHWARZSCHILD · KERR · PENROSE · HAWKING</span>
       </footer>
-    </div>
+    </Hud>
   );
 }
