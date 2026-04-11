@@ -9,6 +9,14 @@ export const SCENES = [
     status: 'available',
     component: lazy(() => import('@/features/black-hole')),
   },
+  {
+    id: 'binary-merger',
+    title: 'BINARY MERGER',
+    subtitle: 'Gravitational Waves',
+    description: 'Two black holes in decaying orbit. The LIGO moment visualized.',
+    status: 'available',
+    component: lazy(() => import('@/features/binary-merger')),
+  },
 ];
 
 export const getScene = (id: string) => {

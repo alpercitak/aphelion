@@ -308,7 +308,7 @@ export default function BlackHole() {
         {/* Top bar */}
         <div className={styles.topbar}>
           <div className={styles.titleBlock}>
-            <h1>EVENT HORIZON RENDERER</h1>
+            <h1>BLACK HOLE</h1>
             <p>SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING</p>
           </div>
           <div className={styles.topRight}>
