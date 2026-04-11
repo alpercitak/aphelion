@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './index.module.css';
 import Glossary from '../glossary';
+import styles from './index.module.css';
 
 interface FeatureHeaderProps {
   title: string;
