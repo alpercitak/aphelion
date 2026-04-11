@@ -20,6 +20,7 @@ import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
 import Hint from '@/components/app/hint';
 import styles from './index.module.css';
+import SceneLayout from '@/layouts/scene';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -426,7 +427,7 @@ export default function BinaryMerger() {
 
       <Scanlines />
 
-      <Hud
+      <SceneLayout
         title={'Binary Merger'}
         subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
         statsItems={statsItems}
@@ -478,7 +479,7 @@ export default function BinaryMerger() {
           {phase === PHASE.MERGING && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
           {phase === PHASE.MERGED && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
         </div>
-      </Hud>
+      </SceneLayout>
     </div>
   );
 }

@@ -17,6 +17,7 @@ import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
 import Hint from '@/components/app/hint';
 import styles from './index.module.css';
+import SceneLayout from '@/layouts/scene';
 
 const DEFAULTS = {
   mass: 10,
@@ -308,7 +309,7 @@ export default function BlackHole() {
 
       <Scanlines />
 
-      <Hud
+      <SceneLayout
         title={'Black Hole'}
         subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
         statsItems={statsItems}
@@ -316,7 +317,7 @@ export default function BlackHole() {
         hintItems={HINT_ITEMS}
       >
         <Controls sliders={sliders} toggles={toggles} />
-      </Hud>
+      </SceneLayout>
     </div>
   );
 }
