@@ -5,6 +5,8 @@ import { createStarField } from '@/utils/starfield';
 import Glossary from '@/components/app/glossary';
 import FeatureHeader from '@/components/app/feature-header';
 import Stats from '@/components/app/stats';
+import ToggleGroup from '@/components/ui/toggle-group';
+import SliderGroup from '@/components/ui/slider-group';
 import {
   createSpacetimeGrid,
   createBlackHoleUnit,
@@ -17,7 +19,6 @@ import {
 import { BINARY_MERGER_GLOSSARY } from './constants';
 import { schwarzschildRadius } from '@/utils/physics';
 import styles from './index.module.css';
-import ToggleGroup from '@/components/ui/toggle-group';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
@@ -445,28 +446,7 @@ export default function BinaryMerger() {
           <div className={styles.panel}>
             <div className={styles.panelTitle}>PARAMETERS</div>
 
-            {sliders.map((s) => {
-              const pct = ((s.value - s.min) / (s.max - s.min)) * 100;
-              return (
-                <div key={s.id} className={styles.param}>
-                  <div className={styles.paramHeader}>
-                    <span className={styles.paramLabel} data-tip={s.tooltip}>
-                      {s.label}
-                    </span>
-                    <span className={styles.paramValue}>{s.format(s.value)}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={s.min}
-                    max={s.max}
-                    step={s.step}
-                    value={s.value}
-                    style={{ '--pct': `${pct}%` }}
-                    onChange={(e) => s.onChange(parseFloat(e.target.value))}
-                  />
-                </div>
-              );
-            })}
+            <SliderGroup items={sliders} />
 
             {/* Inspiral rate selector */}
             <div className={styles.param}>
