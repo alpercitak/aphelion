@@ -15,12 +15,8 @@ import {
 } from './utils';
 import { GLOSSARY_ITEMS, HINT_ITEMS } from './constants';
 import { schwarzschildRadius } from '@/utils/physics';
-import TopBar from '@/components/app/top-bar';
-import Hud from '@/components/app/hud';
-import Scanlines from '@/components/app/scanlines';
-import Hint from '@/components/app/hint';
-import styles from './index.module.css';
 import SceneLayout from '@/layouts/scene';
+import styles from './index.module.css';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
