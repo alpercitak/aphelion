@@ -13,19 +13,27 @@ export default function FeatureHeader({ title, subtitle, glossaryItems }: Featur
   const navigate = useNavigate();
   const [glossaryOpen, setGlossaryOpen] = useState(false);
 
+  const showGlossary = glossaryItems?.length > 0;
+
   return (
     <div className={styles['feature-header']}>
       <div className={styles['feature-header__title-wrapper']}>
         <h1 className={styles['feature-header__title']}>{title}</h1>
-        <button className={styles['feature-header__glossary-button']} onClick={() => setGlossaryOpen((o) => !o)}>
-          ?
-        </button>
+        {showGlossary && (
+          <button className={styles['feature-header__glossary-button']} onClick={() => setGlossaryOpen((o) => !o)}>
+            ?
+          </button>
+        )}
       </div>
       <div className={styles['feature-header__subtitle']}>{subtitle}</div>
-      <button className={styles['feature-header__back']} onClick={() => navigate('/')}>
-        ← APHELION
-      </button>
-      <Glossary isOpen={glossaryOpen} entries={glossaryItems} onClose={() => setGlossaryOpen(false)} />
+      {title && (
+        <button className={styles['feature-header__back']} onClick={() => navigate('/')}>
+          ← APHELION
+        </button>
+      )}
+      {showGlossary && (
+        <Glossary isOpen={glossaryOpen} entries={glossaryItems} onClose={() => setGlossaryOpen(false)} />
+      )}
     </div>
   );
 }

@@ -426,14 +426,13 @@ export default function BinaryMerger() {
 
       <Scanlines />
 
-      <Hud hintItems={HINT_ITEMS}>
-        <TopBar
-          title={'Binary Merger'}
-          subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
-          statsItems={statsItems}
-          glossaryItems={GLOSSARY_ITEMS}
-        />
-
+      <Hud
+        title={'Binary Merger'}
+        subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
+        statsItems={statsItems}
+        glossaryItems={GLOSSARY_ITEMS}
+        hintItems={HINT_ITEMS}
+      >
         {/* Controls */}
         <div className={styles.controlsWrap}>
           <div className={styles.panel}>
