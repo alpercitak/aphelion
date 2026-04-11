@@ -4,7 +4,6 @@ import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import { schwarzschildRadius, hawkingTemperature } from '@/utils/physics';
 import Controls from '@/components/app/controls';
-import Stats from '@/components/app/stats';
 import Glossary from '@/components/app/glossary';
 import { applyMassScale } from './utils/mass-scale';
 import { createAccretionDisk } from './utils/accretion-disk';
@@ -14,12 +13,11 @@ import { createOuterGlow } from './utils/outer-glow';
 import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
 import { BLACK_HOLE_GLOSSARY } from './constants';
-import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
 import Hint from '@/components/app/hint';
-import Crosshair from '@/components/app/crosshair';
+import styles from './index.module.css';
 
 const DEFAULTS = {
   mass: 10,

@@ -3,8 +3,6 @@ import * as THREE from 'three';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import Glossary from '@/components/app/glossary';
-import FeatureHeader from '@/components/app/feature-header';
-import Stats from '@/components/app/stats';
 import ToggleGroup from '@/components/ui/toggle-group';
 import SliderGroup from '@/components/ui/slider-group';
 import {
@@ -18,12 +16,11 @@ import {
 } from './utils';
 import { BINARY_MERGER_GLOSSARY } from './constants';
 import { schwarzschildRadius } from '@/utils/physics';
-import styles from './index.module.css';
 import TopBar from '@/components/app/top-bar';
 import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
 import Hint from '@/components/app/hint';
-import Crosshair from '@/components/app/crosshair';
+import styles from './index.module.css';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
 const INITIAL_SEPARATION = 7.0;
