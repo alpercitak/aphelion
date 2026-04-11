@@ -1,8 +1,7 @@
-import type { ReactNode } from 'react';
 import styles from './index.module.css';
 
 interface StatsItem {
-  label: string | ReactNode;
+  label: string;
   value: string;
   unit?: string;
 }

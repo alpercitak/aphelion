@@ -307,15 +307,7 @@ export default function BlackHole() {
       { label: 'mass', value: params.mass.toFixed(1), unit: 'M☉' },
       { label: 'spin', value: params.spin.toFixed(2), unit: 'a' },
       { label: 'temp', value: hTemp > 1e10 ? (hTemp / 1e10).toExponential(1) : '~0', unit: 'K' },
-      {
-        label: (
-          <>
-            R<sub>s</sub>
-          </>
-        ),
-        value: rs.toFixed(1),
-        unit: 'km',
-      },
+      { label: 'Rₛ', value: rs.toFixed(1), unit: 'km' },
     ];
   }, [params.mass, params.spin, hTemp, rs]);
 
