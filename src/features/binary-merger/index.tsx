@@ -426,7 +426,7 @@ export default function BinaryMerger() {
 
       <Scanlines />
 
-      <Hud>
+      <Hud hintItems={HINT_ITEMS}>
         <TopBar
           title={'Binary Merger'}
           subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
@@ -479,8 +479,6 @@ export default function BinaryMerger() {
           {phase === PHASE.MERGING && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
           {phase === PHASE.MERGED && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
         </div>
-
-        <Hint items={HINT_ITEMS} />
       </Hud>
     </div>
   );

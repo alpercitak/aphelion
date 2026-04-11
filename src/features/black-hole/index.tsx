@@ -308,7 +308,7 @@ export default function BlackHole() {
 
       <Scanlines />
 
-      <Hud>
+      <Hud hintItems={HINT_ITEMS}>
         <TopBar
           title={'Black Hole'}
           subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
@@ -316,7 +316,6 @@ export default function BlackHole() {
           glossaryItems={GLOSSARY_ITEMS}
         />
         <Controls sliders={sliders} toggles={toggles} />
-        <Hint items={HINT_ITEMS} />
       </Hud>
     </div>
   );
