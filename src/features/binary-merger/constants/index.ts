@@ -1,3 +1,4 @@
+import type { GlossarySection } from '@/components/app/glossary';
 import type { Params, SliderItem, ToggleItem } from '../types';
 
 export const PARAMS = {
@@ -77,7 +78,7 @@ export const GLOSSARY_ITEMS = [
       },
     ],
   },
-];
+] satisfies Array<GlossarySection>;
 
 export const HINT_ITEMS = [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }];
 

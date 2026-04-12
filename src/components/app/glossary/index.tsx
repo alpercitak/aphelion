@@ -7,7 +7,7 @@ interface GlossaryItem {
   formula?: string;
 }
 
-interface GlossarySection {
+export interface GlossarySection {
   title: string;
   items: Array<GlossaryItem>;
 }

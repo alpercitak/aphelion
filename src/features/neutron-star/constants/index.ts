@@ -1,3 +1,4 @@
+import type { GlossarySection } from '@/components/app/glossary';
 import type { BeamWidth, Params, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Neutron Star';
@@ -77,7 +78,7 @@ export const GLOSSARY_ITEMS = [
       },
     ],
   },
-];
+] satisfies Array<GlossarySection>;
 
 export const HINT_ITEMS = [
   { title: 'PULSAR PERIOD', values: ['P = 1/f'] },
