@@ -4,17 +4,13 @@ import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import ToggleGroup from '@/components/ui/toggle-group';
 import SliderGroup from '@/components/ui/slider-group';
-import {
-  createSpacetimeGrid,
-  createBlackHoleUnit,
-  createWaveRing,
-  createMergerFlash,
-  createMergedBlackHole,
-  orbitalPositions,
-  orbitalOmega,
-} from './utils';
+import { createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
+import { createMergerFlash } from './utils/merger-flash';
+import { orbitalOmega } from './utils/orbital-omega';
+import { orbitalPositions } from './utils/orbital-positions';
+import { createSpacetimeGrid } from './utils/spacetime-grid';
+import { createWaveRing } from './utils/wave-ring';
 import { GLOSSARY_ITEMS, HINT_ITEMS } from './constants';
-import { schwarzschildRadius } from '@/utils/physics';
 import SceneLayout from '@/layouts/scene';
 import styles from './index.module.css';
 
@@ -153,7 +149,7 @@ export default function BinaryMerger() {
 
     // ── Animation ─────────────────────────────────────────────────────────────
     const clock = new THREE.Clock();
-    let raf;
+    let raf: number;
 
     function spawnWaveRing(cx, cz, radius) {
       const ring = createWaveRing(radius);
@@ -346,8 +342,6 @@ export default function BinaryMerger() {
 
   // ── Sliders & toggles ─────────────────────────────────────────────────────
   const totalMass = params.mass1 + params.mass2;
-  const rs1 = schwarzschildRadius(params.mass1);
-  const rs2 = schwarzschildRadius(params.mass2);
   const chirpMass = Math.pow(params.mass1 * params.mass2, 3 / 5) / Math.pow(totalMass, 1 / 5);
 
   const sliders = [
