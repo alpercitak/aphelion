@@ -39,7 +39,13 @@ export default function BinaryMerger() {
   });
 
   const [params, setParams] = useState<Params>(PARAMS);
+  const paramsRef = useRef(params);
+
   const [phase, setPhase] = useState<Phase>('orbit');
+
+  useEffect(() => {
+    paramsRef.current = params;
+  });
 
   const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
     setParams((prev) => ({ ...prev, [key]: value }));
@@ -151,7 +157,7 @@ export default function BinaryMerger() {
       raf = requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
       const s = stateRef.current;
-      const pr = s.params;
+      const pr = paramsRef.current;
       const refs = sceneRef.current;
 
       if (!refs) {
