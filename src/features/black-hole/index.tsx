@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ACESFilmicToneMapping, Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { ACESFilmicToneMapping, Clock, Mesh, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { createOrbitControls } from '@/utils/camera';
@@ -169,8 +169,10 @@ export default function BlackHole() {
     }
     refs.scene.remove(refs.diskGroup);
     refs.diskGroup.traverse((o) => {
-      o.geometry?.dispose();
-      o.material?.dispose();
+      if (o instanceof Mesh) {
+        o.geometry?.dispose();
+        o.material?.dispose();
+      }
     });
     const newDisk = createAccretionDisk(params.temp, params.dopplerShift);
     refs.diskGroup = newDisk;
