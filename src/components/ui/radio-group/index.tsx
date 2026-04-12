@@ -11,7 +11,7 @@ export default function RadioGroup({ items }: RadioGroupProps) {
   }
 
   return (
-    <div className={styles['toggle-group']}>
+    <div className={styles['radio-group']}>
       {items.map((item) => (
         <Radio key={item.id} {...item} />
       ))}
