@@ -2,8 +2,11 @@ import type {
   Group,
   Mesh,
   MeshBasicMaterial,
+  Object3DEventMap,
   PerspectiveCamera,
   PlaneGeometry,
+  Points,
+  RingGeometry,
   Scene,
   ShaderMaterial,
   SphereGeometry,
@@ -24,6 +27,7 @@ export interface SceneRef {
   orbit: ReturnType<typeof createOrbitControls>;
   renderer: WebGLRenderer;
   scene: Scene;
+  stars: Points;
   waveRingMeshes: Array<Mesh>;
 }
 
@@ -33,7 +37,7 @@ export interface StateRef {
   phase: Phase;
   mergeProgress: number;
   flashOpacity: number;
-  waveRings: Array<Mesh>;
+  waveRings: Array<WaveRing>;
   lastRingTime: number;
   params: Params;
 }
@@ -77,4 +81,9 @@ export interface BlackHoleUnitData {
 
 export interface BlackHoleUnit extends Group {
   userData: BlackHoleUnitData;
+}
+
+export interface WaveRing {
+  mesh: Mesh<RingGeometry, MeshBasicMaterial, Object3DEventMap>;
+  born: number;
 }

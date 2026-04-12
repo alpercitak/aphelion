@@ -180,18 +180,18 @@ export default function BinaryMerger() {
         bh2.userData.diskGroup.rotation.y = -t * 0.28;
 
         // Update spacetime grid sources
-        refs.grid.material.uniforms.source1.value.set(pos.x1, pos.z1);
-        refs.grid.material.uniforms.source2.value.set(pos.x2, pos.z2);
-        refs.grid.material.uniforms.separation.value = s.separation;
-        refs.grid.material.uniforms.amplitude.value = pr.waveAmplitude;
-        refs.grid.material.uniforms.time.value = t * 1.8;
+        refs.grid.material.uniforms['source1']!.value.set(pos.x1, pos.z1);
+        refs.grid.material.uniforms['source2']!.value.set(pos.x2, pos.z2);
+        refs.grid.material.uniforms['separation']!.value = s.separation;
+        refs.grid.material.uniforms['amplitude']!.value = pr.waveAmplitude;
+        refs.grid.material.uniforms['time']!.value = t * 1.8;
         refs.grid.visible = pr.showGrid;
 
         // Glow view vectors
-        bh1.userData.glowMat.uniforms.viewVector.value.copy(camera.position).sub(bh1.position);
-        bh2.userData.glowMat.uniforms.viewVector.value.copy(camera.position).sub(bh2.position);
-        bh1.userData.haloMat.uniforms.viewVector.value.copy(camera.position).sub(bh1.position);
-        bh2.userData.haloMat.uniforms.viewVector.value.copy(camera.position).sub(bh2.position);
+        bh1.userData.glowMat.uniforms.viewVector?.value.copy(camera.position).sub(bh1.position);
+        bh2.userData.glowMat.uniforms.viewVector?.value.copy(camera.position).sub(bh2.position);
+        bh1.userData.haloMat.uniforms.viewVector?.value.copy(camera.position).sub(bh1.position);
+        bh2.userData.haloMat.uniforms.viewVector?.value.copy(camera.position).sub(bh2.position);
 
         // Disk visibility
         bh1.userData.diskGroup.visible = pr.showDisks;
@@ -231,11 +231,11 @@ export default function BinaryMerger() {
         refs.flash.material.opacity = s.flashOpacity;
 
         // Grid still animates
-        refs.grid.material.uniforms.time.value = t * 1.8;
-        refs.grid.material.uniforms.source1.value.set(bh1.position.x, bh1.position.z);
-        refs.grid.material.uniforms.source2.value.set(bh2.position.x, bh2.position.z);
-        refs.grid.material.uniforms.separation.value = bh1.position.distanceTo(bh2.position);
-        refs.grid.material.uniforms.amplitude.value = pr.waveAmplitude * (1 + mp * 2);
+        refs.grid.material.uniforms['time']!.value = t * 1.8;
+        refs.grid.material.uniforms['source1']!.value.set(bh1.position.x, bh1.position.z);
+        refs.grid.material.uniforms['source2']!.value.set(bh2.position.x, bh2.position.z);
+        refs.grid.material.uniforms['separation']!.value = bh1.position.distanceTo(bh2.position);
+        refs.grid.material.uniforms['amplitude']!.value = pr.waveAmplitude * (1 + mp * 2);
 
         // Burst wave rings on merge
         if (mp > 0.5 && t - s.lastRingTime > 0.05) {
@@ -261,13 +261,16 @@ export default function BinaryMerger() {
         refs.mergedBH.userData.haloMat.uniforms.viewVector?.value.copy(camera.position);
 
         // Ringdown — grid dampens
-        refs.grid.material.uniforms.amplitude.value = Math.max(0, refs.grid.material.uniforms.amplitude?.value - 0.005);
-        refs.grid.material.uniforms.time.value = t * 1.8;
-        refs.grid.material.uniforms.source1.value.set(0, 0);
-        refs.grid.material.uniforms.source2.value.set(0, 0);
+        refs.grid.material.uniforms['amplitude']!.value = Math.max(
+          0,
+          refs.grid.material.uniforms.amplitude?.value - 0.005,
+        );
+        refs.grid.material.uniforms['time']!.value = t * 1.8;
+        refs.grid.material.uniforms['source1']!.value.set(0, 0);
+        refs.grid.material.uniforms['source2']!.value.set(0, 0);
 
         // Auto loop
-        if (pr.autoLoop && refs.grid.material.uniforms.amplitude.value <= 0.02) {
+        if (pr.autoLoop && refs.grid.material.uniforms['amplitude']!.value <= 0.02) {
           resetScene();
         }
       }
@@ -282,14 +285,20 @@ export default function BinaryMerger() {
         mesh.scale.y += 0.06;
         mesh.scale.z += 0.06;
         mesh.material.opacity = Math.max(0, mesh.userData.baseOpacity - mesh.scale.x * 0.07);
-        if (mesh.material.opacity <= 0) toRemove.push(mesh);
+        if (mesh.material.opacity <= 0) {
+          toRemove.push(mesh);
+        }
       });
       toRemove.forEach((m) => {
         scene.remove(m);
-        m.geometry.dispose();
-        m.material.dispose();
+
+        if (m instanceof Mesh) {
+          m.geometry.dispose();
+          m.material.dispose();
+        }
+
         s.waveRings = s.waveRings.filter((r) => r.mesh !== m);
-        const idx = refs.waveRingMeshes.indexOf(m);
+        const idx = refs.waveRingMeshes.indexOf(m as Mesh);
         if (idx > -1) {
           refs.waveRingMeshes.splice(idx, 1);
         }

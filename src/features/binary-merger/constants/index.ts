@@ -95,7 +95,7 @@ export const BASE_HUD_PROPS = {
   subtitle: SUBTITLE,
   glossary: GLOSSARY_ITEMS,
   hints: HINT_ITEMS,
-} satisfies Partial<SceneLayoutHudProps>;
+} as const satisfies Partial<SceneLayoutHudProps>;
 
 export const SLIDER_ITEMS = [
   {
