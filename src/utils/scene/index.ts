@@ -17,6 +17,14 @@ export const SCENES = [
     status: 'available',
     component: lazy(() => import('@/features/binary-merger')),
   },
+  {
+    id: 'neutron-star',
+    title: 'NEUTRON STAR',
+    subtitle: 'TOV Limit · Pulsar Beam',
+    description: 'Extreme density and rapid rotation. Visualizing degenerate matter and lighthouse effects.',
+    status: 'available',
+    component: lazy(() => import('@/features/neutron-star')),
+  },
 ];
 
 export const getScene = (id: string) => {

@@ -12,6 +12,7 @@ import type {
 } from 'three';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
+import type { createOrbitControls } from '@/utils/camera';
 
 export interface SceneRef {
   blackHole: Mesh<SphereGeometry, MeshBasicMaterial>;
@@ -20,11 +21,12 @@ export interface SceneRef {
   einsteinMat: MeshBasicMaterial;
   einsteinRing: Mesh<RingGeometry, MeshBasicMaterial>;
   jetsGroup: Group;
+  orbit: ReturnType<typeof createOrbitControls>;
+  outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
   photonMat: ShaderMaterial;
   photonRing: Mesh<RingGeometry, MeshBasicMaterial>;
   photonRingMat: MeshBasicMaterial;
   photonSphere: Mesh<SphereGeometry, ShaderMaterial>;
-  outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
   renderer: WebGLRenderer;
   scene: Scene;
   stars: Points;

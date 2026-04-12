@@ -11,6 +11,7 @@ import type {
 } from 'three';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
+import type { createOrbitControls } from '@/utils/camera';
 
 export interface SceneRef {
   bh1: BlackHoleUnit;
@@ -19,6 +20,7 @@ export interface SceneRef {
   flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
   grid: Mesh<PlaneGeometry, ShaderMaterial>;
   mergedBH: BlackHoleUnit;
+  orbit: ReturnType<typeof createOrbitControls>;
   renderer: WebGLRenderer;
   scene: Scene;
   waveRingMeshes: Array<Mesh>;
