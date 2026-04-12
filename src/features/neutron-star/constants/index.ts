@@ -1,6 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
-import type { BeamWidth, Params, SliderItem, ToggleItem } from '../types';
+import type { BeamWidth, Params, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Neutron Star';
 
@@ -131,7 +131,7 @@ export const RADIO_ITEMS = [
     label: 'Beam width',
     options: BEAM_WIDTH_OPTIONS.map((item) => ({ id: item, label: item })),
   },
-];
+] as const satisfies ReadonlyArray<RadioItem>;
 
 export const BEAM_FLASH_THRESHOLD = 0.92;
 export const NS_RADIUS = 0.35; // visual radius — neutron stars are tiny

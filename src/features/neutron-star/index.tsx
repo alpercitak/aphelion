@@ -315,6 +315,9 @@ export default function NeutronStar() {
           padding: '18px 20px',
           backdropFilter: 'blur(8px)',
           fontFamily: 'var(--font-mono)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
         }}
       >
         <div

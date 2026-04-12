@@ -153,5 +153,5 @@ export const TOGGLE_ITEMS = [
   { id: 'showDisk', label: 'Accretion disk' },
   { id: 'showJets', label: 'Relativistic jets' },
   { id: 'showStars', label: 'Star field' },
-  { id: 'dopplerShift', label: 'Dopper shift' },
+  { id: 'dopplerShift', label: 'Doppler shift' },
 ] as const satisfies ReadonlyArray<ToggleItem>;
