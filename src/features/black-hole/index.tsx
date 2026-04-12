@@ -11,7 +11,7 @@ import { createLensingRings } from './utils/lensing-rings';
 import { createOuterGlow } from './utils/outer-glow';
 import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
-import { GLOSSARY_ITEMS, HINT_ITEMS } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS } from './constants';
 import SceneLayout from '@/layouts/scene';
 import styles from './index.module.css';
 
@@ -211,54 +211,16 @@ export default function BlackHole() {
   }, [params.lensStrength]);
 
   // ── Sliders & toggles config ──────────────────────────────────────────────
-  const sliders = [
-    {
-      id: 'mass',
-      label: 'MASS',
-      value: params.mass,
-      min: 1,
-      max: 100,
-      step: 0.5,
-      format: (v: number) => `${v.toFixed(1)} M☉`,
-      tooltip: 'Mass in solar units. Larger mass = bigger event horizon and stronger lensing.',
-      onChange: (v: number) => set('mass', v),
-    },
-    {
-      id: 'spin',
-      label: 'SPIN (a)',
-      value: params.spin,
-      min: 0,
-      max: 0.99,
-      step: 0.01,
-      format: (v: number) => v.toFixed(2),
-      tooltip:
-        'Dimensionless spin 0–0.99. Spinning BHs follow Kerr metric, flattening the horizon and dragging spacetime.',
-      onChange: (v: number) => set('spin', v),
-    },
-    {
-      id: 'temp',
-      label: 'DISK TEMP',
-      value: params.temp,
-      min: 2000,
-      max: 30000,
-      step: 100,
-      format: (v: number) => `${Math.round(v)} K`,
-      tooltip: 'Inner disk blackbody temperature. Hotter = bluer. Real accretion disks reach 10,000–100,000 K.',
-      onChange: (v: number) => set('temp', v),
-    },
-    {
-      id: 'lens',
-      label: 'LENSING',
-      value: params.lensStrength,
-      min: 0,
-      max: 2,
-      step: 0.05,
-      format: (v: number) => v.toFixed(2),
-      tooltip:
-        'Intensity of gravitational light bending. At max, background light wraps around forming an Einstein ring.',
-      onChange: (v: number) => set('lensStrength', v),
-    },
-  ];
+
+  const sliders = useMemo(
+    () =>
+      Object.values(SLIDERS).map((config) => ({
+        ...config,
+        value: params[config.id],
+        onChange: (v: number) => set(config.id, v),
+      })),
+    [params.mass, params.spin, params.temp, params.lensStrength],
+  );
 
   const toggles = [
     {

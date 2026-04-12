@@ -67,3 +67,35 @@ export const GLOSSARY_ITEMS = [
 ];
 
 export const HINT_ITEMS = [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }];
+
+export const SLIDERS = [
+  {
+    id: 'mass1',
+    label: 'MASS 1',
+    min: 1,
+    max: 50,
+    step: 0.5,
+    tooltip:
+      'Mass of the first black hole. Larger mass = bigger event horizon and stronger gravitational wave emission.',
+    format: (v: number) => `${v.toFixed(1)} M☉`,
+  },
+  {
+    id: 'mass2',
+    label: 'MASS 2',
+    min: 1,
+    max: 50,
+    step: 0.5,
+    tooltip: 'Mass of the second black hole. Unequal masses produce orbital asymmetry and stronger waves.',
+    format: (v: number) => `${v.toFixed(1)} M☉`,
+  },
+  {
+    id: 'waveAmplitude',
+    label: 'WAVE AMP',
+    min: 0,
+    max: 2,
+    step: 0.05,
+    format: (v: number) => v.toFixed(2),
+    tooltip:
+      'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width — amplified here for visibility.',
+  },
+];

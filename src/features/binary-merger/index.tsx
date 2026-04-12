@@ -10,14 +10,16 @@ import { orbitalOmega } from './utils/orbital-omega';
 import { orbitalPositions } from './utils/orbital-positions';
 import { createSpacetimeGrid } from './utils/spacetime-grid';
 import { createWaveRing } from './utils/wave-ring';
-import { GLOSSARY_ITEMS, HINT_ITEMS } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS } from './constants';
 import SceneLayout from '@/layouts/scene';
 import styles from './index.module.css';
 
-const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 };
-const INITIAL_SEPARATION = 7.0;
-const MERGE_THRESHOLD = 1.2;
+type InspiralOption = 'slow' | 'medium' | 'fast';
 
+const INSPIRAL_OPTIONS = ['slow', 'medium', 'fast'] as const satisfies ReadonlyArray<InspiralOption>;
+const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
+const INITIAL_SEPARATION = 7.0 as const;
+const MERGE_THRESHOLD = 1.2 as const;
 const DEFAULTS = {
   mass1: 30,
   mass2: 25,
@@ -344,44 +346,6 @@ export default function BinaryMerger() {
   const totalMass = params.mass1 + params.mass2;
   const chirpMass = Math.pow(params.mass1 * params.mass2, 3 / 5) / Math.pow(totalMass, 1 / 5);
 
-  const sliders = [
-    {
-      id: 'mass1',
-      label: 'MASS 1',
-      value: params.mass1,
-      min: 1,
-      max: 50,
-      step: 0.5,
-      format: (v) => `${v.toFixed(1)} M☉`,
-      tooltip:
-        'Mass of the first black hole. Larger mass = bigger event horizon and stronger gravitational wave emission.',
-      onChange: (v) => set('mass1', v),
-    },
-    {
-      id: 'mass2',
-      label: 'MASS 2',
-      value: params.mass2,
-      min: 1,
-      max: 50,
-      step: 0.5,
-      format: (v) => `${v.toFixed(1)} M☉`,
-      tooltip: 'Mass of the second black hole. Unequal masses produce orbital asymmetry and stronger waves.',
-      onChange: (v) => set('mass2', v),
-    },
-    {
-      id: 'waveAmplitude',
-      label: 'WAVE AMP',
-      value: params.waveAmplitude,
-      min: 0,
-      max: 2,
-      step: 0.05,
-      format: (v) => v.toFixed(2),
-      tooltip:
-        'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width — amplified here for visibility.',
-      onChange: (v) => set('waveAmplitude', v),
-    },
-  ];
-
   const toggles = [
     { id: 'grid', label: 'SPACETIME GRID', active: params.showGrid, onClick: () => set('showGrid', !params.showGrid) },
     {
@@ -399,8 +363,6 @@ export default function BinaryMerger() {
     { id: 'loop', label: 'AUTO LOOP', active: params.autoLoop, onClick: () => set('autoLoop', !params.autoLoop) },
   ];
 
-  const inspiralOptions = ['slow', 'medium', 'fast'];
-
   const statsItems = useMemo(() => {
     return [
       { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
@@ -410,6 +372,16 @@ export default function BinaryMerger() {
       { label: 'Phase', value: phase.toUpperCase() },
     ];
   }, [params.mass1, params.mass2, totalMass, chirpMass, phase]);
+
+  const sliders = useMemo(
+    () =>
+      Object.values(SLIDERS).map((config) => ({
+        ...config,
+        value: params[config.id],
+        onChange: (v: number) => set(config.id, v),
+      })),
+    [params.mass1, params.mass2, params.waveAmplitude],
+  );
 
   return (
     <SceneLayout
@@ -440,7 +412,7 @@ export default function BinaryMerger() {
               </span>
             </div>
             <div className={styles.rateButtons}>
-              {inspiralOptions.map((opt) => (
+              {INSPIRAL_OPTIONS.map((opt) => (
                 <button
                   key={opt}
                   className={`${styles.rateBtn} ${params.inspiralRate === opt ? styles.rateActive : ''}`}

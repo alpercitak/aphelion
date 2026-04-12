@@ -88,3 +88,44 @@ export const HINT_ITEMS = [
   { title: 'SCHWARZSCHILD RADIUS', values: ['rₛ = 2GM/c²'] },
   { title: 'PHOTON SPHERE', values: ['r = 1.5 rₛ'] },
 ];
+
+export const SLIDERS = [
+  {
+    id: 'mass',
+    label: 'MASS',
+    min: 1,
+    max: 100,
+    step: 0.5,
+    format: (v: number) => `${v.toFixed(1)} M☉`,
+    tooltip: 'Mass in solar units. Larger mass = bigger event horizon and stronger lensing.',
+  },
+  {
+    id: 'spin',
+    label: 'SPIN (a)',
+    min: 0,
+    max: 0.99,
+    step: 0.01,
+    format: (v: number) => v.toFixed(2),
+    tooltip:
+      'Dimensionless spin 0–0.99. Spinning BHs follow Kerr metric, flattening the horizon and dragging spacetime.',
+  },
+  {
+    id: 'temp',
+    label: 'DISK TEMP',
+    min: 2000,
+    max: 30000,
+    step: 100,
+    format: (v: number) => `${Math.round(v)} K`,
+    tooltip: 'Inner disk blackbody temperature. Hotter = bluer. Real accretion disks reach 10,000–100,000 K.',
+  },
+  {
+    id: 'lensStrength',
+    label: 'LENSING',
+    min: 0,
+    max: 2,
+    step: 0.05,
+    format: (v: number) => v.toFixed(2),
+    tooltip:
+      'Intensity of gravitational light bending. At max, background light wraps around forming an Einstein ring.',
+  },
+];
