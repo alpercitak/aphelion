@@ -1,5 +1,6 @@
 import Panel from '@/components/ui/panel';
 import styles from './index.module.css';
+import Button from '@/components/ui/button';
 
 interface GlossaryItem {
   term: string;
@@ -24,9 +25,9 @@ export default function Glossary({ isOpen, onClose, entries = [] }: GlossaryProp
       <div className={styles.inner}>
         <div className={styles.header}>
           <h2>PHYSICS GLOSSARY</h2>
-          <button className={styles.close} onClick={onClose} aria-label="Close glossary" type="button">
+          <Button onClick={onClose} aria-label="Close glossary">
             ✕
-          </button>
+          </Button>
         </div>
 
         {entries.map((section) => (

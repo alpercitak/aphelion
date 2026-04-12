@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Glossary from '../glossary';
 import styles from './index.module.css';
+import Button from '@/components/ui/button';
 
 interface FeatureHeaderProps {
   title: string;
@@ -19,17 +20,13 @@ export default function FeatureHeader({ title, subtitle, glossaryItems }: Featur
     <div className={styles['feature-header']}>
       <div className={styles['feature-header__title-wrapper']}>
         <h1 className={styles['feature-header__title']}>{title}</h1>
-        {showGlossary && (
-          <button className={styles['feature-header__glossary-button']} onClick={() => setGlossaryOpen((o) => !o)}>
-            ?
-          </button>
-        )}
+        {showGlossary && <Button onClick={() => setGlossaryOpen((o) => !o)}>?</Button>}
       </div>
       <div className={styles['feature-header__subtitle']}>{subtitle}</div>
       {title && (
-        <button className={styles['feature-header__back']} onClick={() => navigate('/')}>
+        <Button variant="tertiary" onClick={() => navigate('/')}>
           ← APHELION
-        </button>
+        </Button>
       )}
       {showGlossary && (
         <Glossary isOpen={glossaryOpen} entries={glossaryItems} onClose={() => setGlossaryOpen(false)} />

@@ -17,6 +17,7 @@ import { createSpacetimeGrid } from './utils/spacetime-grid';
 import { createWaveRing } from './utils/wave-ring';
 
 import styles from './index.module.css';
+import Button from '@/components/ui/button';
 
 const INSPIRAL_OPTIONS = ['slow', 'medium', 'fast'] as const satisfies ReadonlyArray<InspiralOption>;
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
@@ -382,13 +383,14 @@ export default function BinaryMerger() {
             </div>
             <div className={styles.rateButtons}>
               {INSPIRAL_OPTIONS.map((opt) => (
-                <button
+                <Button
                   key={opt}
-                  className={`${styles.rateBtn} ${params.inspiralRate === opt ? styles.rateActive : ''}`}
                   onClick={() => set('inspiralRate', opt)}
+                  variant={opt === params.inspiralRate ? 'primary' : 'secondary'}
+                  className={styles.rateButton}
                 >
                   {opt.toUpperCase()}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -396,9 +398,9 @@ export default function BinaryMerger() {
           <ToggleGroup items={toggles} />
 
           {/* Reset */}
-          <button className={styles.resetBtn} onClick={resetScene}>
+          <Button variant="secondary" className={styles.resetBtn} onClick={resetScene}>
             ↺ RESET
-          </button>
+          </Button>
         </div>
       </div>
 

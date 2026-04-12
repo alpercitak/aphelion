@@ -1,0 +1,53 @@
+.button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid;
+  padding: 4px;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  user-select: none;
+  pointer-events: all;
+}
+.button--primary {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(255, 107, 26, 0.06);
+}
+.button--primary:hover {
+  background: rgba(255, 107, 26, 0.2);
+  box-shadow:
+    0 0 8px rgba(255, 107, 26, 0.4),
+    inset 0 0 4px rgba(255, 107, 26, 0.2);
+  text-shadow: 0 0 4px var(--accent);
+}
+.button--secondary {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.02);
+}
+.button--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+}
+.button--tertiary {
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+  padding: 6px 4px;
+}
+.button--tertiary:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.button:active {
+  transform: scale(0.97);
+  filter: brightness(1.2);
+}

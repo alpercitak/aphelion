@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import styles from './index.module.css';
+import Button from '../button';
 
 export interface ToggleProps {
   id: string;
@@ -10,9 +11,9 @@ export interface ToggleProps {
 
 export default function Toggle({ label, active, onClick }: ToggleProps) {
   return (
-    <button className={clsx(styles['toggle'], active && styles['toggle--active'])} onClick={onClick} type="button">
+    <Button onClick={onClick} variant={active ? 'primary' : 'secondary'}>
       {label}
       <span className={styles['toggle__dot']} />
-    </button>
+    </Button>
   );
 }
