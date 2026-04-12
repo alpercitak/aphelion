@@ -364,14 +364,8 @@ export default function BinaryMerger() {
       active: params[item.id],
       onClick: () => set(item.id, !params[item.id]),
     })),
+    buttons: [{ variant: 'secondary', onClick: resetScene, children: '↺ RESET' }],
   } satisfies SceneLayoutControlsProps;
 
-  return (
-    <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps}>
-      {/* TODO: put this */}
-      {/* <Button variant="secondary" className={styles.resetBtn} onClick={resetScene}>
-            ↺ RESET
-          </Button> */}
-    </SceneLayout>
-  );
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
 }

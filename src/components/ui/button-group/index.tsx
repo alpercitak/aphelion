@@ -11,7 +11,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
   }
 
   return (
-    <div className={styles['toggle-group']}>
+    <div className={styles['button-group']}>
       {items.map((item) => (
         <Button key={item.id} {...item} />
       ))}
