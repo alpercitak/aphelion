@@ -94,7 +94,7 @@ export default function BinaryMerger() {
     const orbit = createOrbitControls(canvas, { theta: 0.1, phi: Math.PI / 3.5, radius: 16 });
 
     // ── Objects ───────────────────────────────────────────────────────────────
-    const stars = createStarField(4000);
+    const stars = createStarField();
     scene.add(stars);
 
     const grid = createSpacetimeGrid();

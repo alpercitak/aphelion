@@ -68,7 +68,7 @@ export default function Magnetar() {
 
     const orbit = createOrbitControls(canvas, { radius: 4.5, minRadius: 1.5, maxRadius: 18 });
 
-    const stars = createStarField(4000);
+    const stars = createStarField();
     scene.add(stars);
 
     const body = createMagnetarBody();

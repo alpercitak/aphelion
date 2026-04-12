@@ -59,7 +59,7 @@ export default function NeutronStar() {
     const orbit = createOrbitControls(canvas, { radius: 5, minRadius: 1.5, maxRadius: 20 });
 
     // Star field — slightly blue-tinted for X-ray environment
-    const stars = createStarField(4000);
+    const stars = createStarField();
     scene.add(stars);
 
     // Neutron star body
