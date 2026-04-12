@@ -11,18 +11,25 @@ function Loading() {
   );
 }
 
+function NotFound() {
+  const navigate = useNavigate();
+  return (
+    <div className={styles.loading}>
+      <span>SCENE NOT FOUND</span>
+      <button onClick={() => navigate('/')}>← BACK</button>
+    </div>
+  );
+}
+
 export default function ScenePage() {
   const { sceneId } = useParams();
-  const navigate = useNavigate();
-  const scene = getScene(sceneId);
+  if (!sceneId) {
+    return <NotFound />;
+  }
 
+  const scene = getScene(sceneId);
   if (!scene || !scene.component) {
-    return (
-      <div className={styles.loading}>
-        <span>SCENE NOT FOUND</span>
-        <button onClick={() => navigate('/')}>← BACK</button>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const SceneComponent = scene.component;

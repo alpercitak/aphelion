@@ -1,6 +1,11 @@
+import type { HTMLAttributes } from 'react';
 import styles from './index.module.css';
 
-export default function Text({ children, tooltip }) {
+interface TextProps extends HTMLAttributes<HTMLDivElement> {
+  tooltip?: string;
+}
+
+export default function Text({ children, tooltip }: TextProps) {
   return (
     <div className={styles['text']} data-tip={tooltip}>
       {children}

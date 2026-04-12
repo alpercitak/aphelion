@@ -130,13 +130,13 @@ export default function NeutronStar() {
       starBody.rotation.y = t * radsPerSec;
 
       // Surface shader uniforms
-      starBody.material.uniforms.time.value = t;
-      starBody.material.uniforms.rpm.value = p.rpm;
-      starBody.material.uniforms.mass.value = p.mass;
+      starBody.material.uniforms['time']!.value = t;
+      starBody.material.uniforms['rpm']!.value = p.rpm;
+      starBody.material.uniforms['mass']!.value = p.mass;
 
       // Glow view vectors
-      glow.material.uniforms.viewVector.value.copy(camera.position);
-      outerGlow.material.uniforms.viewVector.value.copy(camera.position);
+      glow.material.uniforms.viewVector?.value.copy(camera.position);
+      outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
 
       // Beam flash — check alignment of beam axis with camera direction
       if (p.showBeamFlash) {
@@ -197,7 +197,7 @@ export default function NeutronStar() {
     if (!refs) return;
     const { rotator } = refs;
     // Find and replace beams in the tilt object
-    const tiltObj = rotator.children[0];
+    const tiltObj = rotator.children[0]!;
     const oldBeams = refs.beams;
     tiltObj.remove(oldBeams);
     oldBeams.traverse((o) => {
