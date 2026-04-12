@@ -13,7 +13,6 @@ export default function Hud({ children, className }: HudProps) {
       <span className={clsx(styles['hud__corner'], styles['hud__corner--tr'])} />
       <span className={clsx(styles['hud__corner'], styles['hud__corner--bl'])} />
       <span className={clsx(styles['hud__corner'], styles['hud__corner--br'])} />
-
       {children}
     </div>
   );

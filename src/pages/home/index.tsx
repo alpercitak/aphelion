@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import Hud from '@/components/app/hud';
+import Scanlines from '@/components/app/scanlines';
 import { SCENES } from '@/utils/scene';
 import styles from './index.module.css';
-import Scanlines from '@/components/app/scanlines';
-import Hud from '@/components/app/hud';
 
 export default function Home() {
   const navigate = useNavigate();

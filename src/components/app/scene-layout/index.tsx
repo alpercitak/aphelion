@@ -1,15 +1,18 @@
-import type { Ref } from 'react';
+import { useState, type Ref } from 'react';
+
 import Controls, { type ControlsProps } from '@/components/app/controls';
 import Crosshair from '@/components/app/crosshair';
+import type { GlossarySection } from '@/components/app/glossary';
+import Glossary from '@/components/app/glossary';
+import Header from '@/components/app/header';
 import Hints, { type HintItem } from '@/components/app/hints';
-import Hud, { type HudProps } from '@/components/app/hud';
+import Hud from '@/components/app/hud';
 import Scanlines from '@/components/app/scanlines';
+import type { StatsItem } from '@/components/app/stats';
+import Stats from '@/components/app/stats';
 import Status from '@/components/app/status';
-import TopBar from '@/components/app/top-bar';
+
 import styles from './index.module.css';
-import type { StatsItem } from '../stats';
-import type { GlossarySection } from '../glossary';
-import Stats from '../stats';
 
 export interface SceneLayoutHudProps {
   title: string;
@@ -22,26 +25,28 @@ export interface SceneLayoutHudProps {
 
 export interface SceneLayoutControlsProps extends ControlsProps {}
 
-export interface SceneLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SceneLayoutProps {
   canvasRef: Ref<HTMLCanvasElement>;
   hud: SceneLayoutHudProps;
   controls: SceneLayoutControlsProps;
 }
 
 export default function SceneLayout({ canvasRef, hud, controls }: SceneLayoutProps) {
+  const [glossaryOpen, setGlossaryOpen] = useState(false);
+
   return (
     <div className={styles['scene-layout']}>
-      <canvas ref={canvasRef} className={styles.canvas} />
+      <canvas ref={canvasRef} />
       <Hud>
-        <TopBar title={hud.title} subtitle={hud.subtitle} glossaryItems={hud.glossary} />
-
+        <Header title={hud.title} subtitle={hud.subtitle} onGlossaryClick={() => setGlossaryOpen((o) => !o)} />
         {hud.stats && <Stats items={hud.stats} />}
         {hud.hints && <Hints items={hud.hints} />}
         {hud.status && <Status status={hud.status} />}
       </Hud>
-      {controls && <Controls sliders={controls.sliders} radios={controls.radios} toggles={controls.toggles} />}
+      {controls && <Controls {...controls} />}
       <Scanlines />
       <Crosshair />
+      <Glossary entries={hud.glossary} isOpen={glossaryOpen} onClose={() => setGlossaryOpen(false)} />
     </div>
   );
 }

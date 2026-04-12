@@ -16,15 +16,17 @@ export interface GlossarySection {
 interface GlossaryProps {
   isOpen: boolean;
   onClose: () => void;
-  entries: Array<GlossarySection>;
+  entries: ReadonlyArray<GlossarySection>;
 }
+
+const TITLE = 'PHYSICS GLOSSARY';
 
 export default function Glossary({ isOpen, onClose, entries = [] }: GlossaryProps) {
   return (
     <Panel className={`${styles.panel} ${isOpen ? styles.open : ''}`} aria-hidden={!isOpen}>
       <div className={styles.inner}>
         <div className={styles.header}>
-          <h2>PHYSICS GLOSSARY</h2>
+          <h2>{TITLE}</h2>
           <Button onClick={onClose} aria-label="Close glossary">
             ✕
           </Button>
