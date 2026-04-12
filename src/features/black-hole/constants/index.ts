@@ -129,3 +129,10 @@ export const SLIDERS = [
       'Intensity of gravitational light bending. At max, background light wraps around forming an Einstein ring.',
   },
 ];
+
+export const TOGGLES = [
+  { id: 'showDisk', label: 'Accretion disk' },
+  { id: 'showJets', label: 'Relativistic jets' },
+  { id: 'showStars', label: 'Star field' },
+  { id: 'dopplerShift', label: 'Dopper shift' },
+];

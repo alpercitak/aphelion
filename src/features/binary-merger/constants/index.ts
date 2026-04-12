@@ -99,3 +99,10 @@ export const SLIDERS = [
       'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width — amplified here for visibility.',
   },
 ];
+
+export const TOGGLES = [
+  { id: 'showGrid', label: 'Spacetime grid' },
+  { id: 'showWaveRings', label: 'Wave rings' },
+  { id: 'showDisks', label: 'Accretion disks' },
+  { id: 'loop', label: 'Auto loop' },
+];

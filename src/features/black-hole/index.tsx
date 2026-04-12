@@ -11,7 +11,7 @@ import { createLensingRings } from './utils/lensing-rings';
 import { createOuterGlow } from './utils/outer-glow';
 import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
-import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS, TOGGLES } from './constants';
 import SceneLayout from '@/layouts/scene';
 import styles from './index.module.css';
 
@@ -211,7 +211,6 @@ export default function BlackHole() {
   }, [params.lensStrength]);
 
   // ── Sliders & toggles config ──────────────────────────────────────────────
-
   const sliders = useMemo(
     () =>
       Object.values(SLIDERS).map((config) => ({
@@ -222,32 +221,16 @@ export default function BlackHole() {
     [params.mass, params.spin, params.temp, params.lensStrength],
   );
 
-  const toggles = [
-    {
-      id: 'disk',
-      label: 'ACCRETION DISK',
-      active: params.showDisk,
-      onClick: () => set('showDisk', !params.showDisk),
-    },
-    {
-      id: 'jets',
-      label: 'RELATIVISTIC JETS',
-      active: params.showJets,
-      onClick: () => set('showJets', !params.showJets),
-    },
-    {
-      id: 'stars',
-      label: 'STAR FIELD',
-      active: params.showStars,
-      onClick: () => set('showStars', !params.showStars),
-    },
-    {
-      id: 'doppler',
-      label: 'DOPPLER SHIFT',
-      active: params.dopplerShift,
-      onClick: () => set('dopplerShift', !params.dopplerShift),
-    },
-  ];
+  const toggles = useMemo(
+    () =>
+      TOGGLES.map(({ id, label }) => ({
+        id,
+        label,
+        active: params[id],
+        onClick: () => set(id, !params[id]),
+      })),
+    [params.showDisk, params.showJets, params.showStars, params.dopplerShift],
+  );
 
   const rs = schwarzschildRadius(params.mass);
   const hTemp = hawkingTemperature(params.mass);

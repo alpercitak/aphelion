@@ -10,7 +10,7 @@ import { orbitalOmega } from './utils/orbital-omega';
 import { orbitalPositions } from './utils/orbital-positions';
 import { createSpacetimeGrid } from './utils/spacetime-grid';
 import { createWaveRing } from './utils/wave-ring';
-import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS, TOGGLES } from './constants';
 import SceneLayout from '@/layouts/scene';
 import styles from './index.module.css';
 
@@ -346,23 +346,6 @@ export default function BinaryMerger() {
   const totalMass = params.mass1 + params.mass2;
   const chirpMass = Math.pow(params.mass1 * params.mass2, 3 / 5) / Math.pow(totalMass, 1 / 5);
 
-  const toggles = [
-    { id: 'grid', label: 'SPACETIME GRID', active: params.showGrid, onClick: () => set('showGrid', !params.showGrid) },
-    {
-      id: 'rings',
-      label: 'WAVE RINGS',
-      active: params.showWaveRings,
-      onClick: () => set('showWaveRings', !params.showWaveRings),
-    },
-    {
-      id: 'disks',
-      label: 'ACCRETION DISKS',
-      active: params.showDisks,
-      onClick: () => set('showDisks', !params.showDisks),
-    },
-    { id: 'loop', label: 'AUTO LOOP', active: params.autoLoop, onClick: () => set('autoLoop', !params.autoLoop) },
-  ];
-
   const statsItems = useMemo(() => {
     return [
       { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
@@ -381,6 +364,17 @@ export default function BinaryMerger() {
         onChange: (v: number) => set(config.id, v),
       })),
     [params.mass1, params.mass2, params.waveAmplitude],
+  );
+
+  const toggles = useMemo(
+    () =>
+      TOGGLES.map(({ id, label }) => ({
+        id,
+        label,
+        active: params[id],
+        onClick: () => set(id, !params[id]),
+      })),
+    [params.autoLoop, params.showDisks, params.showGrid, params.showWaveRings],
   );
 
   return (
