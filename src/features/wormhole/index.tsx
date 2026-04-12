@@ -1,0 +1,354 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ACESFilmicToneMapping,
+  BackSide,
+  Clock,
+  Color,
+  FrontSide,
+  LinearFilter,
+  Material,
+  PerspectiveCamera,
+  PointsMaterial,
+  RGBAFormat,
+  Scene,
+  ShaderMaterial,
+  Vector3,
+  WebGLRenderer,
+  WebGLRenderTarget,
+} from 'three';
+
+import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
+import { createOrbitControls } from '@/utils/camera';
+import { createStarField } from '@/utils/starfield';
+
+import {
+  BASE_HUD_PROPS,
+  DESTINATION_COLOR_MAP,
+  DESTINATION_LABEL_MAP,
+  PARAMS,
+  RADIO_ITEMS,
+  SLIDER_ITEMS,
+  TOGGLE_ITEMS,
+} from './constants';
+import type { Destination, Params, SceneRef } from './types';
+import { createDestinationStars } from './utils/destination-stars';
+import { createExoticHalo } from './utils/exotic-halo';
+import { createFresnelGlow } from './utils/fresnel-glow';
+import { createLensingRings } from './utils/lensing-rings';
+import { createPortalDisc } from './utils/portal-disc';
+import { createThroatRim } from './utils/throat-rim';
+
+export default function Wormhole() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sceneRef = useRef<SceneRef | null>(null);
+
+  const [params, setParams] = useState<Params>(PARAMS);
+  const paramsRef = useRef(params);
+  useEffect(() => {
+    paramsRef.current = params;
+  });
+
+  const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
+    setParams((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  // ── Three.js setup ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const renderer = new WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.toneMapping = ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+
+    // ── Main scene ───────────────────────────────────────────────────────────
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
+    camera.position.set(0, 1.5, 5);
+    camera.lookAt(0, 0, 0);
+
+    const orbit = createOrbitControls(canvas, { radius: 5, minRadius: 2, maxRadius: 20 });
+
+    const stars = createStarField();
+    scene.add(stars);
+
+    // ── Portal (secondary) scene — rendered to texture ────────────────────────
+    const renderTarget = new WebGLRenderTarget(512, 512, {
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      format: RGBAFormat,
+    });
+
+    const portalScene = new Scene();
+    const portalCamera = new PerspectiveCamera(90, 1, 0.01, 500);
+    portalCamera.position.set(0, 0, 0.1);
+    portalCamera.lookAt(0, 0, -1);
+
+    const destinationStars = createDestinationStars(DESTINATION_COLOR_MAP[PARAMS.destination]);
+    portalScene.add(destinationStars);
+
+    // ── Wormhole objects ──────────────────────────────────────────────────────
+    const r = PARAMS.throatRadius;
+
+    const portalDisc = createPortalDisc(r, renderTarget);
+    // Face portal disc toward camera (opening faces +Z)
+    portalDisc.rotation.x = Math.PI * 0.5;
+    scene.add(portalDisc);
+
+    const rim = createThroatRim(r);
+    scene.add(rim);
+
+    const innerGlow = createFresnelGlow(camera.position, 0xbbddff, r * 1.3, FrontSide, 3.0);
+    const outerGlow = createFresnelGlow(camera.position, 0x6699ff, r * 2.0, BackSide, 4.5);
+    scene.add(innerGlow, outerGlow);
+
+    const lensingRings = createLensingRings(r, PARAMS.lensingStrength);
+    lensingRings.forEach((ring) => {
+      ring.rotation.x = Math.PI * 0.5;
+      scene.add(ring);
+    });
+
+    const exoticHalo = createExoticHalo(r, PARAMS.exoticDensity);
+    exoticHalo.visible = PARAMS.showExoticHalo;
+    scene.add(exoticHalo);
+
+    // Extract typed uniform refs
+    const rimUniforms = rim.material.uniforms as { viewVector: { value: Vector3 }; glowColor: { value: Color } };
+    const innerGlowUniforms = innerGlow.material.uniforms as { viewVector: { value: Vector3 } };
+    const outerGlowUniforms = outerGlow.material.uniforms as { viewVector: { value: Vector3 } };
+    const portalUniforms = portalDisc.material.uniforms as { time: { value: number }; distortion: { value: number } };
+
+    sceneRef.current = {
+      renderer,
+      scene,
+      portalScene,
+      camera,
+      portalCamera,
+      orbit,
+      renderTarget,
+      rim,
+      portalDisc,
+      innerGlow,
+      outerGlow,
+      lensingRings,
+      exoticHalo,
+      destinationStars,
+      stars,
+      rimUniforms,
+      innerGlowUniforms,
+      outerGlowUniforms,
+      portalUniforms,
+    };
+
+    // ── Animation loop ──────────────────────────────────────────────────────
+    const clock = new Clock();
+    let raf: number;
+
+    function animate() {
+      raf = requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      const p = paramsRef.current;
+      const refs = sceneRef.current;
+      if (!refs) return;
+
+      orbit.updateCamera(camera);
+
+      // Rotate star fields
+      stars.rotation.y = t * 0.002;
+      destinationStars.rotation.y = -t * 0.003; // counter-rotate for alien feel
+      destinationStars.rotation.x = t * 0.001;
+
+      // Slowly rotate portal camera to give the other side life
+      portalCamera.rotation.y = t * 0.08;
+      portalCamera.rotation.x = Math.sin(t * 0.15) * 0.1;
+
+      // Portal distortion from lensing strength
+      portalUniforms.time.value = t;
+      portalUniforms.distortion.value = p.lensingStrength;
+
+      // Fresnel view vectors
+      rimUniforms.viewVector.value.copy(camera.position);
+      innerGlowUniforms.viewVector.value.copy(camera.position);
+      outerGlowUniforms.viewVector.value.copy(camera.position);
+
+      // Exotic halo slow rotation + pulse
+      if (p.showExoticHalo) {
+        exoticHalo.rotation.y = t * 0.12;
+        exoticHalo.rotation.z = t * 0.07;
+        (exoticHalo.material as PointsMaterial).opacity = 0.3 + Math.sin(t * 1.4) * 0.15 * p.exoticDensity;
+      }
+
+      // Lensing rings face camera
+      lensingRings.forEach((ring, i) => {
+        ring.lookAt(camera.position);
+        (ring.material as ShaderMaterial).uniforms['opacity']!.value =
+          (1 - (i + 1) / lensingRings.length) * 0.5 * p.lensingStrength;
+      });
+
+      // Rim color shifts with exotic density — more exotic = more violet
+      rimUniforms.glowColor.value.setRGB(0.6 + (1 - p.exoticDensity) * 0.3, 0.7 + (1 - p.exoticDensity) * 0.15, 1.0);
+
+      // ── Two-pass render ─────────────────────────────────────────────────
+      // Pass 1: render portal scene to texture
+      renderer.setRenderTarget(renderTarget);
+      renderer.render(portalScene, portalCamera);
+
+      // Pass 2: render main scene to screen
+      renderer.setRenderTarget(null);
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    const onResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      orbit.dispose();
+      window.removeEventListener('resize', onResize);
+      renderTarget.dispose();
+      renderer.dispose();
+    };
+  }, []);
+
+  // ── Param effects ─────────────────────────────────────────────────────────
+
+  // Rebuild geometry when throat radius changes
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) return;
+    const { scene, camera } = refs;
+    const r = params.throatRadius;
+
+    // Rebuild rim
+    scene.remove(refs.rim);
+    refs.rim.geometry.dispose();
+    refs.rim.material.dispose();
+    const newRim = createThroatRim(r);
+    scene.add(newRim);
+    refs.rim = newRim;
+    refs.rimUniforms = newRim.material.uniforms as { viewVector: { value: Vector3 }; glowColor: { value: Color } };
+
+    // Rebuild portal disc
+    scene.remove(refs.portalDisc);
+    refs.portalDisc.geometry.dispose();
+    refs.portalDisc.material.dispose();
+    const newDisc = createPortalDisc(r, refs.renderTarget);
+    newDisc.rotation.x = Math.PI * 0.5;
+    scene.add(newDisc);
+    refs.portalDisc = newDisc;
+    refs.portalUniforms = newDisc.material.uniforms as { time: { value: number }; distortion: { value: number } };
+
+    // Rebuild glow
+    scene.remove(refs.innerGlow, refs.outerGlow);
+    refs.innerGlow.geometry.dispose();
+    refs.innerGlow.material.dispose();
+    refs.outerGlow.geometry.dispose();
+    refs.outerGlow.material.dispose();
+    const newInner = createFresnelGlow(camera.position, 0xbbddff, r * 1.3, FrontSide, 3.0);
+    const newOuter = createFresnelGlow(camera.position, 0x6699ff, r * 2.0, BackSide, 4.5);
+    scene.add(newInner, newOuter);
+    refs.innerGlow = newInner;
+    refs.outerGlow = newOuter;
+    refs.innerGlowUniforms = newInner.material.uniforms as { viewVector: { value: Vector3 } };
+    refs.outerGlowUniforms = newOuter.material.uniforms as { viewVector: { value: Vector3 } };
+
+    // Rebuild lensing rings
+    refs.lensingRings.forEach((ring) => {
+      scene.remove(ring);
+      ring.geometry.dispose();
+      (ring.material as Material).dispose();
+    });
+    const newRings = createLensingRings(r, params.lensingStrength);
+    newRings.forEach((ring) => {
+      ring.rotation.x = Math.PI * 0.5;
+      scene.add(ring);
+    });
+    refs.lensingRings = newRings;
+
+    // Rebuild exotic halo
+    scene.remove(refs.exoticHalo);
+    refs.exoticHalo.geometry.dispose();
+    const newHalo = createExoticHalo(r, params.exoticDensity);
+    newHalo.visible = params.showExoticHalo;
+    scene.add(newHalo);
+    refs.exoticHalo = newHalo;
+  }, [params.throatRadius]);
+
+  // Destination star field color
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) return;
+    refs.portalScene.remove(refs.destinationStars);
+    refs.destinationStars.geometry.dispose();
+    const newStars = createDestinationStars(DESTINATION_COLOR_MAP[params.destination]);
+    refs.portalScene.add(newStars);
+    refs.destinationStars = newStars;
+  }, [params.destination]);
+
+  // Exotic halo density
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) return;
+    refs.scene.remove(refs.exoticHalo);
+    refs.exoticHalo.geometry.dispose();
+    const newHalo = createExoticHalo(params.throatRadius, params.exoticDensity);
+    newHalo.visible = params.showExoticHalo;
+    refs.scene.add(newHalo);
+    refs.exoticHalo = newHalo;
+  }, [params.exoticDensity, params.throatRadius]);
+
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) return;
+    refs.exoticHalo.visible = params.showExoticHalo;
+    refs.lensingRings.forEach((r) => {
+      r.visible = params.showLensingRings;
+    });
+    refs.stars.visible = params.showStars;
+  }, [params.showExoticHalo, params.showLensingRings, params.showStars]);
+
+  // ── Stats ─────────────────────────────────────────────────────────────────
+  const stats = useMemo(
+    () => [
+      { label: 'THROAT', value: params.throatRadius.toFixed(2), unit: 'r₀' },
+      { label: 'EXOTIC', value: params.exoticDensity.toFixed(2), unit: 'ρ' },
+      { label: 'DEST', value: DESTINATION_LABEL_MAP[params.destination].toUpperCase() },
+      { label: 'STATUS', value: 'THEORETICAL' },
+    ],
+    [params.throatRadius, params.exoticDensity, params.destination],
+  );
+
+  const hudProps = {
+    ...BASE_HUD_PROPS,
+    stats,
+  } satisfies SceneLayoutHudProps;
+
+  const controlsProps = {
+    sliders: SLIDER_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id] as number,
+      onChange: (v: number) => set(item.id, v),
+    })),
+    radios: RADIO_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id],
+      onChange: (v: string) => set(item.id, v as Destination),
+    })),
+    toggles: TOGGLE_ITEMS.map(({ id, label }) => ({
+      id,
+      label,
+      active: params[id],
+      onClick: () => set(id, !params[id]),
+    })),
+  } satisfies SceneLayoutControlsProps;
+
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
+}

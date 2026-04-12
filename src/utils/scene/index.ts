@@ -29,6 +29,13 @@ export const SCENES = [
     description: 'Extreme magnetic field, starquakes, and gamma ray bursts.',
     component: lazy(() => import('@/features/magnetar')),
   },
+  {
+    id: 'wormhole',
+    title: 'Wormhole',
+    subtitle: 'Einstein-Rosen Bridge',
+    description: 'Traversable spacetime shortcut with lensed view through the throat.',
+    component: lazy(() => import('@/features/wormhole')),
+  },
 ];
 
 export const getScene = (id: string) => {
