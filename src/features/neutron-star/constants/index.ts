@@ -1,4 +1,5 @@
 import type { GlossarySection } from '@/components/app/glossary';
+import type { HintItem } from '@/components/app/hint';
 import type { BeamWidth, Params, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Neutron Star';
@@ -78,12 +79,12 @@ export const GLOSSARY_ITEMS = [
       },
     ],
   },
-] satisfies Array<GlossarySection>;
+] as const satisfies ReadonlyArray<GlossarySection>;
 
 export const HINT_ITEMS = [
   { title: 'PULSAR PERIOD', values: ['P = 1/f'] },
   { title: 'TOV LIMIT', values: ['~2.3 M☉'] },
-];
+] as const satisfies ReadonlyArray<HintItem>;
 
 export const SLIDER_ITEMS = [
   {
@@ -113,14 +114,14 @@ export const SLIDER_ITEMS = [
     format: (v) => v.toFixed(2),
     tooltip: 'Magnetic field strength. Controls field line opacity and arc spread. Pulsars: ~10¹² G.',
   },
-] as const satisfies Array<SliderItem>;
+] as const satisfies ReadonlyArray<SliderItem>;
 
 export const TOGGLE_ITEMS = [
   { id: 'showBeams', label: 'PULSAR BEAMS' },
   { id: 'showFieldLines', label: 'MAGNETIC FIELD LINES' },
   { id: 'showBeamFlash', label: 'BEAM FLASH EFFECT' },
   { id: 'showAccretionDisk', label: 'ACCRETION DISK' },
-] as const satisfies Array<ToggleItem>;
+] as const satisfies ReadonlyArray<ToggleItem>;
 
 export const BEAM_FLASH_THRESHOLD = 0.92;
 export const NS_RADIUS = 0.35; // visual radius — neutron stars are tiny

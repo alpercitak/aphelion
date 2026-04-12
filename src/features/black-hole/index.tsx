@@ -7,8 +7,8 @@ import { createOrbitControls } from '@/utils/camera';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
 
-import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDERS, TOGGLES } from './constants';
-import type { SceneRef } from './types';
+import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
+import { Params, type SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
 import { createLensingRings } from './utils/lensing-rings';
@@ -20,9 +20,10 @@ import { createRelativisticJets } from './utils/relativistic-jets';
 import styles from './index.module.css';
 
 export default function BlackHole() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef>(null);
-  const [params, setParams] = useState(PARAMS);
+
+  const [params, setParams] = useState<Params>(PARAMS);
   const paramsRef = useRef(params);
 
   // Keep ref in sync for use inside animation loop
@@ -30,7 +31,7 @@ export default function BlackHole() {
     paramsRef.current = params;
   }, [params]);
 
-  const set = useCallback((key: string, value: string | number | boolean) => {
+  const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
     setParams((prev) => ({ ...prev, [key]: value }));
   }, []);
 
@@ -227,26 +228,18 @@ export default function BlackHole() {
   }, [params.lensStrength]);
 
   // ── Sliders & toggles config ──────────────────────────────────────────────
-  const sliders = useMemo(
-    () =>
-      Object.values(SLIDERS).map((config) => ({
-        ...config,
-        value: params[config.id],
-        onChange: (v: number) => set(config.id, v),
-      })),
-    [params.mass, params.spin, params.temp, params.lensStrength],
-  );
+  const sliders = SLIDER_ITEMS.map((config) => ({
+    ...config,
+    value: params[config.id],
+    onChange: (v: number) => set(config.id, v),
+  }));
 
-  const toggles = useMemo(
-    () =>
-      TOGGLES.map(({ id, label }) => ({
-        id,
-        label,
-        active: params[id],
-        onClick: () => set(id, !params[id]),
-      })),
-    [params.showDisk, params.showJets, params.showStars, params.dopplerShift],
-  );
+  const toggles = TOGGLE_ITEMS.map(({ id, label }) => ({
+    id,
+    label,
+    active: params[id],
+    onClick: () => set(id, !params[id]),
+  }));
 
   const rs = schwarzschildRadius(params.mass);
   const hTemp = hawkingTemperature(params.mass);

@@ -7,8 +7,8 @@ import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 
-import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDERS, TOGGLES } from './constants';
-import type { InspiralOption, Phase, SceneRef, StateRef } from './types';
+import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
+import { Params, type InspiralOption, type Phase, type SceneRef, type StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
 import { orbitalOmega } from './utils/orbital-omega';
@@ -24,7 +24,7 @@ const INITIAL_SEPARATION = 7.0 as const;
 const MERGE_THRESHOLD = 1.2 as const;
 
 export default function BinaryMerger() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef>(null);
   const stateRef = useRef<StateRef>({
     separation: INITIAL_SEPARATION,
@@ -37,15 +37,11 @@ export default function BinaryMerger() {
     params: PARAMS,
   });
 
-  const [params, setParams] = useState(PARAMS);
+  const [params, setParams] = useState<Params>(PARAMS);
   const [phase, setPhase] = useState<Phase>('orbit');
 
-  const set = useCallback((key: string, value: string | number | boolean) => {
-    setParams((prev) => {
-      const next = { ...prev, [key]: value };
-      stateRef.current.params = next;
-      return next;
-    });
+  const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
+    setParams((prev) => ({ ...prev, [key]: value }));
   }, []);
 
   const resetScene = useCallback(() => {
@@ -343,26 +339,18 @@ export default function BinaryMerger() {
     [params.mass1, params.mass2, totalMass, chirpMass, phase],
   );
 
-  const sliders = useMemo(
-    () =>
-      Object.values(SLIDERS).map((config) => ({
-        ...config,
-        value: params[config.id],
-        onChange: (v: number) => set(config.id, v),
-      })),
-    [params.mass1, params.mass2, params.waveAmplitude],
-  );
+  const sliders = SLIDER_ITEMS.map((config) => ({
+    ...config,
+    value: params[config.id],
+    onChange: (v: number) => set(config.id, v),
+  }));
 
-  const toggles = useMemo(
-    () =>
-      TOGGLES.map(({ id, label }) => ({
-        id,
-        label,
-        active: params[id],
-        onClick: () => set(id, !params[id]),
-      })),
-    [params.autoLoop, params.showDisks, params.showGrid, params.showWaveRings],
-  );
+  const toggles = TOGGLE_ITEMS.map(({ id, label }) => ({
+    id,
+    label,
+    active: params[id],
+    onClick: () => set(id, !params[id]),
+  }));
 
   return (
     <SceneLayout

@@ -1,12 +1,21 @@
 import styles from './index.module.css';
 
-export default function Hint({ items }) {
+export interface HintItem {
+  title: string;
+  values?: Array<string>;
+}
+
+interface HintProps {
+  items: Array<HintItem>;
+}
+
+export default function Hint({ items }: HintProps) {
   return (
     <div className={styles['hint']}>
       {items.map((item) => (
         <div>
           <div className={styles['hint__title']}>{item.title}</div>
-          {item.values.map((value) => (
+          {item.values?.map((value) => (
             <div>{value}</div>
           ))}
         </div>

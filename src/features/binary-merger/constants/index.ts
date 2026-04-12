@@ -1,4 +1,5 @@
 import type { GlossarySection } from '@/components/app/glossary';
+import type { HintItem } from '@/components/app/hint';
 import type { Params, SliderItem, ToggleItem } from '../types';
 
 export const PARAMS = {
@@ -78,11 +79,13 @@ export const GLOSSARY_ITEMS = [
       },
     ],
   },
-] satisfies Array<GlossarySection>;
+] as const satisfies ReadonlyArray<GlossarySection>;
 
-export const HINT_ITEMS = [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }];
+export const HINT_ITEMS = [
+  { title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] },
+] as const satisfies ReadonlyArray<HintItem>;
 
-export const SLIDERS = [
+export const SLIDER_ITEMS = [
   {
     id: 'mass1',
     label: 'MASS 1',
@@ -112,11 +115,11 @@ export const SLIDERS = [
     tooltip:
       'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width — amplified here for visibility.',
   },
-] satisfies Array<SliderItem>;
+] as const satisfies ReadonlyArray<SliderItem>;
 
-export const TOGGLES = [
+export const TOGGLE_ITEMS = [
   { id: 'showGrid', label: 'Spacetime grid' },
   { id: 'showWaveRings', label: 'Wave rings' },
   { id: 'showDisks', label: 'Accretion disks' },
   { id: 'autoLoop', label: 'Auto loop' },
-] satisfies Array<ToggleItem>;
+] as const satisfies ReadonlyArray<ToggleItem>;

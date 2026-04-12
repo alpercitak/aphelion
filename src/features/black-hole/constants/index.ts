@@ -1,4 +1,5 @@
 import type { GlossarySection } from '@/components/app/glossary';
+import type { HintItem } from '@/components/app/hint';
 import type { Params, SliderItem, ToggleItem } from '../types';
 
 export const PARAMS = {
@@ -96,14 +97,14 @@ export const GLOSSARY_ITEMS = [
       },
     ],
   },
-] satisfies Array<GlossarySection>;
+] as const satisfies ReadonlyArray<GlossarySection>;
 
 export const HINT_ITEMS = [
   { title: 'SCHWARZSCHILD RADIUS', values: ['rₛ = 2GM/c²'] },
   { title: 'PHOTON SPHERE', values: ['r = 1.5 rₛ'] },
-];
+] as const satisfies ReadonlyArray<HintItem>;
 
-export const SLIDERS = [
+export const SLIDER_ITEMS = [
   {
     id: 'mass',
     label: 'MASS',
@@ -142,11 +143,11 @@ export const SLIDERS = [
     tooltip:
       'Intensity of gravitational light bending. At max, background light wraps around forming an Einstein ring.',
   },
-] satisfies Array<SliderItem>;
+] as const satisfies ReadonlyArray<SliderItem>;
 
-export const TOGGLES = [
+export const TOGGLE_ITEMS = [
   { id: 'showDisk', label: 'Accretion disk' },
   { id: 'showJets', label: 'Relativistic jets' },
   { id: 'showStars', label: 'Star field' },
   { id: 'dopplerShift', label: 'Dopper shift' },
-] satisfies Array<ToggleItem>;
+] as const satisfies ReadonlyArray<ToggleItem>;
