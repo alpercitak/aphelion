@@ -1,55 +1,44 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import * as THREE from 'three';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ACESFilmicToneMapping, Clock, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
+
+import SliderGroup from '@/components/ui/slider-group';
+import ToggleGroup from '@/components/ui/toggle-group';
+import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
-import ToggleGroup from '@/components/ui/toggle-group';
-import SliderGroup from '@/components/ui/slider-group';
+
+import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDERS, TOGGLES } from './constants';
+import type { InspiralOption, Phase, SceneRef, StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
 import { orbitalOmega } from './utils/orbital-omega';
 import { orbitalPositions } from './utils/orbital-positions';
 import { createSpacetimeGrid } from './utils/spacetime-grid';
 import { createWaveRing } from './utils/wave-ring';
-import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS, TOGGLES } from './constants';
-import SceneLayout from '@/layouts/scene';
-import styles from './index.module.css';
 
-type InspiralOption = 'slow' | 'medium' | 'fast';
+import styles from './index.module.css';
 
 const INSPIRAL_OPTIONS = ['slow', 'medium', 'fast'] as const satisfies ReadonlyArray<InspiralOption>;
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
 const INITIAL_SEPARATION = 7.0 as const;
 const MERGE_THRESHOLD = 1.2 as const;
-const DEFAULTS = {
-  mass1: 30,
-  mass2: 25,
-  inspiralRate: 'medium',
-  waveAmplitude: 1.0,
-  showGrid: true,
-  showWaveRings: true,
-  showDisks: true,
-  autoLoop: true,
-};
-
-// Merger phases
-const PHASE = { ORBIT: 'orbit', MERGING: 'merging', MERGED: 'merged' };
 
 export default function BinaryMerger() {
   const canvasRef = useRef(null);
-  const sceneRef = useRef(null);
-  const stateRef = useRef({
+  const sceneRef = useRef<SceneRef>(null);
+  const stateRef = useRef<StateRef>({
     separation: INITIAL_SEPARATION,
     angle: 0,
-    phase: PHASE.ORBIT,
+    phase: 'orbit',
     mergeProgress: 0,
     flashOpacity: 0,
     waveRings: [],
     lastRingTime: 0,
-    params: { ...DEFAULTS },
+    params: PARAMS,
   });
 
-  const [params, setParams] = useState(DEFAULTS);
-  const [phase, setPhase] = useState(PHASE.ORBIT);
+  const [params, setParams] = useState(PARAMS);
+  const [phase, setPhase] = useState<Phase>('orbit');
 
   const set = useCallback((key: string, value: string | number | boolean) => {
     setParams((prev) => {
@@ -63,12 +52,12 @@ export default function BinaryMerger() {
     const s = stateRef.current;
     s.separation = INITIAL_SEPARATION;
     s.angle = 0;
-    s.phase = PHASE.ORBIT;
+    s.phase = 'orbit';
     s.mergeProgress = 0;
     s.flashOpacity = 0;
     s.waveRings = [];
     s.lastRingTime = 0;
-    setPhase(PHASE.ORBIT);
+    setPhase('orbit');
 
     const refs = sceneRef.current;
     if (!refs) return;
@@ -94,14 +83,14 @@ export default function BinaryMerger() {
     if (!canvas) return;
 
     // ── Renderer ──────────────────────────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    const renderer = new WebGLRenderer({ canvas, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMapping = ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
     camera.position.set(0, 10, 14);
     camera.lookAt(0, 0, 0);
 
@@ -128,7 +117,7 @@ export default function BinaryMerger() {
     flash.position.z = -1;
     scene.add(camera);
 
-    const waveRingMeshes: Array<THREE.Mesh> = [];
+    const waveRingMeshes: Array<Mesh> = [];
 
     sceneRef.current = {
       scene,
@@ -150,16 +139,16 @@ export default function BinaryMerger() {
     bh2.position.set(initPos.x2, 0, initPos.z2);
 
     // ── Animation ─────────────────────────────────────────────────────────────
-    const clock = new THREE.Clock();
+    const clock = new Clock();
     let raf: number;
 
-    function spawnWaveRing(cx, cz, radius) {
+    const spawnWaveRing = (cx: number, cz: number, radius: number) => {
       const ring = createWaveRing(radius);
       ring.position.set(cx, 0.02, cz);
       scene.add(ring);
       waveRingMeshes.push(ring);
       stateRef.current.waveRings.push({ mesh: ring, born: clock.getElapsedTime() });
-    }
+    };
 
     function animate() {
       raf = requestAnimationFrame(animate);
@@ -168,13 +157,17 @@ export default function BinaryMerger() {
       const pr = s.params;
       const refs = sceneRef.current;
 
+      if (!refs) {
+        return;
+      }
+
       orbit.updateCamera(camera);
       stars.rotation.y = t * 0.002;
 
       const totalMass = pr.mass1 + pr.mass2;
 
       // ── ORBIT PHASE ──────────────────────────────────────────────────────
-      if (s.phase === PHASE.ORBIT) {
+      if (s.phase === 'orbit') {
         const rate = INSPIRAL_RATES[pr.inspiralRate];
         s.separation = Math.max(MERGE_THRESHOLD, s.separation - rate * 0.016);
 
@@ -216,20 +209,20 @@ export default function BinaryMerger() {
 
         // Check merge trigger
         if (s.separation <= MERGE_THRESHOLD) {
-          s.phase = PHASE.MERGING;
+          s.phase = 'merging';
           s.mergeProgress = 0;
-          setPhase(PHASE.MERGING);
+          setPhase('merging');
         }
       }
 
       // ── MERGING PHASE ─────────────────────────────────────────────────────
-      if (s.phase === PHASE.MERGING) {
+      if (s.phase === 'merging') {
         s.mergeProgress = Math.min(1, s.mergeProgress + 0.025);
         const mp = s.mergeProgress;
 
         // Converge both BHs to center
-        bh1.position.lerp(new THREE.Vector3(0, 0, 0), 0.06);
-        bh2.position.lerp(new THREE.Vector3(0, 0, 0), 0.06);
+        bh1.position.lerp(new Vector3(0, 0, 0), 0.06);
+        bh2.position.lerp(new Vector3(0, 0, 0), 0.06);
 
         // Scale down as they converge
         const shrink = 1 - mp * 0.4;
@@ -254,17 +247,17 @@ export default function BinaryMerger() {
         }
 
         if (mp >= 1) {
-          s.phase = PHASE.MERGED;
+          s.phase = 'merged';
           bh1.visible = false;
           bh2.visible = false;
           refs.mergedBH.visible = true;
           refs.mergedBH.position.set(0, 0, 0);
-          setPhase(PHASE.MERGED);
+          setPhase('merged');
         }
       }
 
       // ── MERGED PHASE ──────────────────────────────────────────────────────
-      if (s.phase === PHASE.MERGED) {
+      if (s.phase === 'merged') {
         refs.flash.material.opacity = Math.max(0, refs.flash.material.opacity - 0.02);
         refs.mergedBH.userData.diskGroup.rotation.y = t * 0.2;
         refs.mergedBH.userData.glowMat.uniforms.viewVector.value.copy(camera.position);
@@ -283,10 +276,11 @@ export default function BinaryMerger() {
       }
 
       // ── WAVE RINGS ────────────────────────────────────────────────────────
-      const toRemove = [];
+      const toRemove: Array<Object3D> = [];
       s.waveRings.forEach(({ mesh }) => {
-        if (!mesh.parent) return;
-        const age = t - (mesh.userData.born / 1000 || 0);
+        if (!mesh.parent) {
+          return;
+        }
         mesh.scale.x += 0.06;
         mesh.scale.y += 0.06;
         mesh.scale.z += 0.06;
@@ -299,7 +293,9 @@ export default function BinaryMerger() {
         m.material.dispose();
         s.waveRings = s.waveRings.filter((r) => r.mesh !== m);
         const idx = refs.waveRingMeshes.indexOf(m);
-        if (idx > -1) refs.waveRingMeshes.splice(idx, 1);
+        if (idx > -1) {
+          refs.waveRingMeshes.splice(idx, 1);
+        }
       });
 
       renderer.render(scene, camera);
@@ -325,7 +321,7 @@ export default function BinaryMerger() {
   // ── React to mass changes (rebuild BH units) ──────────────────────────────
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs || phase !== PHASE.ORBIT) {
+    if (!refs || phase !== 'orbit') {
       return;
     }
     applyBlackHoleScale(refs.bh1, params.mass1);
@@ -420,9 +416,9 @@ export default function BinaryMerger() {
 
       {/* Phase indicator */}
       <div className={styles.phaseBlock}>
-        {phase === PHASE.ORBIT && <span className={styles.phaseOrbit}>● INSPIRAL IN PROGRESS</span>}
-        {phase === PHASE.MERGING && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
-        {phase === PHASE.MERGED && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
+        {phase === 'orbit' && <span className={styles.phaseOrbit}>● INSPIRAL IN PROGRESS</span>}
+        {phase === 'merging' && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
+        {phase === 'merged' && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
       </div>
     </SceneLayout>
   );

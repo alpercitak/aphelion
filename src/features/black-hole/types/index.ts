@@ -1,9 +1,8 @@
-import type { SliderProps } from '@/components/ui/slider';
-import type { ToggleProps } from '@/components/ui/toggle';
 import type {
   Group,
   Mesh,
   MeshBasicMaterial,
+  PerspectiveCamera,
   Points,
   RingGeometry,
   Scene,
@@ -11,9 +10,12 @@ import type {
   SphereGeometry,
   WebGLRenderer,
 } from 'three';
+import type { SliderProps } from '@/components/ui/slider';
+import type { ToggleProps } from '@/components/ui/toggle';
 
 export interface SceneRef {
   blackHole: Mesh<SphereGeometry, MeshBasicMaterial>;
+  camera: PerspectiveCamera;
   diskGroup: Group;
   einsteinMat: MeshBasicMaterial;
   einsteinRing: Mesh<RingGeometry, MeshBasicMaterial>;

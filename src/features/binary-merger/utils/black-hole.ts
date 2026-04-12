@@ -14,20 +14,7 @@ import {
   type Side,
 } from 'three';
 import { massScale } from '@/utils/physics';
-
-interface BlackHoleUnitData {
-  bhMesh: Mesh;
-  glowMesh: Mesh<SphereGeometry, ShaderMaterial>;
-  glowMat: ShaderMaterial;
-  haloMesh: Mesh<SphereGeometry, ShaderMaterial>;
-  haloMat: ShaderMaterial;
-  diskGroup: Group;
-  baseScale: number;
-}
-
-interface BlackHoleUnit extends Group {
-  userData: BlackHoleUnitData;
-}
+import type { BlackHoleUnit } from '../types';
 
 // Fresnel glow
 const VERTEX_SHADER = `

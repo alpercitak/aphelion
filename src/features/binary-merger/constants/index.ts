@@ -1,3 +1,16 @@
+import type { Params, SliderItem, ToggleItem } from '../types';
+
+export const PARAMS = {
+  mass1: 30,
+  mass2: 25,
+  inspiralRate: 'medium',
+  waveAmplitude: 1.0,
+  showGrid: true,
+  showWaveRings: true,
+  showDisks: true,
+  autoLoop: true,
+} satisfies Params;
+
 export const GLOSSARY_ITEMS = [
   {
     title: 'THE EVENT',
@@ -98,11 +111,11 @@ export const SLIDERS = [
     tooltip:
       'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width — amplified here for visibility.',
   },
-];
+] satisfies Array<SliderItem>;
 
 export const TOGGLES = [
   { id: 'showGrid', label: 'Spacetime grid' },
   { id: 'showWaveRings', label: 'Wave rings' },
   { id: 'showDisks', label: 'Accretion disks' },
-  { id: 'loop', label: 'Auto loop' },
-];
+  { id: 'autoLoop', label: 'Auto loop' },
+] satisfies Array<ToggleItem>;

@@ -1,4 +1,4 @@
-import { Camera, Vector3 } from 'three';
+import { Camera } from 'three';
 
 // --- Control Constants ---
 const ROTATION_SENSITIVITY = 0.005;
