@@ -86,25 +86,6 @@
   color: var(--accent2);
 }
 
-input[type='range'] {
-  width: 100%;
-  -webkit-appearance: none;
-  height: 2px;
-  background: linear-gradient(to right, var(--accent) var(--pct, 50%), rgba(255, 255, 255, 0.1) var(--pct, 50%));
-  outline: none;
-  cursor: pointer;
-}
-
-input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-  background: var(--accent);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 8px var(--accent);
-}
-
 /* Inspiral rate buttons */
 .rateButtons {
   display: flex;

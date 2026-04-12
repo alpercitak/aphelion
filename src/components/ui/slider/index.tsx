@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import Text from '../text';
 import styles from './index.module.css';
 
 export interface SliderProps {
@@ -19,9 +20,7 @@ export default function Slider({ label, tooltip, value, min, max, step, format, 
   return (
     <div className={styles['slider']}>
       <div className={styles['slider__header']}>
-        <span className={styles['slider__label']} data-tip={tooltip}>
-          {label}
-        </span>
+        <Text tooltip={tooltip}>{label}</Text>
         <span className={styles['slider__value']}>{format(value)}</span>
       </div>
       <div className={styles['slider__track-wrapper']}>
