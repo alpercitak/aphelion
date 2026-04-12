@@ -9,6 +9,7 @@ import TopBar from '@/components/app/top-bar';
 import styles from './index.module.css';
 import type { StatsItem } from '../stats';
 import type { GlossarySection } from '../glossary';
+import Stats from '../stats';
 
 export interface SceneLayoutHudProps {
   title: string;
@@ -32,7 +33,9 @@ export default function SceneLayout({ canvasRef, hud, controls }: SceneLayoutPro
     <div className={styles['scene-layout']}>
       <canvas ref={canvasRef} className={styles.canvas} />
       <Hud>
-        <TopBar title={hud.title} subtitle={hud.subtitle} statsItems={hud.stats} glossaryItems={hud.glossary} />
+        <TopBar title={hud.title} subtitle={hud.subtitle} glossaryItems={hud.glossary} />
+
+        {hud.stats && <Stats items={hud.stats} />}
         {hud.hints && <Hints items={hud.hints} />}
         {hud.status && <Status status={hud.status} />}
       </Hud>

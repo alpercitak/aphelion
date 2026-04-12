@@ -1,4 +1,7 @@
 .stats {
+  position: absolute;
+  top: 20px;
+  right: 24px;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.15em;

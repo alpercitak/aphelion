@@ -7,7 +7,7 @@ export interface StatsItem {
 }
 
 interface StatsProps {
-  items: Array<StatsItem>;
+  items: ReadonlyArray<StatsItem>;
 }
 
 export default function Stats({ items = [] }: StatsProps) {
