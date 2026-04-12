@@ -11,6 +11,7 @@ import {
   WebGLRenderer,
 } from 'three';
 
+import Button from '@/components/ui/button';
 import SliderGroup from '@/components/ui/slider-group';
 import ToggleGroup from '@/components/ui/toggle-group';
 import SceneLayout from '@/layouts/scene';
@@ -339,24 +340,14 @@ export default function NeutronStar() {
           </div>
           <div style={{ display: 'flex', gap: 4 }}>
             {BEAM_WIDTH_OPTIONS.map((opt) => (
-              <button
+              <Button
                 key={opt}
                 onClick={() => set('beamWidth', opt)}
-                style={{
-                  flex: 1,
-                  background: params.beamWidth === opt ? 'rgba(255,107,26,0.1)' : 'none',
-                  border: `1px solid ${params.beamWidth === opt ? 'var(--accent)' : 'rgba(255,255,255,0.1)'}`,
-                  color: params.beamWidth === opt ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 9,
-                  letterSpacing: '0.15em',
-                  padding: '5px 4px',
-                  cursor: 'pointer',
-                  textTransform: 'uppercase',
-                }}
+                variant={opt === params.beamWidth ? 'primary' : 'secondary'}
+                style={{ flex: 1, justifyContent: 'center' }}
               >
                 {opt}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
