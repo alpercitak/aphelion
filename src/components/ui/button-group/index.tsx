@@ -12,8 +12,8 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
 
   return (
     <div className={styles['button-group']}>
-      {items.map((item) => (
-        <Button key={item.id} {...item} />
+      {items.map((item, index) => (
+        <Button key={`${item.id}-${index}`} {...item} />
       ))}
     </div>
   );
