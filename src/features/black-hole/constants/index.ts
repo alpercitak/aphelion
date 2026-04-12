@@ -2,6 +2,10 @@ import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
 import type { Params, SliderItem, ToggleItem } from '../types';
 
+export const TITLE = 'Black Hole';
+
+export const SUBTITLE = 'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING';
+
 export const PARAMS = {
   mass: 10,
   spin: 0,

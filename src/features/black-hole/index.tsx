@@ -7,7 +7,7 @@ import { createOrbitControls } from '@/utils/camera';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
 
-import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, SUBTITLE, TITLE, TOGGLE_ITEMS } from './constants';
 import type { Params, SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
@@ -256,8 +256,8 @@ export default function BlackHole() {
   return (
     <SceneLayout
       className={styles.root}
-      title={'Black Hole'}
-      subtitle={'SCHWARZSCHILD METRIC · GRAVITATIONAL LENSING'}
+      title={TITLE}
+      subtitle={SUBTITLE}
       statsItems={statsItems}
       glossaryItems={GLOSSARY_ITEMS}
       hintItems={HINT_ITEMS}

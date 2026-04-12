@@ -7,7 +7,7 @@ import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 
-import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
+import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, SUBTITLE, TITLE, TOGGLE_ITEMS } from './constants';
 import type { InspiralOption, Params, Phase, SceneRef, StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
@@ -355,8 +355,8 @@ export default function BinaryMerger() {
   return (
     <SceneLayout
       className={styles.root}
-      title={'Binary Merger'}
-      subtitle={'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914'}
+      title={TITLE}
+      subtitle={SUBTITLE}
       statsItems={statsItems}
       glossaryItems={GLOSSARY_ITEMS}
       hintItems={HINT_ITEMS}

@@ -2,6 +2,10 @@ import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
 import type { Params, SliderItem, ToggleItem } from '../types';
 
+export const TITLE = 'Binary Merger';
+
+export const SUBTITLE = 'GRAVITATIONAL WAVES · INSPIRAL · LIGO GW150914';
+
 export const PARAMS = {
   mass1: 30,
   mass2: 25,
