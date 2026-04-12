@@ -28,7 +28,7 @@ interface BlackHoleUnitData {
 type BlackHoleUnit = Group & { userData: BlackHoleUnitData };
 
 // Fresnel glow
-const FRESNEL_VERTEX_SHADER = `
+const VERTEX_SHADER = `
   uniform vec3 viewVector;
   uniform float power;
   varying float intensity;
@@ -40,7 +40,7 @@ const FRESNEL_VERTEX_SHADER = `
   }
 `;
 
-const FRESNEL_FRAGMENT_SHADER = `
+const FRAGMENT_SHADER = `
   uniform vec3 glowColor;
   varying float intensity;
   void main() {
@@ -61,8 +61,8 @@ const createFresnelMaterial = (color: number, side: Side, power: number, viewVec
       viewVector: { value: viewVector.clone() },
       power: { value: power },
     },
-    vertexShader: FRESNEL_VERTEX_SHADER,
-    fragmentShader: FRESNEL_FRAGMENT_SHADER,
+    vertexShader: VERTEX_SHADER,
+    fragmentShader: FRAGMENT_SHADER,
     side,
     blending: AdditiveBlending,
     transparent: true,
