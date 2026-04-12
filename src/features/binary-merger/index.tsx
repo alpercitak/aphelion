@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ACESFilmicToneMapping, Clock, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 
-import SliderGroup from '@/components/ui/slider-group';
-import ToggleGroup from '@/components/ui/toggle-group';
+import Controls from '@/components/app/controls';
 import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
@@ -26,8 +25,6 @@ import { createSpacetimeGrid } from './utils/spacetime-grid';
 import { createWaveRing } from './utils/wave-ring';
 
 import styles from './index.module.css';
-import Button from '@/components/ui/button';
-import Radio from '@/components/ui/radio';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
 const INITIAL_SEPARATION = 7.0 as const;
@@ -383,26 +380,12 @@ export default function BinaryMerger() {
       hintItems={HINT_ITEMS}
     >
       <canvas ref={canvasRef} className={styles.canvas} />
+      <Controls sliders={sliders} radios={radios} toggles={toggles} />
 
-      {/* Controls */}
-      <div className={styles.controlsWrap}>
-        <div className={styles.panel}>
-          <div className={styles.panelTitle}>PARAMETERS</div>
-
-          <SliderGroup items={sliders} />
-
-          {radios.map((radio) => (
-            <Radio className={styles['param']} {...radio} />
-          ))}
-
-          <ToggleGroup items={toggles} />
-
-          {/* Reset */}
-          <Button variant="secondary" className={styles.resetBtn} onClick={resetScene}>
+      {/* TODO: put this */}
+      {/* <Button variant="secondary" className={styles.resetBtn} onClick={resetScene}>
             ↺ RESET
-          </Button>
-        </div>
-      </div>
+          </Button> */}
 
       {/* Phase indicator */}
       <div className={styles.phaseBlock}>

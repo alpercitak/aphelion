@@ -9,6 +9,7 @@ interface RadioOption {
 }
 
 export interface RadioProps {
+  id: string;
   options: Array<RadioOption>;
   value: string;
   onChange: (value: string) => void;
