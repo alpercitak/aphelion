@@ -8,7 +8,7 @@ import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 
 import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
-import { Params, type InspiralOption, type Phase, type SceneRef, type StateRef } from './types';
+import type { InspiralOption, Params, Phase, SceneRef, StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
 import { orbitalOmega } from './utils/orbital-omega';

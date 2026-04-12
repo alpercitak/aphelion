@@ -8,7 +8,7 @@ import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
 
 import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
-import { Params, type SceneRef } from './types';
+import type { Params, SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
 import { createLensingRings } from './utils/lensing-rings';
