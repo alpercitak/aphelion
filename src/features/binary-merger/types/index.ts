@@ -9,6 +9,7 @@ import type {
   SphereGeometry,
   WebGLRenderer,
 } from 'three';
+import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import type { createOrbitControls } from '@/utils/camera';
@@ -54,6 +55,10 @@ export interface SliderItem extends Partial<SliderProps> {
 
 export interface ToggleItem extends Partial<ToggleProps> {
   id: keyof Pick<Params, 'showGrid' | 'showWaveRings' | 'showDisks' | 'autoLoop'>;
+}
+
+export interface RadioItem extends Partial<RadioProps> {
+  id: keyof Pick<Params, 'inspiralRate'>;
 }
 
 export type InspiralOption = 'slow' | 'medium' | 'fast';

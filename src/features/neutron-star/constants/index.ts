@@ -123,6 +123,15 @@ export const TOGGLE_ITEMS = [
   { id: 'showAccretionDisk', label: 'ACCRETION DISK' },
 ] as const satisfies ReadonlyArray<ToggleItem>;
 
+export const BEAM_WIDTH_OPTIONS = ['narrow', 'wide'] as const satisfies ReadonlyArray<BeamWidth>;
+
+export const RADIO_ITEMS = [
+  {
+    id: 'beamWidth',
+    label: 'Beam width',
+    options: BEAM_WIDTH_OPTIONS.map((item) => ({ id: item, label: item })),
+  },
+];
+
 export const BEAM_FLASH_THRESHOLD = 0.92;
 export const NS_RADIUS = 0.35; // visual radius — neutron stars are tiny
-export const BEAM_WIDTH_OPTIONS = ['narrow', 'wide'] as const satisfies ReadonlyArray<BeamWidth>;

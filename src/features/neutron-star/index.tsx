@@ -25,6 +25,7 @@ import {
   GLOSSARY_ITEMS,
   HINT_ITEMS,
   PARAMS,
+  RADIO_ITEMS,
   SLIDER_ITEMS,
   SUBTITLE,
   TITLE,
@@ -272,17 +273,22 @@ export default function NeutronStar() {
   }, [params.mass, params.rpm]);
 
   // ── Sliders / toggles ─────────────────────────────────────────────────────
-  const sliders = SLIDER_ITEMS.map((config) => ({
-    ...config,
-    value: params[config.id],
-    onChange: (v: number) => set(config.id, v),
+  const sliders = SLIDER_ITEMS.map((item) => ({
+    ...item,
+    value: params[item.id],
+    onChange: (v: number) => set(item.id, v),
   }));
 
-  const toggles = TOGGLE_ITEMS.map(({ id, label }) => ({
-    id,
-    label,
-    active: params[id],
-    onClick: () => set(id, !params[id]),
+  const toggles = TOGGLE_ITEMS.map((item) => ({
+    ...item,
+    active: params[item.id],
+    onClick: () => set(item.id, !params[item.id]),
+  }));
+
+  const radios = RADIO_ITEMS.map((item) => ({
+    ...item,
+    value: params[item.id],
+    onChange: (newVal: string) => set(item.id, newVal as BeamWidth),
   }));
 
   return (
@@ -324,12 +330,9 @@ export default function NeutronStar() {
           PARAMETERS
         </div>
         <SliderGroup items={sliders} />
-        <Radio
-          value={params.beamWidth}
-          options={BEAM_WIDTH_OPTIONS.map((item) => ({ id: item, label: item }))}
-          label="Beam width"
-          onChange={(newVal) => set('beamWidth', newVal as BeamWidth)}
-        />
+        {radios.map((radio) => (
+          <Radio {...radio} />
+        ))}
         <ToggleGroup items={toggles} />
       </div>
     </SceneLayout>

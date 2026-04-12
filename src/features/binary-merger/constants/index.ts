@@ -1,6 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
-import type { Params, SliderItem, ToggleItem } from '../types';
+import type { InspiralOption, Params, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Binary Merger';
 
@@ -127,3 +127,12 @@ export const TOGGLE_ITEMS = [
   { id: 'showDisks', label: 'Accretion disks' },
   { id: 'autoLoop', label: 'Auto loop' },
 ] as const satisfies ReadonlyArray<ToggleItem>;
+
+export const RADIO_ITEMS = [
+  {
+    id: 'inspiralRate',
+    label: 'Inspiral',
+    labelTooltip: 'How fast the orbit decays. Real inspiral takes millions of years — compressed here.',
+    options: (['slow', 'medium', 'fast'] satisfies Array<InspiralOption>).map((item) => ({ id: item, label: item })),
+  },
+] as const satisfies ReadonlyArray<RadioItem>;

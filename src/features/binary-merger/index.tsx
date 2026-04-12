@@ -7,7 +7,16 @@ import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 
-import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, SUBTITLE, TITLE, TOGGLE_ITEMS } from './constants';
+import {
+  GLOSSARY_ITEMS,
+  HINT_ITEMS,
+  PARAMS,
+  RADIO_ITEMS,
+  SLIDER_ITEMS,
+  SUBTITLE,
+  TITLE,
+  TOGGLE_ITEMS,
+} from './constants';
 import type { InspiralOption, Params, Phase, SceneRef, StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
@@ -20,7 +29,6 @@ import styles from './index.module.css';
 import Button from '@/components/ui/button';
 import Radio from '@/components/ui/radio';
 
-const INSPIRAL_OPTIONS = ['slow', 'medium', 'fast'] as const satisfies ReadonlyArray<InspiralOption>;
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
 const INITIAL_SEPARATION = 7.0 as const;
 const MERGE_THRESHOLD = 1.2 as const;
@@ -347,17 +355,22 @@ export default function BinaryMerger() {
     [params.mass1, params.mass2, totalMass, chirpMass, phase],
   );
 
-  const sliders = SLIDER_ITEMS.map((config) => ({
-    ...config,
-    value: params[config.id],
-    onChange: (v: number) => set(config.id, v),
+  const sliders = SLIDER_ITEMS.map((item) => ({
+    ...item,
+    value: params[item.id],
+    onChange: (v: number) => set(item.id, v),
   }));
 
-  const toggles = TOGGLE_ITEMS.map(({ id, label }) => ({
-    id,
-    label,
-    active: params[id],
-    onClick: () => set(id, !params[id]),
+  const toggles = TOGGLE_ITEMS.map((item) => ({
+    ...item,
+    active: params[item.id],
+    onClick: () => set(item.id, !params[item.id]),
+  }));
+
+  const radios = RADIO_ITEMS.map((item) => ({
+    ...item,
+    value: params[item.id],
+    onChange: (newVal: string) => set(item.id, newVal as InspiralOption),
   }));
 
   return (
@@ -378,14 +391,9 @@ export default function BinaryMerger() {
 
           <SliderGroup items={sliders} />
 
-          <Radio
-            className={styles['param']}
-            value={params.inspiralRate}
-            options={INSPIRAL_OPTIONS.map((item) => ({ id: item, label: item }))}
-            label="Inspiral"
-            labelTooltip="How fast the orbit decays. Real inspiral takes millions of years — compressed here."
-            onChange={(newVal) => set('inspiralRate', newVal as InspiralOption)}
-          />
+          {radios.map((radio) => (
+            <Radio className={styles['param']} {...radio} />
+          ))}
 
           <ToggleGroup items={toggles} />
 
