@@ -1,18 +1,9 @@
-import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
-import type { GlossarySection } from '../glossary';
-import type { HintItem } from '../hint';
-import type { StatsItem } from '../stats';
+import clsx from 'clsx';
 import styles from './index.module.css';
 
 export interface HudProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
-  title: string;
-  subtitle: string;
-  stats: ReadonlyArray<StatsItem>;
-  glossary: ReadonlyArray<GlossarySection>;
-  hints: ReadonlyArray<HintItem>;
-  status?: string;
 }
 
 export default function Hud({ children, className }: HudProps) {

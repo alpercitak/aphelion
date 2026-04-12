@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ACESFilmicToneMapping, Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
-import type { HudProps } from '@/components/app/hud';
-import SceneLayout from '@/layouts/scene';
+import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { createOrbitControls } from '@/utils/camera';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
@@ -242,7 +241,7 @@ export default function BlackHole() {
   const hudProps = {
     ...BASE_HUD_PROPS,
     stats,
-  } satisfies HudProps;
+  } satisfies SceneLayoutHudProps;
 
   const controlsProps = {
     sliders: SLIDER_ITEMS.map((item) => ({
@@ -255,7 +254,7 @@ export default function BlackHole() {
       active: params[item.id],
       onClick: () => set(item.id, !params[item.id]),
     })),
-  };
+  } satisfies SceneLayoutControlsProps;
 
   return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
 }

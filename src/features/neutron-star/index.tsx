@@ -11,13 +11,11 @@ import {
   WebGLRenderer,
 } from 'three';
 
-import SceneLayout from '@/layouts/scene';
+import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { createOrbitControls } from '@/utils/camera';
 import { schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
 
-import type { ControlsProps } from '@/components/app/controls';
-import type { HudProps } from '@/components/app/hud';
 import { BASE_HUD_PROPS, BEAM_FLASH_THRESHOLD, PARAMS, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { BeamWidth, Params, SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
@@ -261,7 +259,7 @@ export default function NeutronStar() {
   const hudProps = {
     ...BASE_HUD_PROPS,
     stats,
-  } satisfies HudProps;
+  } satisfies SceneLayoutHudProps;
 
   const controlsProps = {
     radios: RADIO_ITEMS.map((item) => ({
@@ -279,7 +277,7 @@ export default function NeutronStar() {
       active: params[item.id],
       onClick: () => set(item.id, !params[item.id]),
     })),
-  } satisfies ControlsProps;
+  } satisfies SceneLayoutControlsProps;
 
   return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
 }

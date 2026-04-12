@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ACESFilmicToneMapping, Clock, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 
-import type { ControlsProps } from '@/components/app/controls';
-import type { HudProps } from '@/components/app/hud';
-import SceneLayout from '@/layouts/scene';
+import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 
@@ -348,7 +346,7 @@ export default function BinaryMerger() {
     ...BASE_HUD_PROPS,
     status,
     stats,
-  } satisfies HudProps;
+  } satisfies SceneLayoutHudProps;
 
   const controlsProps = {
     radios: RADIO_ITEMS.map((item) => ({
@@ -366,7 +364,7 @@ export default function BinaryMerger() {
       active: params[item.id],
       onClick: () => set(item.id, !params[item.id]),
     })),
-  } satisfies ControlsProps;
+  } satisfies SceneLayoutControlsProps;
 
   return (
     <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps}>

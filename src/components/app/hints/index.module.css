@@ -1,4 +1,4 @@
-.hint {
+.hints {
   position: absolute;
   bottom: 28px;
   right: 28px;
@@ -10,6 +10,6 @@
   text-align: right;
   text-transform: uppercase;
 }
-.hint__title {
+.hints__item-title {
   color: var(--cold);
 }

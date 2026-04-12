@@ -5,16 +5,16 @@ export interface HintItem {
   values?: Array<string>;
 }
 
-interface HintProps {
+interface HintsProps {
   items: ReadonlyArray<HintItem>;
 }
 
-export default function Hint({ items }: HintProps) {
+export default function Hints({ items }: HintsProps) {
   return (
-    <div className={styles['hint']}>
+    <div className={styles['hints']}>
       {items.map((item) => (
         <div>
-          <div className={styles['hint__title']}>{item.title}</div>
+          <div className={styles['.hints__item-title']}>{item.title}</div>
           {item.values?.map((value) => (
             <div>{value}</div>
           ))}

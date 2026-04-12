@@ -1,6 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
-import type { HintItem } from '@/components/app/hint';
-import type { HudProps } from '@/components/app/hud';
+import type { HintItem } from '@/components/app/hints';
+import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import type { InspiralOption, Params, Phase, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Binary Merger';
@@ -95,7 +95,7 @@ export const BASE_HUD_PROPS = {
   subtitle: SUBTITLE,
   glossary: GLOSSARY_ITEMS,
   hints: HINT_ITEMS,
-} satisfies Partial<HudProps>;
+} satisfies Partial<SceneLayoutHudProps>;
 
 export const SLIDER_ITEMS = [
   {
