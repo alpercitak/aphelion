@@ -25,7 +25,9 @@ interface BlackHoleUnitData {
   baseScale: number;
 }
 
-type BlackHoleUnit = Group & { userData: BlackHoleUnitData };
+interface BlackHoleUnit extends Group {
+  userData: BlackHoleUnitData;
+}
 
 // Fresnel glow
 const VERTEX_SHADER = `
@@ -53,6 +55,8 @@ const DISK_RING_COLORS = [0xff9944, 0xff6633, 0xdd4422, 0x882211] as const;
 const DISK_RING_COUNT = 12;
 
 const MERGER_MASS_FACTOR = 1.2; // ~80% mass retention, rest radiated as gravitational waves
+
+const BINARY_VISUAL_SCALE = 0.7; // scale down BH units relative to standalone scene
 
 const createFresnelMaterial = (color: number, side: Side, power: number, viewVector: Vector3) =>
   new ShaderMaterial({
@@ -120,4 +124,11 @@ export const createBlackHoleUnit = (massSolar: number, cameraPos?: Vector3): Bla
 export const createMergedBlackHole = (mass1: number, mass2: number, cameraPos?: Vector3): BlackHoleUnit => {
   const combinedMass = mass1 + mass2;
   return createBlackHoleUnit(combinedMass * MERGER_MASS_FACTOR, cameraPos);
+};
+
+export const applyBlackHoleScale = (unit: BlackHoleUnit, mass: number) => {
+  const s = massScale(mass, 20) * BINARY_VISUAL_SCALE;
+  unit.userData.bhMesh.scale.setScalar(s);
+  unit.userData.glowMesh.scale.setScalar(s);
+  unit.userData.haloMesh.scale.setScalar(s);
 };

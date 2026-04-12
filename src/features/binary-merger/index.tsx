@@ -4,7 +4,7 @@ import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 import ToggleGroup from '@/components/ui/toggle-group';
 import SliderGroup from '@/components/ui/slider-group';
-import { createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
+import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
 import { orbitalOmega } from './utils/orbital-omega';
 import { orbitalPositions } from './utils/orbital-positions';
@@ -323,24 +323,15 @@ export default function BinaryMerger() {
   }, [resetScene]);
 
   // ── React to mass changes (rebuild BH units) ──────────────────────────────
-  useEffect(() => {
-    const refs = sceneRef.current;
-    if (!refs || phase !== PHASE.ORBIT) return;
-    const s = refs.bh1.userData.baseScale;
-    const newS = Math.cbrt(params.mass1 / 20) * 0.7;
-    refs.bh1.userData.bhMesh.scale.setScalar(newS);
-    refs.bh1.userData.glowMesh.scale.setScalar(newS);
-    refs.bh1.userData.haloMesh.scale.setScalar(newS);
-  }, [params.mass1, phase]);
 
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs || phase !== PHASE.ORBIT) return;
-    const newS = Math.cbrt(params.mass2 / 20) * 0.7;
-    refs.bh2.userData.bhMesh.scale.setScalar(newS);
-    refs.bh2.userData.glowMesh.scale.setScalar(newS);
-    refs.bh2.userData.haloMesh.scale.setScalar(newS);
-  }, [params.mass2, phase]);
+    if (!refs || phase !== PHASE.ORBIT) {
+      return;
+    }
+    applyBlackHoleScale(refs.bh1, params.mass1);
+    applyBlackHoleScale(refs.bh2, params.mass2);
+  }, [params.mass1, params.mass2, phase]);
 
   // ── Sliders & toggles ─────────────────────────────────────────────────────
   const totalMass = params.mass1 + params.mass2;
