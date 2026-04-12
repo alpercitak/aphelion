@@ -352,7 +352,7 @@ export default function BinaryMerger() {
     radios: RADIO_ITEMS.map((item) => ({
       ...item,
       value: params[item.id],
-      onChange: (newVal: string) => set(item.id, newVal as InspiralOption),
+      onChange: (v: string) => set(item.id, v as InspiralOption),
     })),
     sliders: SLIDER_ITEMS.map((item) => ({
       ...item,

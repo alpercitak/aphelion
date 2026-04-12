@@ -6,7 +6,6 @@ export const SCENES = [
     title: 'BLACK HOLE',
     subtitle: 'Schwarzschild · Kerr Metric',
     description: 'Event horizon, accretion disk, relativistic jets and gravitational lensing.',
-    status: 'available',
     component: lazy(() => import('@/features/black-hole')),
   },
   {
@@ -14,7 +13,6 @@ export const SCENES = [
     title: 'BINARY MERGER',
     subtitle: 'Gravitational Waves',
     description: 'Two black holes in decaying orbit. The LIGO moment visualized.',
-    status: 'available',
     component: lazy(() => import('@/features/binary-merger')),
   },
   {
@@ -22,8 +20,14 @@ export const SCENES = [
     title: 'NEUTRON STAR',
     subtitle: 'TOV Limit · Pulsar Beam',
     description: 'Extreme density and rapid rotation. Visualizing degenerate matter and lighthouse effects.',
-    status: 'available',
     component: lazy(() => import('@/features/neutron-star')),
+  },
+  {
+    id: 'magnetar',
+    title: 'Magnetar',
+    subtitle: '10¹⁵ Gauss · Starquakes',
+    description: 'Extreme magnetic field, starquakes, and gamma ray bursts.',
+    component: lazy(() => import('@/features/magnetar')),
   },
 ];
 

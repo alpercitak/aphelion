@@ -14,7 +14,7 @@ export default function Hints({ items }: HintsProps) {
     <div className={styles['hints']}>
       {items.map((item) => (
         <div>
-          <div className={styles['.hints__item-title']}>{item.title}</div>
+          <div className={styles['hints__item-title']}>{item.title}</div>
           {item.values?.map((value) => (
             <div>{value}</div>
           ))}

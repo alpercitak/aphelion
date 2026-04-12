@@ -203,8 +203,9 @@ export default function NeutronStar() {
     oldBeams.traverse((o) => {
       if (o instanceof Mesh || o instanceof Points) {
         o.geometry.dispose();
-        if (Array.isArray(o.material)) o.material.forEach((m) => m.dispose());
-        else o.material.dispose();
+        if (Array.isArray(o.material)) {
+          o.material.forEach((m) => m.dispose());
+        } else o.material.dispose();
       }
     });
     const newBeams = createPulsarBeams(params.beamWidth);
