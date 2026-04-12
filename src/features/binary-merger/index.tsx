@@ -260,11 +260,11 @@ export default function BinaryMerger() {
       if (s.phase === 'merged') {
         refs.flash.material.opacity = Math.max(0, refs.flash.material.opacity - 0.02);
         refs.mergedBH.userData.diskGroup.rotation.y = t * 0.2;
-        refs.mergedBH.userData.glowMat.uniforms.viewVector.value.copy(camera.position);
-        refs.mergedBH.userData.haloMat.uniforms.viewVector.value.copy(camera.position);
+        refs.mergedBH.userData.glowMat.uniforms.viewVector?.value.copy(camera.position);
+        refs.mergedBH.userData.haloMat.uniforms.viewVector?.value.copy(camera.position);
 
         // Ringdown — grid dampens
-        refs.grid.material.uniforms.amplitude.value = Math.max(0, refs.grid.material.uniforms.amplitude.value - 0.005);
+        refs.grid.material.uniforms.amplitude.value = Math.max(0, refs.grid.material.uniforms.amplitude?.value - 0.005);
         refs.grid.material.uniforms.time.value = t * 1.8;
         refs.grid.material.uniforms.source1.value.set(0, 0);
         refs.grid.material.uniforms.source2.value.set(0, 0);

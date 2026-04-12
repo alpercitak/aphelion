@@ -12,40 +12,6 @@
   height: 100%;
 }
 
-.topRight {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.stats {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.25);
-  text-align: right;
-  line-height: 1.9;
-}
-
-.stats span {
-  color: var(--cold);
-}
-.stats .orbit {
-  color: var(--cold);
-}
-.stats .merging {
-  color: var(--accent);
-}
-.stats .merged {
-  color: #88ff88;
-}
-
-.title {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
 .controlsWrap {
   position: absolute;
   bottom: 20px;
