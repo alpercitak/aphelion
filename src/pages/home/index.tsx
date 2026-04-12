@@ -4,26 +4,24 @@ import Scanlines from '@/components/app/scanlines';
 import { SCENES } from '@/utils/scene';
 import styles from './index.module.css';
 
+const TITLE = 'APHELION';
+const SUBTITLE = 'DEEP-SPACE PHYSICS RENDERER';
+
 export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <Hud className={styles.root}>
+    <Hud className={styles['home']}>
       <Scanlines />
 
-      <header className={styles.header}>
-        <div className={styles.logo}>APHELION</div>
-        <p className={styles.tagline}>DEEP-SPACE PHYSICS RENDERER</p>
+      <header className={styles['home__header']}>
+        <div className={styles['home__header-title']}>{TITLE}</div>
+        <p className={styles['home__header-subtitle']}>{SUBTITLE}</p>
       </header>
 
-      <main className={styles.grid}>
+      <main className={styles['home__main']}>
         {SCENES.map((scene, i) => (
-          <button
-            key={scene.id}
-            className={`${styles.card} ${scene.status === 'coming-soon' ? styles.locked : ''}`}
-            onClick={() => scene.status === 'available' && navigate(`/${scene.id}`)}
-            disabled={scene.status !== 'available'}
-          >
+          <button key={scene.id} className={styles['card']} onClick={() => navigate(`/${scene.id}`)}>
             <div className={styles.cardIndex}>0{i + 1}</div>
             <div className={styles.cardBody}>
               <div className={styles.cardTitle}>{scene.title}</div>
@@ -31,17 +29,13 @@ export default function Home() {
               <div className={styles.cardDesc}>{scene.description}</div>
             </div>
             <div className={styles.cardStatus}>
-              {scene.status === 'available' ? (
-                <span className={styles.available}>ENTER →</span>
-              ) : (
-                <span className={styles.soon}>SOON</span>
-              )}
+              <span className={styles.available}>ENTER →</span>
             </div>
           </button>
         ))}
       </main>
 
-      <footer className={styles.footer}>
+      <footer className={styles['home__footer']}>
         <span>SCHWARZSCHILD · KERR · PENROSE · HAWKING</span>
       </footer>
     </Hud>
