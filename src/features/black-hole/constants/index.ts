@@ -1,3 +1,16 @@
+import type { Params, SliderItem, ToggleItem } from '../types';
+
+export const PARAMS = {
+  mass: 10,
+  spin: 0,
+  temp: 8000,
+  lensStrength: 1.0,
+  showDisk: true,
+  showJets: true,
+  showStars: true,
+  dopplerShift: false,
+} satisfies Params;
+
 export const GLOSSARY_ITEMS = [
   {
     title: 'THE OBJECT',
@@ -128,11 +141,11 @@ export const SLIDERS = [
     tooltip:
       'Intensity of gravitational light bending. At max, background light wraps around forming an Einstein ring.',
   },
-];
+] satisfies Array<SliderItem>;
 
 export const TOGGLES = [
   { id: 'showDisk', label: 'Accretion disk' },
   { id: 'showJets', label: 'Relativistic jets' },
   { id: 'showStars', label: 'Star field' },
   { id: 'dopplerShift', label: 'Dopper shift' },
-];
+] satisfies Array<ToggleItem>;

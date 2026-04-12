@@ -11,7 +11,7 @@ import {
   PointsMaterial,
 } from 'three';
 
-export const createRelativisticJets = () => {
+export const createRelativisticJets = (): Group => {
   const group = new Group();
 
   [-1, 1].forEach((dir) => {

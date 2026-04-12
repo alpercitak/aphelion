@@ -1,6 +1,6 @@
 import { AdditiveBlending, BackSide, Color, Mesh, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
 
-const OUTER_GLOW_VERT = `
+const VERTEX_SHADER = `
   uniform vec3 viewVector;
   varying float intensity;
   void main() {
@@ -11,7 +11,7 @@ const OUTER_GLOW_VERT = `
   }
 `;
 
-const OUTER_GLOW_FRAG = `
+const FRAGMENT_SHADER = `
   uniform vec3 glowColor;
   varying float intensity;
   void main() {
@@ -20,15 +20,15 @@ const OUTER_GLOW_FRAG = `
   }
 `;
 
-export const createOuterGlow = (cameraPos: Vector3) => {
+export const createOuterGlow = (cameraPos: Vector3): Mesh<SphereGeometry, ShaderMaterial> => {
   const geo = new SphereGeometry(2.2, 64, 64);
   const mat = new ShaderMaterial({
     uniforms: {
       glowColor: { value: new Color(0xff6b1a) },
       viewVector: { value: cameraPos.clone() },
     },
-    vertexShader: OUTER_GLOW_VERT,
-    fragmentShader: OUTER_GLOW_FRAG,
+    vertexShader: VERTEX_SHADER,
+    fragmentShader: FRAGMENT_SHADER,
     side: BackSide,
     blending: AdditiveBlending,
     transparent: true,

@@ -1,35 +1,28 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import * as THREE from 'three';
-import { createOrbitControls } from '@/utils/camera';
-import { createStarField } from '@/utils/starfield';
-import { schwarzschildRadius, hawkingTemperature } from '@/utils/physics';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ACESFilmicToneMapping, Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+
 import Controls from '@/components/app/controls';
-import { applyMassScale } from './utils/mass-scale';
+import SceneLayout from '@/layouts/scene';
+import { createOrbitControls } from '@/utils/camera';
+import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
+import { createStarField } from '@/utils/starfield';
+
+import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDERS, TOGGLES } from './constants';
+import type { SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
 import { createLensingRings } from './utils/lensing-rings';
+import { applyMassScale } from './utils/mass-scale';
 import { createOuterGlow } from './utils/outer-glow';
 import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
-import { GLOSSARY_ITEMS, HINT_ITEMS, SLIDERS, TOGGLES } from './constants';
-import SceneLayout from '@/layouts/scene';
-import styles from './index.module.css';
 
-const DEFAULTS = {
-  mass: 10,
-  spin: 0,
-  temp: 8000,
-  lensStrength: 1.0,
-  showDisk: true,
-  showJets: true,
-  showStars: true,
-  dopplerShift: false,
-};
+import styles from './index.module.css';
 
 export default function BlackHole() {
   const canvasRef = useRef(null);
-  const sceneRef = useRef(null);
-  const [params, setParams] = useState(DEFAULTS);
+  const sceneRef = useRef<SceneRef>(null);
+  const [params, setParams] = useState(PARAMS);
   const paramsRef = useRef(params);
 
   // Keep ref in sync for use inside animation loop
@@ -43,17 +36,20 @@ export default function BlackHole() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     // ── Renderer ──────────────────────────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    const renderer = new WebGLRenderer({ canvas, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMapping = ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
+    const scene = new Scene();
+
+    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
     camera.position.set(0, 3, 8);
     camera.lookAt(0, 0, 0);
 
@@ -76,10 +72,10 @@ export default function BlackHole() {
     scene.add(photonRing);
     scene.add(einsteinRing);
 
-    let diskGroup = createAccretionDisk(DEFAULTS.temp, false);
+    const diskGroup = createAccretionDisk(PARAMS.temp, false);
     scene.add(diskGroup);
 
-    let jetsGroup = createRelativisticJets();
+    const jetsGroup = createRelativisticJets();
     scene.add(jetsGroup);
 
     // Store refs for external param changes
@@ -102,14 +98,14 @@ export default function BlackHole() {
     };
 
     // ── Animation ─────────────────────────────────────────────────────────────
-    const clock = new THREE.Clock();
-    let raf;
+    const clock = new Clock();
+    let raf: number;
 
     function animate() {
       raf = requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
       const p = paramsRef.current;
-      const refs = sceneRef.current;
+      const refs = sceneRef.current!;
 
       orbit.updateCamera(camera);
 
@@ -127,8 +123,8 @@ export default function BlackHole() {
       refs.photonSphere.scale.set(s * pulse, s * oblate * pulse, s * pulse);
 
       // Update glow view vectors
-      refs.photonMat.uniforms.viewVector.value.copy(camera.position);
-      refs.outerGlow.material.uniforms.viewVector.value.copy(camera.position);
+      refs.photonMat.uniforms.viewVector?.value.copy(camera.position);
+      refs.outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
 
       if (p.showStars) refs.stars.rotation.y = t * 0.003;
 
@@ -170,7 +166,9 @@ export default function BlackHole() {
 
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs) return;
+    if (!refs) {
+      return;
+    }
     refs.scene.remove(refs.diskGroup);
     refs.diskGroup.traverse((o) => {
       o.geometry?.dispose();
@@ -178,36 +176,54 @@ export default function BlackHole() {
     });
     const newDisk = createAccretionDisk(params.temp, params.dopplerShift);
     refs.diskGroup = newDisk;
-    sceneRef.current.diskGroup = newDisk;
-    if (params.showDisk) refs.scene.add(newDisk);
+    if (sceneRef.current) {
+      sceneRef.current.diskGroup = newDisk;
+    }
+    if (params.showDisk) {
+      refs.scene.add(newDisk);
+    }
   }, [params.temp, params.dopplerShift]);
 
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs) return;
-    if (params.showDisk) refs.scene.add(refs.diskGroup);
-    else refs.scene.remove(refs.diskGroup);
+    if (!refs) {
+      return;
+    }
+    if (params.showDisk) {
+      refs.scene.add(refs.diskGroup);
+    } else {
+      refs.scene.remove(refs.diskGroup);
+    }
   }, [params.showDisk]);
 
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs) return;
-    if (params.showJets) refs.scene.add(refs.jetsGroup);
-    else refs.scene.remove(refs.jetsGroup);
+    if (!refs) {
+      return;
+    }
+    if (params.showJets) {
+      refs.scene.add(refs.jetsGroup);
+    } else {
+      refs.scene.remove(refs.jetsGroup);
+    }
   }, [params.showJets]);
 
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs) return;
+    if (!refs) {
+      return;
+    }
     refs.stars.visible = params.showStars;
   }, [params.showStars]);
 
   useEffect(() => {
     const refs = sceneRef.current;
-    if (!refs) return;
+    if (!refs) {
+      return;
+    }
     refs.photonRingMat.opacity = params.lensStrength * 0.9;
     refs.einsteinMat.opacity = params.lensStrength * 0.5;
-    refs.photonMat.uniforms.glowColor.value.setRGB(1.0, 0.67 * params.lensStrength, 0.27 * params.lensStrength);
+    refs.photonMat.uniforms.glowColor?.value.setRGB(1.0, 0.67 * params.lensStrength, 0.27 * params.lensStrength);
   }, [params.lensStrength]);
 
   // ── Sliders & toggles config ──────────────────────────────────────────────

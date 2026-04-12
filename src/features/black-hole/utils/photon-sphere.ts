@@ -20,7 +20,7 @@ const FRESNEL_FRAG = `
   }
 `;
 
-export const createPhotonSphere = (cameraPos: Vector3) => {
+export const createPhotonSphere = (cameraPos: Vector3): Mesh<SphereGeometry, ShaderMaterial> => {
   const geo = new SphereGeometry(1.5, 64, 64);
   const mat = new ShaderMaterial({
     uniforms: {

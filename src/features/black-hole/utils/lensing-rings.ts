@@ -1,6 +1,6 @@
 import { AdditiveBlending, DoubleSide, Mesh, MeshBasicMaterial, RingGeometry } from 'three';
 
-const createPhotonRing = () =>
+const createPhotonRing = (): Mesh<RingGeometry, MeshBasicMaterial> =>
   new Mesh(
     new RingGeometry(1.48, 1.52, 256, 1),
     new MeshBasicMaterial({
@@ -13,7 +13,7 @@ const createPhotonRing = () =>
     }),
   );
 
-const createEinsteinRing = () =>
+const createEinsteinRing = (): Mesh<RingGeometry, MeshBasicMaterial> =>
   new Mesh(
     new RingGeometry(1.2, 1.22, 256, 1),
     new MeshBasicMaterial({

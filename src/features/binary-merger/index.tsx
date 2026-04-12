@@ -323,7 +323,6 @@ export default function BinaryMerger() {
   }, [resetScene]);
 
   // ── React to mass changes (rebuild BH units) ──────────────────────────────
-
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs || phase !== PHASE.ORBIT) {
@@ -337,15 +336,16 @@ export default function BinaryMerger() {
   const totalMass = params.mass1 + params.mass2;
   const chirpMass = Math.pow(params.mass1 * params.mass2, 3 / 5) / Math.pow(totalMass, 1 / 5);
 
-  const statsItems = useMemo(() => {
-    return [
+  const statsItems = useMemo(
+    () => [
       { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
       { label: 'M2', value: params.mass2.toFixed(1), unit: 'M☉' },
       { label: 'Total', value: totalMass.toFixed(1), unit: 'M☉' },
       { label: 'Chirp', value: chirpMass.toFixed(1), unit: 'M☉' },
       { label: 'Phase', value: phase.toUpperCase() },
-    ];
-  }, [params.mass1, params.mass2, totalMass, chirpMass, phase]);
+    ],
+    [params.mass1, params.mass2, totalMass, chirpMass, phase],
+  );
 
   const sliders = useMemo(
     () =>
