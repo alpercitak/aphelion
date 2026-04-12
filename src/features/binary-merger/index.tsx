@@ -18,6 +18,7 @@ import { createWaveRing } from './utils/wave-ring';
 
 import styles from './index.module.css';
 import Button from '@/components/ui/button';
+import Radio from '@/components/ui/radio';
 
 const INSPIRAL_OPTIONS = ['slow', 'medium', 'fast'] as const satisfies ReadonlyArray<InspiralOption>;
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
@@ -377,29 +378,14 @@ export default function BinaryMerger() {
 
           <SliderGroup items={sliders} />
 
-          {/* Inspiral rate selector */}
-          <div className={styles.param}>
-            <div className={styles.paramHeader}>
-              <span
-                className={styles.paramLabel}
-                data-tip="How fast the orbit decays. Real inspiral takes millions of years — compressed here."
-              >
-                INSPIRAL
-              </span>
-            </div>
-            <div className={styles.rateButtons}>
-              {INSPIRAL_OPTIONS.map((opt) => (
-                <Button
-                  key={opt}
-                  onClick={() => set('inspiralRate', opt)}
-                  variant={opt === params.inspiralRate ? 'primary' : 'secondary'}
-                  className={styles.rateButton}
-                >
-                  {opt.toUpperCase()}
-                </Button>
-              ))}
-            </div>
-          </div>
+          <Radio
+            className={styles['param']}
+            value={params.inspiralRate}
+            options={INSPIRAL_OPTIONS.map((item) => ({ id: item, label: item }))}
+            label="Inspiral"
+            labelTooltip="How fast the orbit decays. Real inspiral takes millions of years — compressed here."
+            onChange={(newVal) => set('inspiralRate', newVal as InspiralOption)}
+          />
 
           <ToggleGroup items={toggles} />
 

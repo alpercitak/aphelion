@@ -30,13 +30,14 @@ import {
   TITLE,
   TOGGLE_ITEMS,
 } from './constants';
-import type { Params, SceneRef } from './types';
+import type { BeamWidth, Params, SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createBeamFlash } from './utils/beam-flash';
 import { createFieldLines } from './utils/field-lines';
 import { createGlow, createOuterGlow } from './utils/glow';
 import { createNeutronStarBody } from './utils/neutron-star';
 import { createPulsarBeams } from './utils/pulsar-beams';
+import Radio from '@/components/ui/radio';
 
 export default function NeutronStar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -322,36 +323,13 @@ export default function NeutronStar() {
         >
           PARAMETERS
         </div>
-
         <SliderGroup items={sliders} />
-
-        {/* Beam width selector */}
-        <div style={{ marginBottom: 14, marginTop: 14 }}>
-          <div
-            style={{
-              fontSize: 10,
-              letterSpacing: '0.2em',
-              color: 'rgba(255,255,255,0.5)',
-              textTransform: 'uppercase',
-              marginBottom: 6,
-            }}
-          >
-            BEAM WIDTH
-          </div>
-          <div style={{ display: 'flex', gap: 4 }}>
-            {BEAM_WIDTH_OPTIONS.map((opt) => (
-              <Button
-                key={opt}
-                onClick={() => set('beamWidth', opt)}
-                variant={opt === params.beamWidth ? 'primary' : 'secondary'}
-                style={{ flex: 1, justifyContent: 'center' }}
-              >
-                {opt}
-              </Button>
-            ))}
-          </div>
-        </div>
-
+        <Radio
+          value={params.beamWidth}
+          options={BEAM_WIDTH_OPTIONS.map((item) => ({ id: item, label: item }))}
+          label="Beam width"
+          onChange={(newVal) => set('beamWidth', newVal as BeamWidth)}
+        />
         <ToggleGroup items={toggles} />
       </div>
     </SceneLayout>
