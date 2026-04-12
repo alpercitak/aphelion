@@ -1,8 +1,9 @@
-import Hud from '@/components/app/hud';
-import TopBar from '@/components/app/top-bar';
-import Hint from '@/components/app/hint';
-import Scanlines from '@/components/app/scanlines';
 import Crosshair from '@/components/app/crosshair';
+import Hint from '@/components/app/hint';
+import Hud from '@/components/app/hud';
+import Scanlines from '@/components/app/scanlines';
+import TopBar from '@/components/app/top-bar';
+import Status from './components/status';
 import styles from './index.module.css';
 
 interface SceneLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -11,7 +12,7 @@ interface SceneLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function SceneLayout(props: SceneLayoutProps) {
-  const { title, subtitle, statsItems, glossaryItems, hintItems, children } = props;
+  const { title, subtitle, statsItems, glossaryItems, hintItems, status, children } = props;
   return (
     <div className={styles['scene-layout']}>
       <Hud>
@@ -21,6 +22,7 @@ export default function SceneLayout(props: SceneLayoutProps) {
       </Hud>
       <Scanlines />
       <Crosshair />
+      <Status status={status} />
       {children}
     </div>
   );

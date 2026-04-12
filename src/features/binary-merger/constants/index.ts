@@ -1,6 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
-import type { InspiralOption, Params, RadioItem, SliderItem, ToggleItem } from '../types';
+import type { InspiralOption, Params, Phase, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Binary Merger';
 
@@ -136,3 +136,9 @@ export const RADIO_ITEMS = [
     options: (['slow', 'medium', 'fast'] satisfies Array<InspiralOption>).map((item) => ({ id: item, label: item })),
   },
 ] as const satisfies ReadonlyArray<RadioItem>;
+
+export const PHASE_LABEL_MAP = {
+  orbit: '● INSPIRAL IN PROGRESS',
+  merging: '◉ MERGER EVENT',
+  merged: '◎ RINGDOWN',
+} as const satisfies Record<Phase, string>;

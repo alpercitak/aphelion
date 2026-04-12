@@ -1,0 +1,11 @@
+.status {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  pointer-events: none;
+  color: var(--cold);
+}

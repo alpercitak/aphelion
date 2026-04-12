@@ -10,6 +10,7 @@ import {
   GLOSSARY_ITEMS,
   HINT_ITEMS,
   PARAMS,
+  PHASE_LABEL_MAP,
   RADIO_ITEMS,
   SLIDER_ITEMS,
   SUBTITLE,
@@ -370,6 +371,8 @@ export default function BinaryMerger() {
     onChange: (newVal: string) => set(item.id, newVal as InspiralOption),
   }));
 
+  const status = useMemo(() => PHASE_LABEL_MAP[phase], [phase]);
+
   return (
     <SceneLayout
       className={styles.root}
@@ -378,6 +381,7 @@ export default function BinaryMerger() {
       statsItems={statsItems}
       glossaryItems={GLOSSARY_ITEMS}
       hintItems={HINT_ITEMS}
+      status={status}
     >
       <canvas ref={canvasRef} className={styles.canvas} />
       <Controls sliders={sliders} radios={radios} toggles={toggles} />
@@ -386,13 +390,6 @@ export default function BinaryMerger() {
       {/* <Button variant="secondary" className={styles.resetBtn} onClick={resetScene}>
             ↺ RESET
           </Button> */}
-
-      {/* Phase indicator */}
-      <div className={styles.phaseBlock}>
-        {phase === 'orbit' && <span className={styles.phaseOrbit}>● INSPIRAL IN PROGRESS</span>}
-        {phase === 'merging' && <span className={styles.phaseMerge}>◉ MERGER EVENT</span>}
-        {phase === 'merged' && <span className={styles.phaseDone}>◎ RINGDOWN</span>}
-      </div>
     </SceneLayout>
   );
 }
