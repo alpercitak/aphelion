@@ -37,7 +37,7 @@ export default function BlackHole() {
     paramsRef.current = params;
   }, [params]);
 
-  const set = useCallback((key, value) => {
+  const set = useCallback((key: string, value: string | number | boolean) => {
     setParams((prev) => ({ ...prev, [key]: value }));
   }, []);
 

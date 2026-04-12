@@ -51,7 +51,7 @@ export default function BinaryMerger() {
   const [params, setParams] = useState(DEFAULTS);
   const [phase, setPhase] = useState(PHASE.ORBIT);
 
-  const set = useCallback((key, value) => {
+  const set = useCallback((key: string, value: string | number | boolean) => {
     setParams((prev) => {
       const next = { ...prev, [key]: value };
       stateRef.current.params = next;
@@ -128,7 +128,7 @@ export default function BinaryMerger() {
     flash.position.z = -1;
     scene.add(camera);
 
-    const waveRingMeshes = [];
+    const waveRingMeshes: Array<THREE.Mesh> = [];
 
     sceneRef.current = {
       scene,
