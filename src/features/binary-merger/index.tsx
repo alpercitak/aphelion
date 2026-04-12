@@ -7,17 +7,7 @@ import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
 
-import {
-  GLOSSARY_ITEMS,
-  HINT_ITEMS,
-  PARAMS,
-  PHASE_LABEL_MAP,
-  RADIO_ITEMS,
-  SLIDER_ITEMS,
-  SUBTITLE,
-  TITLE,
-  TOGGLE_ITEMS,
-} from './constants';
+import { BASE_HUD_PROPS, PARAMS, PHASE_LABEL_MAP, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { InspiralOption, Params, Phase, SceneRef, StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
@@ -355,10 +345,7 @@ export default function BinaryMerger() {
   const status = useMemo(() => PHASE_LABEL_MAP[phase], [phase]);
 
   const hudProps = {
-    title: TITLE,
-    subtitle: SUBTITLE,
-    glossary: GLOSSARY_ITEMS,
-    hints: HINT_ITEMS,
+    ...BASE_HUD_PROPS,
     status,
     stats,
   } satisfies HudProps;

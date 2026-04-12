@@ -18,17 +18,7 @@ import { createStarField } from '@/utils/starfield';
 
 import type { ControlsProps } from '@/components/app/controls';
 import type { HudProps } from '@/components/app/hud';
-import {
-  BEAM_FLASH_THRESHOLD,
-  GLOSSARY_ITEMS,
-  HINT_ITEMS,
-  PARAMS,
-  RADIO_ITEMS,
-  SLIDER_ITEMS,
-  SUBTITLE,
-  TITLE,
-  TOGGLE_ITEMS,
-} from './constants';
+import { BASE_HUD_PROPS, BEAM_FLASH_THRESHOLD, PARAMS, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { BeamWidth, Params, SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createBeamFlash } from './utils/beam-flash';
@@ -269,10 +259,7 @@ export default function NeutronStar() {
   }, [params.mass, params.rpm]);
 
   const hudProps = {
-    title: TITLE,
-    subtitle: SUBTITLE,
-    glossary: GLOSSARY_ITEMS,
-    hints: HINT_ITEMS,
+    ...BASE_HUD_PROPS,
     stats,
   } satisfies HudProps;
 

@@ -1,5 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
+import type { HudProps } from '@/components/app/hud';
 import type { BeamWidth, Params, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Neutron Star';
@@ -85,6 +86,13 @@ export const HINT_ITEMS = [
   { title: 'PULSAR PERIOD', values: ['P = 1/f'] },
   { title: 'TOV LIMIT', values: ['~2.3 M☉'] },
 ] as const satisfies ReadonlyArray<HintItem>;
+
+export const BASE_HUD_PROPS = {
+  title: TITLE,
+  subtitle: SUBTITLE,
+  glossary: GLOSSARY_ITEMS,
+  hints: HINT_ITEMS,
+} satisfies Partial<HudProps>;
 
 export const SLIDER_ITEMS = [
   {

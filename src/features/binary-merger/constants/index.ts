@@ -1,5 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
+import type { HudProps } from '@/components/app/hud';
 import type { InspiralOption, Params, Phase, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Binary Merger';
@@ -88,6 +89,13 @@ export const GLOSSARY_ITEMS = [
 export const HINT_ITEMS = [
   { title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] },
 ] as const satisfies ReadonlyArray<HintItem>;
+
+export const BASE_HUD_PROPS = {
+  title: TITLE,
+  subtitle: SUBTITLE,
+  glossary: GLOSSARY_ITEMS,
+  hints: HINT_ITEMS,
+} satisfies Partial<HudProps>;
 
 export const SLIDER_ITEMS = [
   {

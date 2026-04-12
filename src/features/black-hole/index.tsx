@@ -7,7 +7,7 @@ import { createOrbitControls } from '@/utils/camera';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
 
-import { GLOSSARY_ITEMS, HINT_ITEMS, PARAMS, SLIDER_ITEMS, SUBTITLE, TITLE, TOGGLE_ITEMS } from './constants';
+import { BASE_HUD_PROPS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { Params, SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
@@ -240,10 +240,7 @@ export default function BlackHole() {
   );
 
   const hudProps = {
-    title: TITLE,
-    subtitle: SUBTITLE,
-    glossary: GLOSSARY_ITEMS,
-    hints: HINT_ITEMS,
+    ...BASE_HUD_PROPS,
     stats,
   } satisfies HudProps;
 

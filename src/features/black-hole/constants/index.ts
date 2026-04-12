@@ -1,5 +1,6 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hint';
+import type { HudProps } from '@/components/app/hud';
 import type { Params, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Black Hole';
@@ -107,6 +108,13 @@ export const HINT_ITEMS = [
   { title: 'SCHWARZSCHILD RADIUS', values: ['rₛ = 2GM/c²'] },
   { title: 'PHOTON SPHERE', values: ['r = 1.5 rₛ'] },
 ] as const satisfies ReadonlyArray<HintItem>;
+
+export const BASE_HUD_PROPS = {
+  title: TITLE,
+  subtitle: SUBTITLE,
+  glossary: GLOSSARY_ITEMS,
+  hints: HINT_ITEMS,
+} satisfies Partial<HudProps>;
 
 export const SLIDER_ITEMS = [
   {
