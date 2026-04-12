@@ -11,17 +11,15 @@ import {
   WebGLRenderer,
 } from 'three';
 
-import Button from '@/components/ui/button';
-import SliderGroup from '@/components/ui/slider-group';
-import ToggleGroup from '@/components/ui/toggle-group';
 import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { schwarzschildRadius } from '@/utils/physics';
 import { createStarField } from '@/utils/starfield';
 
+import type { ControlsProps } from '@/components/app/controls';
+import type { HudProps } from '@/components/app/hud';
 import {
   BEAM_FLASH_THRESHOLD,
-  BEAM_WIDTH_OPTIONS,
   GLOSSARY_ITEMS,
   HINT_ITEMS,
   PARAMS,
@@ -38,7 +36,6 @@ import { createFieldLines } from './utils/field-lines';
 import { createGlow, createOuterGlow } from './utils/glow';
 import { createNeutronStarBody } from './utils/neutron-star';
 import { createPulsarBeams } from './utils/pulsar-beams';
-import Radio from '@/components/ui/radio';
 
 export default function NeutronStar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -210,7 +207,7 @@ export default function NeutronStar() {
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs) return;
-    const { rotator, fieldLines } = refs;
+    const { rotator } = refs;
     // Find and replace beams in the tilt object
     const tiltObj = rotator.children[0];
     const oldBeams = refs.beams;
@@ -252,8 +249,8 @@ export default function NeutronStar() {
     refs.accretionDisk.visible = params.showAccretionDisk;
   }, [params.showAccretionDisk]);
 
-  // ── Stats ─────────────────────────────────────────────────────────────────
-  const statsItems = useMemo(() => {
+  // ── SceneLayout ─────────────────────────────────────────────────────
+  const stats = useMemo(() => {
     const rs = schwarzschildRadius(params.mass);
     const hz = params.rpm / 60;
     // Surface gravity: g = GM/R² for NS (R ~ 10km)
@@ -262,7 +259,6 @@ export default function NeutronStar() {
     const R_NS = 1e4;
     const g = (G * params.mass * Msun) / (R_NS * R_NS);
     const gExponent = Math.floor(Math.log10(g));
-
     return [
       { label: 'MASS', value: params.mass.toFixed(2), unit: 'M☉' },
       { label: 'FREQ', value: hz.toFixed(1), unit: 'Hz' },
@@ -272,72 +268,31 @@ export default function NeutronStar() {
     ];
   }, [params.mass, params.rpm]);
 
-  // ── Sliders / toggles ─────────────────────────────────────────────────────
-  const sliders = SLIDER_ITEMS.map((item) => ({
-    ...item,
-    value: params[item.id],
-    onChange: (v: number) => set(item.id, v),
-  }));
+  const hudProps = {
+    title: TITLE,
+    subtitle: SUBTITLE,
+    glossary: GLOSSARY_ITEMS,
+    hints: HINT_ITEMS,
+    stats,
+  } satisfies HudProps;
 
-  const toggles = TOGGLE_ITEMS.map((item) => ({
-    ...item,
-    active: params[item.id],
-    onClick: () => set(item.id, !params[item.id]),
-  }));
+  const controlsProps = {
+    radios: RADIO_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id],
+      onChange: (newVal: string) => set(item.id, newVal as BeamWidth),
+    })),
+    sliders: SLIDER_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id],
+      onChange: (v: number) => set(item.id, v),
+    })),
+    toggles: TOGGLE_ITEMS.map((item) => ({
+      ...item,
+      active: params[item.id],
+      onClick: () => set(item.id, !params[item.id]),
+    })),
+  } satisfies ControlsProps;
 
-  const radios = RADIO_ITEMS.map((item) => ({
-    ...item,
-    value: params[item.id],
-    onChange: (newVal: string) => set(item.id, newVal as BeamWidth),
-  }));
-
-  return (
-    <SceneLayout
-      title={TITLE}
-      subtitle={SUBTITLE}
-      statsItems={statsItems}
-      glossaryItems={GLOSSARY_ITEMS}
-      hintItems={HINT_ITEMS}
-    >
-      <canvas ref={canvasRef} style={{ display: 'block', width: '100%', height: '100%' }} />
-
-      {/* Controls panel — inline, split into own file later */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 28,
-          left: 28,
-          zIndex: 10,
-          pointerEvents: 'all',
-          width: 240,
-          background: 'var(--panel)',
-          border: '1px solid var(--border)',
-          padding: '18px 20px',
-          backdropFilter: 'blur(8px)',
-          fontFamily: 'var(--font-mono)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-        }}
-      >
-        <div
-          style={{
-            fontSize: 9,
-            letterSpacing: '0.35em',
-            color: 'var(--accent)',
-            marginBottom: 16,
-            paddingBottom: 10,
-            borderBottom: '1px solid var(--border)',
-          }}
-        >
-          PARAMETERS
-        </div>
-        <SliderGroup items={sliders} />
-        {radios.map((radio) => (
-          <Radio {...radio} />
-        ))}
-        <ToggleGroup items={toggles} />
-      </div>
-    </SceneLayout>
-  );
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
 }

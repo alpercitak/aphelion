@@ -1,6 +1,6 @@
 import styles from './index.module.css';
 
-interface StatsItem {
+export interface StatsItem {
   label: string;
   value: string;
   unit?: string;

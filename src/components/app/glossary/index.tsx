@@ -1,6 +1,6 @@
+import Button from '@/components/ui/button';
 import Panel from '@/components/ui/panel';
 import styles from './index.module.css';
-import Button from '@/components/ui/button';
 
 interface GlossaryItem {
   term: string;

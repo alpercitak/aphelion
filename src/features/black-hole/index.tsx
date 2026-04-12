@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ACESFilmicToneMapping, Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
-import Controls from '@/components/app/controls';
+import type { HudProps } from '@/components/app/hud';
 import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
@@ -16,8 +16,6 @@ import { applyMassScale } from './utils/mass-scale';
 import { createOuterGlow } from './utils/outer-glow';
 import { createPhotonSphere } from './utils/photon-sphere';
 import { createRelativisticJets } from './utils/relativistic-jets';
-
-import styles from './index.module.css';
 
 export default function BlackHole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -227,43 +225,40 @@ export default function BlackHole() {
     refs.photonMat.uniforms.glowColor?.value.setRGB(1.0, 0.67 * params.lensStrength, 0.27 * params.lensStrength);
   }, [params.lensStrength]);
 
-  // ── Sliders & toggles config ──────────────────────────────────────────────
-  const sliders = SLIDER_ITEMS.map((config) => ({
-    ...config,
-    value: params[config.id],
-    onChange: (v: number) => set(config.id, v),
-  }));
-
-  const toggles = TOGGLE_ITEMS.map(({ id, label }) => ({
-    id,
-    label,
-    active: params[id],
-    onClick: () => set(id, !params[id]),
-  }));
-
+  // ── SceneLayout ─────────────────────────────────────────────────────
   const rs = schwarzschildRadius(params.mass);
   const hTemp = hawkingTemperature(params.mass);
 
-  const statsItems = useMemo(() => {
-    return [
+  const stats = useMemo(
+    () => [
       { label: 'mass', value: params.mass.toFixed(1), unit: 'M☉' },
       { label: 'spin', value: params.spin.toFixed(2), unit: 'a' },
       { label: 'temp', value: hTemp > 1e10 ? (hTemp / 1e10).toExponential(1) : '~0', unit: 'K' },
       { label: 'Rₛ', value: rs.toFixed(1), unit: 'km' },
-    ];
-  }, [params.mass, params.spin, hTemp, rs]);
-
-  return (
-    <SceneLayout
-      className={styles.root}
-      title={TITLE}
-      subtitle={SUBTITLE}
-      statsItems={statsItems}
-      glossaryItems={GLOSSARY_ITEMS}
-      hintItems={HINT_ITEMS}
-    >
-      <canvas ref={canvasRef} className={styles.canvas} />
-      <Controls sliders={sliders} toggles={toggles} />
-    </SceneLayout>
+    ],
+    [params.mass, params.spin, hTemp, rs],
   );
+
+  const hudProps = {
+    title: TITLE,
+    subtitle: SUBTITLE,
+    glossary: GLOSSARY_ITEMS,
+    hints: HINT_ITEMS,
+    stats,
+  } satisfies HudProps;
+
+  const controlsProps = {
+    sliders: SLIDER_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id],
+      onChange: (v: number) => set(item.id, v),
+    })),
+    toggles: TOGGLE_ITEMS.map((item) => ({
+      ...item,
+      active: params[item.id],
+      onClick: () => set(item.id, !params[item.id]),
+    })),
+  };
+
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
 }

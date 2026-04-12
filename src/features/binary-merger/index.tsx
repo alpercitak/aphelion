@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ACESFilmicToneMapping, Clock, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 
-import Controls from '@/components/app/controls';
+import type { ControlsProps } from '@/components/app/controls';
+import type { HudProps } from '@/components/app/hud';
 import SceneLayout from '@/layouts/scene';
 import { createOrbitControls } from '@/utils/camera';
 import { createStarField } from '@/utils/starfield';
@@ -24,8 +25,6 @@ import { orbitalOmega } from './utils/orbital-omega';
 import { orbitalPositions } from './utils/orbital-positions';
 import { createSpacetimeGrid } from './utils/spacetime-grid';
 import { createWaveRing } from './utils/wave-ring';
-
-import styles from './index.module.css';
 
 const INSPIRAL_RATES = { slow: 0.008, medium: 0.022, fast: 0.055 } as const satisfies Record<InspiralOption, number>;
 const INITIAL_SEPARATION = 7.0 as const;
@@ -338,11 +337,11 @@ export default function BinaryMerger() {
     applyBlackHoleScale(refs.bh2, params.mass2);
   }, [params.mass1, params.mass2, phase]);
 
-  // ── Sliders & toggles ─────────────────────────────────────────────────────
+  // ── SceneLayout ─────────────────────────────────────────────────────
   const totalMass = params.mass1 + params.mass2;
   const chirpMass = Math.pow(params.mass1 * params.mass2, 3 / 5) / Math.pow(totalMass, 1 / 5);
 
-  const statsItems = useMemo(
+  const stats = useMemo(
     () => [
       { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },
       { label: 'M2', value: params.mass2.toFixed(1), unit: 'M☉' },
@@ -353,39 +352,37 @@ export default function BinaryMerger() {
     [params.mass1, params.mass2, totalMass, chirpMass, phase],
   );
 
-  const sliders = SLIDER_ITEMS.map((item) => ({
-    ...item,
-    value: params[item.id],
-    onChange: (v: number) => set(item.id, v),
-  }));
-
-  const toggles = TOGGLE_ITEMS.map((item) => ({
-    ...item,
-    active: params[item.id],
-    onClick: () => set(item.id, !params[item.id]),
-  }));
-
-  const radios = RADIO_ITEMS.map((item) => ({
-    ...item,
-    value: params[item.id],
-    onChange: (newVal: string) => set(item.id, newVal as InspiralOption),
-  }));
-
   const status = useMemo(() => PHASE_LABEL_MAP[phase], [phase]);
 
-  return (
-    <SceneLayout
-      className={styles.root}
-      title={TITLE}
-      subtitle={SUBTITLE}
-      statsItems={statsItems}
-      glossaryItems={GLOSSARY_ITEMS}
-      hintItems={HINT_ITEMS}
-      status={status}
-    >
-      <canvas ref={canvasRef} className={styles.canvas} />
-      <Controls sliders={sliders} radios={radios} toggles={toggles} />
+  const hudProps = {
+    title: TITLE,
+    subtitle: SUBTITLE,
+    glossary: GLOSSARY_ITEMS,
+    hints: HINT_ITEMS,
+    status,
+    stats,
+  } satisfies HudProps;
 
+  const controlsProps = {
+    radios: RADIO_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id],
+      onChange: (newVal: string) => set(item.id, newVal as InspiralOption),
+    })),
+    sliders: SLIDER_ITEMS.map((item) => ({
+      ...item,
+      value: params[item.id],
+      onChange: (v: number) => set(item.id, v),
+    })),
+    toggles: TOGGLE_ITEMS.map((item) => ({
+      ...item,
+      active: params[item.id],
+      onClick: () => set(item.id, !params[item.id]),
+    })),
+  } satisfies ControlsProps;
+
+  return (
+    <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps}>
       {/* TODO: put this */}
       {/* <Button variant="secondary" className={styles.resetBtn} onClick={resetScene}>
             ↺ RESET

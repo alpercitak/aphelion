@@ -7,7 +7,7 @@ import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import styles from './index.module.css';
 
-interface ControlsProps {
+export interface ControlsProps {
   sliders?: Array<SliderProps>;
   toggles?: Array<ToggleProps>;
   radios?: Array<RadioProps>;

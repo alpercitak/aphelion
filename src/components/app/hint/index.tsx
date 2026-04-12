@@ -6,7 +6,7 @@ export interface HintItem {
 }
 
 interface HintProps {
-  items: Array<HintItem>;
+  items: ReadonlyArray<HintItem>;
 }
 
 export default function Hint({ items }: HintProps) {
