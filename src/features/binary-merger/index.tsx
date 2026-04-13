@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ACESFilmicToneMapping, Clock, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
+import { Clock, Mesh, Object3D, Vector3 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { createOrbitControls } from '@/utils/camera';
-import { createStarField } from '@/utils/starfield';
+import { setupScene } from '@/utils/setup';
 
 import { BASE_HUD_PROPS, PARAMS, PHASE_LABEL_MAP, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { InspiralOption, Params, Phase, SceneRef, StateRef } from './types';
@@ -77,42 +76,31 @@ export default function BinaryMerger() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
-    // ── Renderer ──────────────────────────────────────────────────────────────
-    const renderer = new WebGLRenderer({ canvas, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
-    camera.position.set(0, 10, 14);
-    camera.lookAt(0, 0, 0);
-
-    const orbit = createOrbitControls(canvas, { theta: 0.1, phi: Math.PI / 3.5, radius: 16 });
-
-    // ── Objects ───────────────────────────────────────────────────────────────
-    const stars = createStarField();
-    scene.add(stars);
+    // ── Setup ──────────────────────────────────────────────────────────────
+    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
+      canvas,
+      cameraPosition: [0, 10, 14],
+      orbitOptions: { theta: 0.1, phi: Math.PI / 3.5, radius: 16 },
+    });
 
     const grid = createSpacetimeGrid();
-    scene.add(grid);
 
     const p = stateRef.current.params;
     const bh1 = createBlackHoleUnit(p.mass1, camera.position);
     const bh2 = createBlackHoleUnit(p.mass2, camera.position);
-    scene.add(bh1, bh2);
 
     const mergedBH = createMergedBlackHole(p.mass1, p.mass2, camera.position);
     mergedBH.visible = false;
-    scene.add(mergedBH);
 
     const flash = createMergerFlash();
     camera.add(flash);
     flash.position.z = -1;
-    scene.add(camera);
+
+    scene.add(grid, bh1, bh2, mergedBH, camera);
 
     const waveRingMeshes: Array<Mesh> = [];
 
@@ -309,29 +297,9 @@ export default function BinaryMerger() {
 
     animate();
 
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', onResize);
-
     return () => {
       cancelAnimationFrame(raf);
-      orbit.dispose();
-      window.removeEventListener('resize', onResize);
-      renderer.setAnimationLoop(null);
-      scene.traverse((object) => {
-        if (object instanceof Mesh) {
-          object.geometry.dispose();
-          if (Array.isArray(object.material)) {
-            object.material.forEach((m) => m.dispose());
-          } else {
-            object.material.dispose();
-          }
-        }
-      });
-      renderer.dispose();
+      dispose();
     };
   }, [resetScene]);
 

@@ -1,20 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Clock,
-  Mesh,
-  MeshBasicMaterial,
-  Object3D,
-  PerspectiveCamera,
-  Points,
-  Scene,
-  Vector3,
-  WebGLRenderer,
-} from 'three';
+import { Clock, Mesh, MeshBasicMaterial, Object3D, Points, Vector3 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { createOrbitControls } from '@/utils/camera';
 import { schwarzschildRadius } from '@/utils/physics';
-import { createStarField } from '@/utils/starfield';
+import { setupScene } from '@/utils/setup';
 
 import { BASE_HUD_PROPS, BEAM_FLASH_THRESHOLD, PARAMS, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { BeamWidth, Params, SceneRef } from './types';
@@ -47,33 +36,24 @@ export default function NeutronStar() {
       return;
     }
 
-    const renderer = new WebGLRenderer({ canvas, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    // ── Setup ──────────────────────────────────────────────────────────────
+    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
+      canvas,
+      cameraPosition: [0, 2, 5],
+      orbitOptions: { radius: 5, minRadius: 1.5, maxRadius: 20 },
+    });
 
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
-    camera.position.set(0, 2, 5);
-    camera.lookAt(0, 0, 0);
+    const starBody = createNeutronStarBody(PARAMS.mass); // Neutron star body
 
-    const orbit = createOrbitControls(canvas, { radius: 5, minRadius: 1.5, maxRadius: 20 });
+    const glow = createGlow(camera.position); // Glow layers
+    const outerGlow = createOuterGlow(camera.position); // Glow layers
+    const rotator = new Object3D(); // Rotator — beams rotate with the star's spin axis
 
-    // Star field — slightly blue-tinted for X-ray environment
-    const stars = createStarField();
-    scene.add(stars);
+    // Accretion disk — flat, not tilted
+    const accretionDisk = createAccretionDisk();
+    accretionDisk.visible = PARAMS.showAccretionDisk;
 
-    // Neutron star body
-    const starBody = createNeutronStarBody(PARAMS.mass);
-    scene.add(starBody);
-
-    // Glow layers
-    const glow = createGlow(camera.position);
-    const outerGlow = createOuterGlow(camera.position);
-    scene.add(glow, outerGlow);
-
-    // Rotator — beams rotate with the star's spin axis
-    const rotator = new Object3D();
-    scene.add(rotator);
+    scene.add(starBody, glow, outerGlow, rotator, accretionDisk);
 
     // Magnetic tilt object — field lines tilt ~25° from rotation axis
     const fieldTiltObj = new Object3D();
@@ -85,11 +65,6 @@ export default function NeutronStar() {
 
     const fieldLines = createFieldLines(PARAMS.fieldStrength);
     fieldTiltObj.add(fieldLines);
-
-    // Accretion disk — flat, not tilted
-    const accretionDisk = createAccretionDisk();
-    accretionDisk.visible = PARAMS.showAccretionDisk;
-    scene.add(accretionDisk);
 
     // Beam flash overlay — attached to camera so it always faces viewer
     const flash = createBeamFlash();
@@ -174,18 +149,9 @@ export default function NeutronStar() {
 
     animate();
 
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', onResize);
-
     return () => {
       cancelAnimationFrame(raf);
-      orbit.dispose();
-      window.removeEventListener('resize', onResize);
-      renderer.dispose();
+      dispose();
     };
   }, []);
 

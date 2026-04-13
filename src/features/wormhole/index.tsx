@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ACESFilmicToneMapping,
   BackSide,
   Clock,
   Color,
@@ -13,13 +12,11 @@ import {
   Scene,
   ShaderMaterial,
   Vector3,
-  WebGLRenderer,
   WebGLRenderTarget,
 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { createOrbitControls } from '@/utils/camera';
-import { createStarField } from '@/utils/starfield';
+import { setupScene } from '@/utils/setup';
 
 import {
   BASE_HUD_PROPS,
@@ -55,24 +52,15 @@ export default function Wormhole() {
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
-    const renderer = new WebGLRenderer({ canvas, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-
-    // ── Main scene ───────────────────────────────────────────────────────────
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
-    camera.position.set(0, 1.5, 5);
-    camera.lookAt(0, 0, 0);
-
-    const orbit = createOrbitControls(canvas, { radius: 5, minRadius: 2, maxRadius: 20 });
-
-    const stars = createStarField();
-    scene.add(stars);
+    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
+      canvas,
+      cameraPosition: [0, 1.5, 5],
+      orbitOptions: { radius: 5, minRadius: 2, maxRadius: 20 },
+    });
 
     // ── Portal (secondary) scene — rendered to texture ────────────────────────
     const renderTarget = new WebGLRenderTarget(512, 512, {
@@ -202,19 +190,10 @@ export default function Wormhole() {
 
     animate();
 
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', onResize);
-
     return () => {
       cancelAnimationFrame(raf);
-      orbit.dispose();
-      window.removeEventListener('resize', onResize);
       renderTarget.dispose();
-      renderer.dispose();
+      dispose();
     };
   }, []);
 

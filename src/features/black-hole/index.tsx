@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ACESFilmicToneMapping, Clock, Mesh, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Clock, Mesh } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { createOrbitControls } from '@/utils/camera';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
-import { createStarField } from '@/utils/starfield';
+import { setupScene } from '@/utils/setup';
 
 import { BASE_HUD_PROPS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
 import type { Params, SceneRef } from './types';
@@ -38,43 +37,21 @@ export default function BlackHole() {
       return;
     }
 
-    // ── Renderer ──────────────────────────────────────────────────────────────
-    const renderer = new WebGLRenderer({ canvas, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-
-    const scene = new Scene();
-
-    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
-    camera.position.set(0, 3, 8);
-    camera.lookAt(0, 0, 0);
-
-    const orbit = createOrbitControls(canvas);
+    // ── Setup ──────────────────────────────────────────────────────────────
+    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
+      canvas,
+      cameraPosition: [0, 3, 8],
+      orbitOptions: { theta: 0.1, phi: Math.PI / 3.5, radius: 16 },
+    });
 
     // ── Objects ───────────────────────────────────────────────────────────────
-    const stars = createStarField();
-    scene.add(stars);
-
     const blackHole = createEventHorizon();
-    scene.add(blackHole);
-
     const photonSphere = createPhotonSphere(camera.position);
-    scene.add(photonSphere);
-
     const outerGlow = createOuterGlow(camera.position);
-    scene.add(outerGlow);
-
     const { photonRing, einsteinRing } = createLensingRings();
-    scene.add(photonRing);
-    scene.add(einsteinRing);
-
     const diskGroup = createAccretionDisk(PARAMS.temp, false);
-    scene.add(diskGroup);
-
     const jetsGroup = createRelativisticJets();
-    scene.add(jetsGroup);
+    scene.add(blackHole, photonSphere, outerGlow, photonRing, einsteinRing, diskGroup, jetsGroup);
 
     // Store refs for external param changes
     sceneRef.current = {
@@ -135,19 +112,9 @@ export default function BlackHole() {
 
     animate();
 
-    // ── Resize ────────────────────────────────────────────────────────────────
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', onResize);
-
     return () => {
       cancelAnimationFrame(raf);
-      orbit.dispose();
-      window.removeEventListener('resize', onResize);
-      renderer.dispose();
+      dispose();
     };
   }, []);
 
@@ -157,7 +124,7 @@ export default function BlackHole() {
     if (!refs) {
       return;
     }
-    const { scene, blackHole, photonSphere, outerGlow, photonRing, einsteinRing } = refs;
+    const { blackHole, photonSphere, outerGlow, photonRing, einsteinRing } = refs;
 
     applyMassScale({ blackHole, photonSphere, outerGlow, photonRing, einsteinRing }, params.mass, params.spin);
   }, [params.mass, params.spin]);

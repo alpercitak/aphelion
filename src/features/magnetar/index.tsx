@@ -1,22 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  ACESFilmicToneMapping,
-  BackSide,
-  Clock,
-  FrontSide,
-  LineBasicMaterial,
-  Mesh,
-  MeshBasicMaterial,
-  PerspectiveCamera,
-  PointsMaterial,
-  Scene,
-  Vector3,
-  WebGLRenderer,
-} from 'three';
+import { BackSide, Clock, FrontSide, LineBasicMaterial, Mesh, MeshBasicMaterial, PointsMaterial, Vector3 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { createOrbitControls } from '@/utils/camera';
-import { createStarField } from '@/utils/starfield';
+import { setupScene } from '@/utils/setup';
 
 import {
   BASE_HUD_PROPS,
@@ -53,23 +39,16 @@ export default function Magnetar() {
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
-    const renderer = new WebGLRenderer({ canvas, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
-    camera.position.set(0, 1.5, 4.5);
-    camera.lookAt(0, 0, 0);
-
-    const orbit = createOrbitControls(canvas, { radius: 4.5, minRadius: 1.5, maxRadius: 18 });
-
-    const stars = createStarField();
-    scene.add(stars);
+    // ── Setup ──────────────────────────────────────────────────────────────
+    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
+      canvas,
+      cameraPosition: [0, 1.5, 4.5],
+      orbitOptions: { radius: 4.5, minRadius: 1.5, maxRadius: 18 },
+    });
 
     const body = createMagnetarBody();
     const innerGlow = createGlow(camera.position, 0x99bbff, NS_RADIUS * 1.7, FrontSide);
@@ -80,8 +59,7 @@ export default function Magnetar() {
 
     camera.add(flash);
     flash.position.z = -1;
-    scene.add(camera);
-    scene.add(body, innerGlow, outerGlow, fieldLines, fieldHalo);
+    scene.add(body, innerGlow, outerGlow, fieldLines, fieldHalo, camera);
 
     sceneRef.current = {
       renderer,
@@ -214,18 +192,9 @@ export default function Magnetar() {
 
     animate();
 
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', onResize);
-
     return () => {
       cancelAnimationFrame(raf);
-      orbit.dispose();
-      window.removeEventListener('resize', onResize);
-      renderer.dispose();
+      dispose();
     };
   }, []);
 
