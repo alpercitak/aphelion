@@ -57,16 +57,4 @@ export type Params = {
   showStars: boolean;
 };
 
-export interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'throatRadius' | 'exoticDensity' | 'lensingStrength'>;
-}
-
-export interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showExoticHalo' | 'showLensingRings' | 'showStars'>;
-}
-
-export interface RadioItem extends Partial<RadioProps> {
-  id: keyof Pick<Params, 'destination'>;
-}
-
 export type Destination = 'distant' | 'nebula';
