@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Clock, Mesh } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
+import { useParams } from '@/hooks/params';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 
@@ -19,17 +20,7 @@ export default function BlackHole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef>(null);
 
-  const [params, setParams] = useState<Params>(PARAMS);
-  const paramsRef = useRef(params);
-
-  // Keep ref in sync for use inside animation loop
-  useEffect(() => {
-    paramsRef.current = params;
-  }, [params]);
-
-  const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
-    setParams((prev) => ({ ...prev, [key]: value }));
-  }, []);
+  const { params, paramsRef, set } = useParams<Params>(PARAMS);
 
   useEffect(() => {
     const canvas = canvasRef.current;

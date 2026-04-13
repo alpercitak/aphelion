@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Clock, Mesh, Object3D, Vector3 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
+import { useParams } from '@/hooks/params';
 import { setupScene } from '@/utils/setup';
 
 import { BASE_HUD_PROPS, PARAMS, PHASE_LABEL_MAP, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
@@ -31,18 +32,9 @@ export default function BinaryMerger() {
     params: PARAMS,
   });
 
-  const [params, setParams] = useState<Params>(PARAMS);
-  const paramsRef = useRef(params);
+  const { params, paramsRef, set } = useParams<Params>(PARAMS);
 
   const [phase, setPhase] = useState<Phase>('orbit');
-
-  useEffect(() => {
-    paramsRef.current = params;
-  });
-
-  const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
-    setParams((prev) => ({ ...prev, [key]: value }));
-  }, []);
 
   const resetScene = useCallback(() => {
     const s = stateRef.current;

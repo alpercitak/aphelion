@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import {
   BackSide,
   Clock,
@@ -16,6 +16,7 @@ import {
 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
+import { useParams } from '@/hooks/params';
 import { setupScene } from '@/utils/setup';
 
 import {
@@ -39,15 +40,7 @@ export default function Wormhole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const [params, setParams] = useState<Params>(PARAMS);
-  const paramsRef = useRef(params);
-  useEffect(() => {
-    paramsRef.current = params;
-  });
-
-  const set = useCallback(<K extends keyof Params>(key: K, value: Params[K]) => {
-    setParams((prev) => ({ ...prev, [key]: value }));
-  }, []);
+  const { params, paramsRef, set } = useParams<Params>(PARAMS);
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
