@@ -42,11 +42,3 @@ export interface Params {
   showStars: boolean;
   dopplerShift: boolean;
 }
-
-export interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'mass' | 'spin' | 'temp' | 'lensStrength'>;
-}
-
-export interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showDisk' | 'showJets' | 'showStars' | 'dopplerShift'>;
-}
