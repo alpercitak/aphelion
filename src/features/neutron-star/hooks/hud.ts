@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { schwarzschildRadius } from '@/utils/physics';
+import { GRAVITATIONAL_CONSTANT, SOLAR_MASS_KG, schwarzschildRadius } from '@/utils/physics';
 import type { Params } from '../types';
 
 const BASE_HUD_PROPS = {
@@ -75,18 +75,15 @@ const BASE_HUD_PROPS = {
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
-// Physical Constants
-const G = 6.674e-11;
-const Msun = 1.989e30;
-const R_NS = 1e4;
+const R_NS = 1e4; // 10km Neutron Star radius in meters
 
 export const useHud = (params: Params) =>
   useMemo(() => {
     const rs = schwarzschildRadius(params.mass);
     const hz = params.rpm / 60;
 
-    const g = (G * params.mass * Msun) / (R_NS * R_NS);
-    const gExponent = Math.floor(Math.log10(g));
+    const surfaceGravity = (GRAVITATIONAL_CONSTANT * params.mass * SOLAR_MASS_KG) / (R_NS * R_NS);
+    const gExponent = Math.floor(Math.log10(surfaceGravity));
 
     const stats = [
       { label: 'MASS', value: params.mass.toFixed(2), unit: 'M☉' },

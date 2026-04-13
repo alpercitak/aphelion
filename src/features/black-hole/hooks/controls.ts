@@ -4,11 +4,11 @@ import { useSceneControls } from '@/hooks/scene-controls';
 import { PARAMS } from '../constants';
 import type { Params } from '../types';
 
-export interface SliderItem extends Partial<SliderProps> {
+interface SliderItem extends Partial<SliderProps> {
   id: keyof Pick<Params, 'mass' | 'spin' | 'temp' | 'lensStrength'>;
 }
 
-export interface ToggleItem extends Partial<ToggleProps> {
+interface ToggleItem extends Partial<ToggleProps> {
   id: keyof Pick<Params, 'showDisk' | 'showJets' | 'showStars' | 'dopplerShift'>;
 }
 

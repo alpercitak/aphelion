@@ -16,6 +16,7 @@ import {
 const RINGS = 80;
 const INNER_R = 1.5;
 const OUTER_R = 6.0;
+const DIFF_R = OUTER_R - INNER_R;
 
 const createMeshBasicMaterial = (brightness: number, params: MeshBasicMaterialParameters) =>
   new MeshBasicMaterial({
@@ -32,8 +33,8 @@ const createDopplerDisk = (temp: number) => {
 
   for (let i = 0; i < RINGS; i++) {
     const t = i / RINGS;
-    const r = INNER_R + t * (OUTER_R - INNER_R);
-    const width = ((OUTER_R - INNER_R) / RINGS) * 1.05;
+    const r = INNER_R + t * DIFF_R;
+    const width = (DIFF_R / RINGS) * 1.05;
     const segments = 256;
     const vertices = [];
     const cols = [];

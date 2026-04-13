@@ -43,6 +43,13 @@ export const SCENES = [
     description: 'Matter only exits. The inverse of a black hole.',
     component: lazy(() => import('@/features/white-hole')),
   },
+  {
+    id: 'hawking-evaporation',
+    title: 'Hawking Evaporation',
+    cardSubtitle: 'Quantum Decay',
+    description: 'Virtual particle pairs at the horizon. A micro black hole evaporates.',
+    component: lazy(() => import('@/features/hawking-evaporation')),
+  },
 ];
 
 export const getScene = (id: string) => {
