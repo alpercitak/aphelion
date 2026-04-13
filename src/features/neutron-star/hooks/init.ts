@@ -1,5 +1,6 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect } from 'react';
 import { Object3D } from 'three';
+import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { PARAMS } from '../constants';
 import type { SceneRef } from '../types';
@@ -10,10 +11,7 @@ import { createGlow, createOuterGlow } from '../utils/glow';
 import { createNeutronStarBody } from '../utils/neutron-star';
 import { createPulsarBeams } from '../utils/pulsar-beams';
 
-type CanvasRefType = RefObject<HTMLCanvasElement | null>;
-type SceneRefType = RefObject<SceneRef | null>;
-
-export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType) => {
+export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRef>) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {

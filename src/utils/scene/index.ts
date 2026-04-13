@@ -36,6 +36,13 @@ export const SCENES = [
     description: 'Traversable spacetime shortcut with lensed view through the throat.',
     component: lazy(() => import('@/features/wormhole')),
   },
+  {
+    id: 'white-hole',
+    title: 'White Hole',
+    subtitle: 'Time-Reversed Singularity',
+    description: 'Matter only exits. The inverse of a black hole.',
+    component: lazy(() => import('@/features/white-hole')),
+  },
 ];
 
 export const getScene = (id: string) => {

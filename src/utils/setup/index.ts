@@ -6,14 +6,20 @@ interface SetupSceneProps {
   canvas: HTMLCanvasElement;
   cameraPosition: [number, number, number];
   orbitOptions?: OrbitOptions;
+  toneMappingExposure?: number;
 }
 
-export const setupScene = ({ canvas, cameraPosition, orbitOptions = {} }: SetupSceneProps) => {
+export const setupScene = ({
+  canvas,
+  cameraPosition,
+  orbitOptions = {},
+  toneMappingExposure = 1.2,
+}: SetupSceneProps) => {
   const renderer = new WebGLRenderer({ canvas, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
+  renderer.toneMappingExposure = toneMappingExposure;
 
   const scene = new Scene();
 
