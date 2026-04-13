@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import {
   BackSide,
-  Clock,
   Color,
   FrontSide,
   LinearFilter,
@@ -16,9 +15,9 @@ import {
 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useParams } from '@/hooks/params';
-import { setupScene } from '@/utils/setup';
+import { useSceneParams } from '@/hooks/scene-params';
 import { useSceneAnimation } from '@/hooks/scene-animation';
+import { setupScene } from '@/utils/setup';
 
 import {
   BASE_HUD_PROPS,
@@ -41,7 +40,7 @@ export default function Wormhole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const { params, paramsRef, set } = useParams<Params>(PARAMS);
+  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {

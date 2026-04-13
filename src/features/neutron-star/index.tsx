@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Clock, Mesh, MeshBasicMaterial, Object3D, Points, Vector3 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useParams } from '@/hooks/params';
+import { useSceneParams } from '@/hooks/scene-params';
 import { schwarzschildRadius } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 
@@ -19,7 +19,7 @@ export default function NeutronStar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const { params, paramsRef, set } = useParams<Params>(PARAMS);
+  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const useParams = <T>(initial: T) => {
+export const useSceneParams = <T>(initial: T) => {
   const [params, setParams] = useState(initial);
   const ref = useRef(params);
 

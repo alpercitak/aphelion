@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { BackSide, Clock, FrontSide, LineBasicMaterial, Mesh, MeshBasicMaterial, PointsMaterial, Vector3 } from 'three';
 
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useParams } from '@/hooks/params';
+import { useSceneParams } from '@/hooks/scene-params';
 import { setupScene } from '@/utils/setup';
 
 import {
@@ -27,7 +27,7 @@ export default function Magnetar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const { params, paramsRef, set } = useParams<Params>(PARAMS);
+  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
