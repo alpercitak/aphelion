@@ -9,7 +9,7 @@ export const PARAMS = {
   showWaveRings: true,
   showDisks: true,
   autoLoop: true,
-} satisfies Params;
+} as const satisfies Params;
 
 export const PHASE_LABEL_MAP = {
   orbit: '● INSPIRAL IN PROGRESS',

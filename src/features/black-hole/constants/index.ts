@@ -9,4 +9,4 @@ export const PARAMS = {
   showJets: true,
   showStars: true,
   dopplerShift: false,
-} satisfies Params;
+} as const satisfies Params;

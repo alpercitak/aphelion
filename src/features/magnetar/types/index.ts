@@ -44,18 +44,6 @@ export type Params = {
   showFieldDistortion: boolean;
 };
 
-export interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'fieldStrength' | 'burstIntensity' | 'surfaceTemp'>;
-}
-
-export interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showFieldLines' | 'showStarquakes' | 'showGammaBursts' | 'showFieldDistortion'>;
-}
-
-export interface RadioItem extends Partial<RadioProps> {
-  id: keyof Pick<Params, 'starquakeRate'>;
-}
-
 export type StarquakeRate = 'off' | 'rare' | 'frequent';
 
 export type ActiveCrack = {
