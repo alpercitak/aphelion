@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Clock, Mesh, Object3D, Vector3 } from 'three';
 
-import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useSceneParams } from '@/hooks/scene-params';
+import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { setupScene } from '@/utils/setup';
 
-import { BASE_HUD_PROPS, PARAMS, PHASE_LABEL_MAP, RADIO_ITEMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
-import type { InspiralOption, Params, Phase, SceneRef, StateRef } from './types';
+import { BASE_HUD_PROPS, PARAMS, PHASE_LABEL_MAP } from './constants';
+import { useControls } from './hooks/controls';
+import type { InspiralOption, Phase, SceneRef, StateRef } from './types';
 import { applyBlackHoleScale, createBlackHoleUnit, createMergedBlackHole } from './utils/black-hole';
 import { createMergerFlash } from './utils/merger-flash';
 import { orbitalOmega } from './utils/orbital-omega';
@@ -32,7 +32,7 @@ export default function BinaryMerger() {
     params: PARAMS,
   });
 
-  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
+  const { params, paramsRef, controls } = useControls();
 
   const [phase, setPhase] = useState<Phase>('orbit');
 
@@ -328,24 +328,5 @@ export default function BinaryMerger() {
     stats,
   } satisfies SceneLayoutHudProps;
 
-  const controlsProps = {
-    radios: RADIO_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id],
-      onChange: (v: string) => set(item.id, v as InspiralOption),
-    })),
-    sliders: SLIDER_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id],
-      onChange: (v: number) => set(item.id, v),
-    })),
-    toggles: TOGGLE_ITEMS.map((item) => ({
-      ...item,
-      active: params[item.id],
-      onClick: () => set(item.id, !params[item.id]),
-    })),
-    buttons: [{ variant: 'secondary', onClick: resetScene, children: '↺ RESET' }],
-  } satisfies SceneLayoutControlsProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
 }

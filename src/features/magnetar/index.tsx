@@ -1,21 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { BackSide, Clock, FrontSide, LineBasicMaterial, Mesh, MeshBasicMaterial, PointsMaterial, Vector3 } from 'three';
 
-import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useSceneParams } from '@/hooks/scene-params';
+import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { setupScene } from '@/utils/setup';
 
-import {
-  BASE_HUD_PROPS,
-  NS_RADIUS,
-  PARAMS,
-  RADIO_ITEMS,
-  SLIDER_ITEMS,
-  STARQUAKE_DURATION,
-  STARQUAKE_RATES,
-  TOGGLE_ITEMS,
-} from './constants';
-import type { ActiveCrack, Params, SceneRef, StarquakeRate } from './types';
+import { BASE_HUD_PROPS, NS_RADIUS, PARAMS, STARQUAKE_DURATION, STARQUAKE_RATES } from './constants';
+import { useControls } from './hooks/controls';
+import type { ActiveCrack, SceneRef } from './types';
 import { createFieldHalo } from './utils/field-halo';
 import { createFieldLines } from './utils/field-lines';
 import { createGammaBurstFlash } from './utils/gamma-burst';
@@ -27,7 +18,7 @@ export default function Magnetar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
+  const { params, paramsRef, controls } = useControls();
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -245,23 +236,5 @@ export default function Magnetar() {
     stats,
   } satisfies SceneLayoutHudProps;
 
-  const controlsProps = {
-    sliders: SLIDER_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id] as number,
-      onChange: (v: number) => set(item.id, v),
-    })),
-    radios: RADIO_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id],
-      onChange: (v: string) => set(item.id, v as StarquakeRate),
-    })),
-    toggles: TOGGLE_ITEMS.map((item) => ({
-      ...item,
-      active: params[item.id],
-      onClick: () => set(item.id, !params[item.id]),
-    })),
-  } satisfies SceneLayoutControlsProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
 }

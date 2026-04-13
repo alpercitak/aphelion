@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import SceneLayout from '@/components/app/scene-layout';
-import { PARAMS } from './constants';
 import { useAnimate } from './hooks/animate';
 import { useControls } from './hooks/controls';
 import { useHud } from './hooks/hud';
@@ -12,7 +11,7 @@ export default function NeutronStar() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const { params, paramsRef, controls } = useControls(PARAMS);
+  const { params, paramsRef, controls } = useControls();
   const hud = useHud(params);
 
   useInit(canvasRef, sceneRef);

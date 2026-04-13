@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Clock, Mesh } from 'three';
 
-import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useSceneParams } from '@/hooks/scene-params';
+import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 
-import { BASE_HUD_PROPS, PARAMS, SLIDER_ITEMS, TOGGLE_ITEMS } from './constants';
-import type { Params, SceneRef } from './types';
+import { BASE_HUD_PROPS, PARAMS } from './constants';
+import { useControls } from './hooks/controls';
+import type { SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
 import { createLensingRings } from './utils/lensing-rings';
@@ -20,7 +20,7 @@ export default function BlackHole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef>(null);
 
-  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
+  const { params, paramsRef, controls } = useControls();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -203,18 +203,5 @@ export default function BlackHole() {
     stats,
   } satisfies SceneLayoutHudProps;
 
-  const controlsProps = {
-    sliders: SLIDER_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id],
-      onChange: (v: number) => set(item.id, v),
-    })),
-    toggles: TOGGLE_ITEMS.map((item) => ({
-      ...item,
-      active: params[item.id],
-      onClick: () => set(item.id, !params[item.id]),
-    })),
-  } satisfies SceneLayoutControlsProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
 }

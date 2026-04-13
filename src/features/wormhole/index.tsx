@@ -14,21 +14,13 @@ import {
   WebGLRenderTarget,
 } from 'three';
 
-import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { useSceneParams } from '@/hooks/scene-params';
+import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import { setupScene } from '@/utils/setup';
 
-import {
-  BASE_HUD_PROPS,
-  DESTINATION_COLOR_MAP,
-  DESTINATION_LABEL_MAP,
-  PARAMS,
-  RADIO_ITEMS,
-  SLIDER_ITEMS,
-  TOGGLE_ITEMS,
-} from './constants';
-import type { Destination, Params, SceneRef } from './types';
+import { BASE_HUD_PROPS, DESTINATION_COLOR_MAP, DESTINATION_LABEL_MAP, PARAMS } from './constants';
+import { useControls } from './hooks/controls';
+import type { SceneRef } from './types';
 import { createDestinationStars } from './utils/destination-stars';
 import { createExoticHalo } from './utils/exotic-halo';
 import { createFresnelGlow } from './utils/fresnel-glow';
@@ -40,7 +32,7 @@ export default function Wormhole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
 
-  const { params, paramsRef, set } = useSceneParams<Params>(PARAMS);
+  const { params, paramsRef, controls } = useControls();
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -301,24 +293,5 @@ export default function Wormhole() {
     stats,
   } satisfies SceneLayoutHudProps;
 
-  const controlsProps = {
-    sliders: SLIDER_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id] as number,
-      onChange: (v: number) => set(item.id, v),
-    })),
-    radios: RADIO_ITEMS.map((item) => ({
-      ...item,
-      value: params[item.id],
-      onChange: (v: string) => set(item.id, v as Destination),
-    })),
-    toggles: TOGGLE_ITEMS.map(({ id, label }) => ({
-      id,
-      label,
-      active: params[id],
-      onClick: () => set(id, !params[id]),
-    })),
-  } satisfies SceneLayoutControlsProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controlsProps} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
 }
