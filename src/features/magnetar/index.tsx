@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { BackSide, Clock, FrontSide, LineBasicMaterial, Mesh, MeshBasicMaterial, PointsMaterial, Vector3 } from 'three';
 
-import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
+import SceneLayout from '@/components/app/scene-layout';
 import { setupScene } from '@/utils/setup';
 
-import { BASE_HUD_PROPS, NS_RADIUS, PARAMS, STARQUAKE_DURATION, STARQUAKE_RATES } from './constants';
+import { NS_RADIUS, PARAMS, STARQUAKE_DURATION, STARQUAKE_RATES } from './constants';
 import { useControls } from './hooks/controls';
+import { useHud } from './hooks/hud';
 import type { ActiveCrack, SceneRef } from './types';
 import { createFieldHalo } from './utils/field-halo';
 import { createFieldLines } from './utils/field-lines';
@@ -19,6 +20,7 @@ export default function Magnetar() {
   const sceneRef = useRef<SceneRef | null>(null);
 
   const { params, paramsRef, controls } = useControls();
+  const hud = useHud(params);
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -219,22 +221,5 @@ export default function Magnetar() {
     refs.burstOpacity = params.burstIntensity * 0.4;
   }, [params.showGammaBursts, params.burstIntensity]);
 
-  // ── Stats ─────────────────────────────────────────────────────────────────
-  const stats = useMemo(() => {
-    const fieldGauss = `10^${(13 + params.fieldStrength).toFixed(1)}`;
-    const tempMK = (params.surfaceTemp / 1e6).toFixed(0);
-    return [
-      { label: 'FIELD', value: fieldGauss, unit: 'G' },
-      { label: 'TEMP', value: `${tempMK}`, unit: 'MK' },
-      { label: 'RADIUS', value: '~10', unit: 'km' },
-      { label: 'SPIN', value: '~0.1–10', unit: 'RPM' },
-    ];
-  }, [params.fieldStrength, params.surfaceTemp]);
-
-  const hudProps = {
-    ...BASE_HUD_PROPS,
-    stats,
-  } satisfies SceneLayoutHudProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
 }
