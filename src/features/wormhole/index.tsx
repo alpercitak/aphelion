@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   BackSide,
   Color,
@@ -14,12 +14,13 @@ import {
   WebGLRenderTarget,
 } from 'three';
 
-import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
+import SceneLayout from '@/components/app/scene-layout';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import { setupScene } from '@/utils/setup';
 
-import { BASE_HUD_PROPS, DESTINATION_COLOR_MAP, DESTINATION_LABEL_MAP, PARAMS } from './constants';
+import { DESTINATION_COLOR_MAP, PARAMS } from './constants';
 import { useControls } from './hooks/controls';
+import { useHud } from './hooks/hud';
 import type { SceneRef } from './types';
 import { createDestinationStars } from './utils/destination-stars';
 import { createExoticHalo } from './utils/exotic-halo';
@@ -33,6 +34,7 @@ export default function Wormhole() {
   const sceneRef = useRef<SceneRef | null>(null);
 
   const { params, paramsRef, controls } = useControls();
+  const hud = useHud(params);
 
   // ── Three.js setup ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -277,21 +279,5 @@ export default function Wormhole() {
     refs.stars.visible = params.showStars;
   }, [params.showExoticHalo, params.showLensingRings, params.showStars]);
 
-  // ── Stats ─────────────────────────────────────────────────────────────────
-  const stats = useMemo(
-    () => [
-      { label: 'THROAT', value: params.throatRadius.toFixed(2), unit: 'r₀' },
-      { label: 'EXOTIC', value: params.exoticDensity.toFixed(2), unit: 'ρ' },
-      { label: 'DEST', value: DESTINATION_LABEL_MAP[params.destination].toUpperCase() },
-      { label: 'STATUS', value: 'THEORETICAL' },
-    ],
-    [params.throatRadius, params.exoticDensity, params.destination],
-  );
-
-  const hudProps = {
-    ...BASE_HUD_PROPS,
-    stats,
-  } satisfies SceneLayoutHudProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
 }
