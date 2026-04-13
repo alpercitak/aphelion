@@ -18,6 +18,7 @@ import {
 import SceneLayout, { type SceneLayoutControlsProps, type SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { useParams } from '@/hooks/params';
 import { setupScene } from '@/utils/setup';
+import { useSceneAnimation } from '@/hooks/scene-animation';
 
 import {
   BASE_HUD_PROPS,
@@ -123,75 +124,73 @@ export default function Wormhole() {
       portalUniforms,
     };
 
-    // ── Animation loop ──────────────────────────────────────────────────────
-    const clock = new Clock();
-    let raf: number;
-
-    function animate() {
-      raf = requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-      const p = paramsRef.current;
-      const refs = sceneRef.current;
-      if (!refs) return;
-
-      orbit.updateCamera(camera);
-
-      // Rotate star fields
-      stars.rotation.y = t * 0.002;
-      destinationStars.rotation.y = -t * 0.003; // counter-rotate for alien feel
-      destinationStars.rotation.x = t * 0.001;
-
-      // Slowly rotate portal camera to give the other side life
-      portalCamera.rotation.y = t * 0.08;
-      portalCamera.rotation.x = Math.sin(t * 0.15) * 0.1;
-
-      // Portal distortion from lensing strength
-      portalUniforms.time.value = t;
-      portalUniforms.distortion.value = p.lensingStrength;
-
-      // Fresnel view vectors
-      rimUniforms.viewVector.value.copy(camera.position);
-      innerGlowUniforms.viewVector.value.copy(camera.position);
-      outerGlowUniforms.viewVector.value.copy(camera.position);
-
-      // Exotic halo slow rotation + pulse
-      if (p.showExoticHalo) {
-        exoticHalo.rotation.y = t * 0.12;
-        exoticHalo.rotation.z = t * 0.07;
-        (exoticHalo.material as PointsMaterial).opacity = 0.3 + Math.sin(t * 1.4) * 0.15 * p.exoticDensity;
-      }
-
-      // Lensing rings face camera
-      lensingRings.forEach((ring, i) => {
-        ring.lookAt(camera.position);
-        (ring.material as ShaderMaterial).uniforms['opacity']!.value =
-          (1 - (i + 1) / lensingRings.length) * 0.5 * p.lensingStrength;
-      });
-
-      // Rim color shifts with exotic density — more exotic = more violet
-      rimUniforms.glowColor.value.setRGB(0.6 + (1 - p.exoticDensity) * 0.3, 0.7 + (1 - p.exoticDensity) * 0.15, 1.0);
-
-      // ── Two-pass render ─────────────────────────────────────────────────
-      // Pass 1: render portal scene to texture
-      renderer.setRenderTarget(renderTarget);
-      renderer.render(portalScene, portalCamera);
-
-      // Pass 2: render main scene to screen
-      renderer.setRenderTarget(null);
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
     return () => {
-      cancelAnimationFrame(raf);
       renderTarget.dispose();
       dispose();
     };
   }, []);
 
-  // ── Param effects ─────────────────────────────────────────────────────────
+  // ── Animation loop ──────────────────────────────────────────────────────
+  useSceneAnimation((time) => {
+    const refs = sceneRef.current;
+    const params = paramsRef.current;
+    if (!refs) {
+      return;
+    }
 
+    const {
+      renderer,
+      scene,
+      portalScene,
+      camera,
+      portalCamera,
+      orbit,
+      renderTarget,
+      stars,
+      destinationStars,
+      portalUniforms,
+      rimUniforms,
+      innerGlowUniforms,
+      outerGlowUniforms,
+      lensingRings,
+      exoticHalo,
+    } = refs;
+
+    orbit.updateCamera(camera);
+
+    stars.rotation.y = time * 0.002;
+    destinationStars.rotation.y = -time * 0.003;
+    destinationStars.rotation.x = time * 0.001;
+
+    portalCamera.rotation.y = time * 0.08;
+    portalCamera.rotation.x = Math.sin(time * 0.15) * 0.1;
+
+    portalUniforms.time.value = time;
+    portalUniforms.distortion.value = params.lensingStrength;
+
+    rimUniforms.viewVector.value.copy(camera.position);
+    innerGlowUniforms.viewVector.value.copy(camera.position);
+    outerGlowUniforms.viewVector.value.copy(camera.position);
+
+    if (params.showExoticHalo) {
+      exoticHalo.rotation.y = time * 0.12;
+      exoticHalo.rotation.z = time * 0.07;
+      (exoticHalo.material as PointsMaterial).opacity = 0.3 + Math.sin(time * 1.4) * 0.15 * params.exoticDensity;
+    }
+
+    lensingRings.forEach((ring, i) => {
+      ring.lookAt(camera.position);
+      (ring.material as ShaderMaterial).uniforms['opacity']!.value =
+        (1 - (i + 1) / lensingRings.length) * 0.5 * params.lensingStrength;
+    });
+
+    renderer.setRenderTarget(renderTarget);
+    renderer.render(portalScene, portalCamera);
+    renderer.setRenderTarget(null);
+    renderer.render(scene, camera);
+  });
+
+  // ── Param effects ─────────────────────────────────────────────────────────
   // Rebuild geometry when throat radius changes
   useEffect(() => {
     const refs = sceneRef.current;
