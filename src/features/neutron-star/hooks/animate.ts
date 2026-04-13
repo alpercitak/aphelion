@@ -50,7 +50,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   }
 };
 
-export function useAnimate(sceneRef: React.RefObject<SceneRef | null>, paramsRef: React.RefObject<Params>) {
+export const useAnimate = (sceneRef: React.RefObject<SceneRef | null>, paramsRef: React.RefObject<Params>) => {
   useSceneAnimation((time) => {
     const refs = sceneRef.current;
     if (!refs) {
@@ -60,4 +60,4 @@ export function useAnimate(sceneRef: React.RefObject<SceneRef | null>, paramsRef
     animate(refs, paramsRef.current, time);
     core.renderer.render(core.scene, core.camera);
   });
-}
+};

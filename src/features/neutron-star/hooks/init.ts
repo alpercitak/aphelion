@@ -13,7 +13,7 @@ import { createPulsarBeams } from '../utils/pulsar-beams';
 type CanvasRefType = RefObject<HTMLCanvasElement | null>;
 type SceneRefType = RefObject<SceneRef | null>;
 
-export function useInit(canvasRef: CanvasRefType, sceneRef: SceneRefType) {
+export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -56,4 +56,4 @@ export function useInit(canvasRef: CanvasRefType, sceneRef: SceneRefType) {
 
     return () => dispose();
   }, [canvasRef, sceneRef]);
-}
+};

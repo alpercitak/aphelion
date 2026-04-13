@@ -3,7 +3,7 @@ import { Mesh, Points } from 'three';
 import type { Params, SceneRef } from '../types';
 import { createPulsarBeams } from '../utils/pulsar-beams';
 
-export function useUpdate(sceneRef: RefObject<SceneRef | null>, params: Params) {
+export const useUpdate = (sceneRef: RefObject<SceneRef | null>, params: Params) => {
   // visibility toggles
   useEffect(() => {
     const refs = sceneRef.current;
@@ -40,4 +40,4 @@ export function useUpdate(sceneRef: RefObject<SceneRef | null>, params: Params) 
     tiltObj.add(newBeams);
     entities.beams = newBeams;
   }, [params.beamWidth]);
-}
+};
