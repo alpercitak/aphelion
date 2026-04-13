@@ -3,32 +3,25 @@ import type {
   Mesh,
   MeshBasicMaterial,
   Object3DEventMap,
-  PerspectiveCamera,
   PlaneGeometry,
-  Points,
   RingGeometry,
-  Scene,
   ShaderMaterial,
   SphereGeometry,
-  WebGLRenderer,
 } from 'three';
 import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
-import type { createOrbitControls } from '@/utils/camera';
+import type { BaseSceneRef } from '@/types';
 
-export interface SceneRef {
-  bh1: BlackHoleUnit;
-  bh2: BlackHoleUnit;
-  camera: PerspectiveCamera;
-  flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
-  grid: Mesh<PlaneGeometry, ShaderMaterial>;
-  mergedBH: BlackHoleUnit;
-  orbit: ReturnType<typeof createOrbitControls>;
-  renderer: WebGLRenderer;
-  scene: Scene;
-  stars: Points;
-  waveRingMeshes: Array<Mesh>;
+export interface SceneRef extends BaseSceneRef {
+  entities: {
+    bh1: BlackHoleUnit;
+    bh2: BlackHoleUnit;
+    flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
+    grid: Mesh<PlaneGeometry, ShaderMaterial>;
+    mergedBH: BlackHoleUnit;
+    waveRingMeshes: Array<Mesh>;
+  };
 }
 
 export interface StateRef {

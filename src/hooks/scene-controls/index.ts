@@ -1,19 +1,22 @@
 import { useMemo } from 'react';
 import type { SceneLayoutControlsProps } from '@/components/app/scene-layout';
+import type { ButtonProps } from '@/components/ui/button';
 import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import { useSceneParams } from '../scene-params';
 
-export interface GenericSliderItem<T> extends Omit<SliderProps, 'id' | 'value' | 'onChange'> {
+interface GenericButtonItem<T> extends ButtonProps {}
+
+interface GenericRadioItem<T> extends Omit<RadioProps, 'id' | 'value' | 'onChange'> {
   id: keyof T & string;
 }
 
-export interface GenericToggleItem<T> extends Omit<ToggleProps, 'id' | 'active' | 'onClick'> {
+interface GenericSliderItem<T> extends Omit<SliderProps, 'id' | 'value' | 'onChange'> {
   id: keyof T & string;
 }
 
-export interface GenericRadioItem<T> extends Omit<RadioProps, 'id' | 'value' | 'onChange'> {
+interface GenericToggleItem<T> extends Omit<ToggleProps, 'id' | 'active' | 'onClick'> {
   id: keyof T & string;
 }
 
@@ -21,11 +24,12 @@ interface SceneControlsProps<T> {
   sliders?: ReadonlyArray<GenericSliderItem<T>>;
   toggles?: ReadonlyArray<GenericToggleItem<T>>;
   radios?: ReadonlyArray<GenericRadioItem<T>>;
+  buttons?: ReadonlyArray<GenericButtonItem<T>>;
 }
 
 export const useSceneControls = <T extends object>(
   initialParams: T,
-  { sliders, toggles, radios }: SceneControlsProps<T>,
+  { sliders, toggles, radios, buttons }: SceneControlsProps<T>,
 ) => {
   const { params, paramsRef, set } = useSceneParams<T>(initialParams);
 
@@ -46,6 +50,7 @@ export const useSceneControls = <T extends object>(
         value: params[item.id] as string,
         onChange: (value: string) => set(item.id, value as T[keyof T]),
       })),
+      buttons: (buttons ?? []).map((item) => item),
     }),
     [params, set, sliders, toggles, radios],
   );

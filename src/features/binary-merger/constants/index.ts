@@ -1,7 +1,7 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hints';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
-import type { InspiralOption, Params, Phase, RadioItem, SliderItem, ToggleItem } from '../types';
+import type { InspiralOption, Params, Phase, RadioItem, SliderItem, StateRef, ToggleItem } from '../types';
 
 export const TITLE = 'Binary Merger';
 
@@ -150,3 +150,24 @@ export const PHASE_LABEL_MAP = {
   merging: '◉ MERGER EVENT',
   merged: '◎ RINGDOWN',
 } as const satisfies Record<Phase, string>;
+
+export const INSPIRAL_RATE_MAP = {
+  slow: 0.008,
+  medium: 0.022,
+  fast: 0.055,
+} as const satisfies Record<InspiralOption, number>;
+
+export const INITIAL_SEPARATION = 7.0 as const;
+
+export const MERGE_THRESHOLD = 1.2 as const;
+
+export const INITIAL_STATE: StateRef = {
+  separation: INITIAL_SEPARATION,
+  angle: 0,
+  phase: 'orbit',
+  mergeProgress: 0,
+  flashOpacity: 0,
+  waveRings: [],
+  lastRingTime: 0,
+  params: PARAMS,
+};
