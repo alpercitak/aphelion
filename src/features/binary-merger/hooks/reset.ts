@@ -1,10 +1,11 @@
 import { useCallback, type RefObject } from 'react';
+import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION } from '../constants';
 import { orbitalPositions } from '../utils/orbital-positions';
 import type { Phase, SceneRef, StateRef } from '../types';
 
 export const useReset = (
-  sceneRef: RefObject<SceneRef | null>,
+  sceneRef: SceneRefType<SceneRef>,
   stateRef: RefObject<StateRef>,
   setPhase: (phase: Phase) => void,
 ) =>

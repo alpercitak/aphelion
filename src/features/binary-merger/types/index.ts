@@ -8,9 +8,6 @@ import type {
   ShaderMaterial,
   SphereGeometry,
 } from 'three';
-import type { RadioProps } from '@/components/ui/radio';
-import type { SliderProps } from '@/components/ui/slider';
-import type { ToggleProps } from '@/components/ui/toggle';
 import type { BaseSceneRef } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {
@@ -44,18 +41,6 @@ export interface Params {
   showDisks: boolean;
   autoLoop: boolean;
   inspiralRate: InspiralOption;
-}
-
-export interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'mass1' | 'mass2' | 'waveAmplitude'>;
-}
-
-export interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showGrid' | 'showWaveRings' | 'showDisks' | 'autoLoop'>;
-}
-
-export interface RadioItem extends Partial<RadioProps> {
-  id: keyof Pick<Params, 'inspiralRate'>;
 }
 
 export type InspiralOption = 'slow' | 'medium' | 'fast';

@@ -1,4 +1,5 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect } from 'react';
+import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { INITIAL_SEPARATION, PARAMS } from '../constants';
 import type { SceneRef } from '../types';
@@ -7,7 +8,7 @@ import { createMergerFlash } from '../utils/merger-flash';
 import { orbitalPositions } from '../utils/orbital-positions';
 import { createSpacetimeGrid } from '../utils/spacetime-grid';
 
-export const useInit = (canvasRef: RefObject<HTMLCanvasElement | null>, sceneRef: RefObject<SceneRef | null>) => {
+export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRef>) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
