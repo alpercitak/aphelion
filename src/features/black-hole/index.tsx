@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Clock, Mesh } from 'three';
 
-import SceneLayout, { type SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
+import SceneLayout from '@/components/app/scene-layout';
 import { setupScene } from '@/utils/setup';
 
-import { BASE_HUD_PROPS, PARAMS } from './constants';
+import { PARAMS } from './constants';
 import { useControls } from './hooks/controls';
+import { useHud } from './hooks/hud';
 import type { SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
 import { createEventHorizon } from './utils/event-horizon';
@@ -21,6 +21,7 @@ export default function BlackHole() {
   const sceneRef = useRef<SceneRef>(null);
 
   const { params, paramsRef, controls } = useControls();
+  const hud = useHud(params);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -184,24 +185,5 @@ export default function BlackHole() {
     refs.photonMat.uniforms.glowColor?.value.setRGB(1.0, 0.67 * params.lensStrength, 0.27 * params.lensStrength);
   }, [params.lensStrength]);
 
-  // ── SceneLayout ─────────────────────────────────────────────────────
-  const rs = schwarzschildRadius(params.mass);
-  const hTemp = hawkingTemperature(params.mass);
-
-  const stats = useMemo(
-    () => [
-      { label: 'mass', value: params.mass.toFixed(1), unit: 'M☉' },
-      { label: 'spin', value: params.spin.toFixed(2), unit: 'a' },
-      { label: 'temp', value: hTemp > 1e10 ? (hTemp / 1e10).toExponential(1) : '~0', unit: 'K' },
-      { label: 'Rₛ', value: rs.toFixed(1), unit: 'km' },
-    ],
-    [params.mass, params.spin, hTemp, rs],
-  );
-
-  const hudProps = {
-    ...BASE_HUD_PROPS,
-    stats,
-  } satisfies SceneLayoutHudProps;
-
-  return <SceneLayout canvasRef={canvasRef} hud={hudProps} controls={controls} />;
+  return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
 }
