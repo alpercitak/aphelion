@@ -10,14 +10,13 @@ import {
   Points,
   PointsMaterial,
 } from 'three';
-import type { BeamWidth } from '../types';
 import { NS_RADIUS } from '../constants';
 
 const BEAM_LENGTH = 12;
 const CONE_ANGLE_NARROW = 0.06;
 const CONE_ANGLE_WIDE = 0.14;
 
-export const createPulsarBeams = (beamWidth: BeamWidth): Group => {
+export const createPulsarBeams = (beamWidth: string): Group => {
   const group = new Group();
   const coneAngle = beamWidth === 'narrow' ? CONE_ANGLE_NARROW : CONE_ANGLE_WIDE;
 

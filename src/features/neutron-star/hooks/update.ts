@@ -1,0 +1,43 @@
+import { useEffect, type RefObject } from 'react';
+import { Mesh, Points } from 'three';
+import type { Params, SceneRef } from '../types';
+import { createPulsarBeams } from '../utils/pulsar-beams';
+
+export function useUpdate(sceneRef: RefObject<SceneRef | null>, params: Params) {
+  // visibility toggles
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) {
+      return;
+    }
+    const { entities } = refs;
+
+    entities.beams.visible = params.showBeams;
+    entities.fieldLines.visible = params.showFieldLines;
+    entities.accretionDisk.visible = params.showAccretionDisk;
+  }, [params.showBeams, params.showFieldLines, params.showAccretionDisk]);
+
+  // structural rebuilds
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) {
+      return;
+    }
+
+    const { entities } = refs;
+
+    const tiltObj = entities.rotator.children[0]!;
+    entities.beams.traverse((o) => {
+      if (o instanceof Mesh || o instanceof Points) {
+        o.geometry.dispose();
+        Array.isArray(o.material) ? o.material.forEach((m) => m.dispose()) : o.material.dispose();
+      }
+    });
+
+    tiltObj.remove(entities.beams);
+    const newBeams = createPulsarBeams(params.beamWidth);
+    newBeams.visible = params.showBeams;
+    tiltObj.add(newBeams);
+    entities.beams = newBeams;
+  }, [params.beamWidth]);
+}

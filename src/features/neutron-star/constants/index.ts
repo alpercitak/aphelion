@@ -1,7 +1,7 @@
 import type { GlossarySection } from '@/components/app/glossary';
 import type { HintItem } from '@/components/app/hints';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
-import type { BeamWidth, Params, RadioItem, SliderItem, ToggleItem } from '../types';
+import type { Params, RadioItem, SliderItem, ToggleItem } from '../types';
 
 export const TITLE = 'Neutron Star';
 
@@ -131,13 +131,11 @@ export const TOGGLE_ITEMS = [
   { id: 'showAccretionDisk', label: 'ACCRETION DISK' },
 ] as const satisfies ReadonlyArray<ToggleItem>;
 
-export const BEAM_WIDTH_OPTIONS = ['narrow', 'wide'] as const satisfies ReadonlyArray<BeamWidth>;
-
 export const RADIO_ITEMS = [
   {
     id: 'beamWidth',
     label: 'Beam width',
-    options: BEAM_WIDTH_OPTIONS.map((item) => ({ id: item, label: item })),
+    options: ['narrow', 'wide'].map((item) => ({ id: item, label: item })),
   },
 ] as const satisfies ReadonlyArray<RadioItem>;
 
