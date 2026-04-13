@@ -27,15 +27,3 @@ export type Params = {
   showBeamFlash: boolean;
   showAccretionDisk: boolean;
 };
-
-export interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'mass' | 'rpm' | 'fieldStrength'>;
-}
-
-export interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showBeams' | 'showFieldLines' | 'showBeamFlash' | 'showAccretionDisk'>;
-}
-
-export interface RadioItem extends Partial<RadioProps> {
-  id: keyof Pick<Params, 'beamWidth'>;
-}
