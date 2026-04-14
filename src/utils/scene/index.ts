@@ -46,7 +46,7 @@ export const SCENES = [
   {
     id: 'hawking-evaporation',
     title: 'Hawking Evaporation',
-    cardSubtitle: 'Quantum Decay',
+    subtitle: 'Quantum Decay',
     description: 'Virtual particle pairs at the horizon. A micro black hole evaporates.',
     component: lazy(() => import('@/features/hawking-evaporation')),
   },
