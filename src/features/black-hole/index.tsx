@@ -2,19 +2,13 @@ import { useEffect, useRef } from 'react';
 import { Clock, Mesh } from 'three';
 
 import SceneLayout from '@/components/app/scene-layout';
-import { setupScene } from '@/utils/setup';
 
-import { PARAMS } from './constants';
 import { useControls } from './hooks/controls';
 import { useHud } from './hooks/hud';
+import { useInit } from './hooks/init';
 import type { SceneRef } from './types';
 import { createAccretionDisk } from './utils/accretion-disk';
-import { createEventHorizon } from './utils/event-horizon';
-import { createLensingRings } from './utils/lensing-rings';
 import { applyMassScale } from './utils/mass-scale';
-import { createOuterGlow } from './utils/outer-glow';
-import { createPhotonSphere } from './utils/photon-sphere';
-import { createRelativisticJets } from './utils/relativistic-jets';
 
 export default function BlackHole() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -23,42 +17,13 @@ export default function BlackHole() {
   const { params, paramsRef, controls } = useControls();
   const hud = useHud(params);
 
+  useInit(canvasRef, sceneRef);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
       return;
     }
-
-    // ── Setup ──────────────────────────────────────────────────────────────
-    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
-      canvas,
-      cameraPosition: [0, 3, 8],
-      orbitOptions: { theta: 0.1, phi: Math.PI / 3.5, radius: 16 },
-    });
-
-    // ── Objects ───────────────────────────────────────────────────────────────
-    const blackHole = createEventHorizon();
-    const photonSphere = createPhotonSphere(camera.position);
-    const outerGlow = createOuterGlow(camera.position);
-    const { photonRing, einsteinRing } = createLensingRings();
-    const diskGroup = createAccretionDisk(PARAMS.temp, false);
-    const jetsGroup = createRelativisticJets();
-    scene.add(blackHole, photonSphere, outerGlow, photonRing, einsteinRing, diskGroup, jetsGroup);
-
-    const core = { scene, renderer, camera, orbit, stars };
-    const entities = {
-      blackHole,
-      photonSphere,
-      outerGlow,
-      photonRing,
-      einsteinRing,
-      diskGroup,
-      jetsGroup,
-      photonMat: photonSphere.material,
-      einsteinMat: einsteinRing.material,
-      photonRingMat: photonRing.material,
-    };
-    sceneRef.current = { core, entities };
 
     // ── Animation ─────────────────────────────────────────────────────────────
     const clock = new Clock();
@@ -74,8 +39,8 @@ export default function BlackHole() {
         return;
       }
       const { core, entities } = refs;
-      const { orbit } = core;
-      const { diskGroup, photonMat, photonSphere } = entities;
+      const { orbit, camera, stars, renderer, scene } = core;
+      const { diskGroup, photonMat, photonSphere, outerGlow, photonRing, einsteinRing } = entities;
 
       orbit.updateCamera(camera);
 
@@ -111,7 +76,6 @@ export default function BlackHole() {
 
     return () => {
       cancelAnimationFrame(raf);
-      dispose();
     };
   }, []);
 
