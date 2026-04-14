@@ -10,8 +10,6 @@ import type {
   SphereGeometry,
   WebGLRenderer,
 } from 'three';
-import type { SliderProps } from '@/components/ui/slider';
-import type { ToggleProps } from '@/components/ui/toggle';
 import type { createOrbitControls } from '@/utils/camera';
 
 export interface SceneRef {

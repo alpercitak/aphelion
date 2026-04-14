@@ -32,7 +32,7 @@ const BB_CONFIG = {
  * 1. HAWKING TEMPERATURE (K)
  * Standard TH = (hbar * c³) / (8 * π * G * M * k_b)
  */
-export const hawkingTempK = (massSolar: number): number => {
+export const hawkingTemperatureKelvin = (massSolar: number): number => {
   const massKg = Math.max(1e-28, massSolar) * SOLAR_MASS_KG;
   return HAWKING_NUMERATOR / massKg;
 };

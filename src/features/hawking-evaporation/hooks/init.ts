@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Vector3 } from 'three';
 import type { CanvasRefType, SceneRefType } from '@/types';
-import { hawkingGlowColor, hawkingTempK } from '@/utils/physics';
+import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 import { PAIR_POOL, PARAMS } from '../constants';
 import type { SceneRef } from '../types';
@@ -23,7 +23,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       orbitOptions: { radius: 6, minRadius: 2, maxRadius: 20 },
     });
 
-    const initTemp = hawkingTempK(PARAMS.initialMass);
+    const initTemp = hawkingTemperatureKelvin(PARAMS.initialMass);
     const initColor = hawkingGlowColor(initTemp);
 
     const horizon = createEventHorizon();

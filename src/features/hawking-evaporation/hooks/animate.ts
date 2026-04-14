@@ -1,7 +1,7 @@
 import { useRef, type RefObject } from 'react';
 import { BufferAttribute, PointsMaterial } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
-import { hawkingGlowColor, hawkingTempK } from '@/utils/physics';
+import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { DECAY_RATE_MAP, PAIR_POOL, VISUAL_SCALE } from '../constants';
 import type { Params, Phase, SceneRef, StateRef, VirtualPair } from '../types';
 import { spawnPair } from '../utils/virtual-pair';
@@ -34,7 +34,7 @@ const animate = (
     state.mass = Math.max(0, state.mass - decayBase * accel * delta);
 
     // 2. Physics-to-Visual Mapping
-    const tempK = hawkingTempK(state.mass);
+    const tempK = hawkingTemperatureKelvin(state.mass);
     const glowColor = hawkingGlowColor(tempK);
     const s = massNorm * VISUAL_SCALE;
 

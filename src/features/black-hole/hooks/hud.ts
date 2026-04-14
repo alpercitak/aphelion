@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { hawkingTemperature, schwarzschildRadius } from '@/utils/physics';
+import { hawkingTemperatureKelvin, schwarzschildRadius } from '@/utils/physics';
 import type { Params } from '../types';
 
 const BASE_HUD_PROPS = {
@@ -100,12 +100,12 @@ const BASE_HUD_PROPS = {
 export const useHud = (params: Params) =>
   useMemo(() => {
     const rs = schwarzschildRadius(params.mass);
-    const hTemp = hawkingTemperature(params.mass);
+    const hTemp = hawkingTemperatureKelvin(params.mass);
 
     const stats = [
       { label: 'mass', value: params.mass.toFixed(1), unit: 'M☉' },
       { label: 'spin', value: params.spin.toFixed(2), unit: 'a' },
-      { label: 'temp', value: hTemp > 1e10 ? (hTemp / 1e10).toExponential(1) : '~0', unit: 'K' },
+      { label: 'temp', value: hTemp < 1 ? hTemp.toExponential(4) : Math.round(hTemp).toLocaleString(), unit: 'K' },
       { label: 'Rₛ', value: rs.toFixed(1), unit: 'km' },
     ];
 
