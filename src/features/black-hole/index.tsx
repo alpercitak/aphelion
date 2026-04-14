@@ -45,13 +45,8 @@ export default function BlackHole() {
     const jetsGroup = createRelativisticJets();
     scene.add(blackHole, photonSphere, outerGlow, photonRing, einsteinRing, diskGroup, jetsGroup);
 
-    // Store refs for external param changes
-    sceneRef.current = {
-      scene,
-      renderer,
-      camera,
-      orbit,
-      stars,
+    const core = { scene, renderer, camera, orbit, stars };
+    const entities = {
       blackHole,
       photonSphere,
       outerGlow,
@@ -63,6 +58,7 @@ export default function BlackHole() {
       einsteinMat: einsteinRing.material,
       photonRingMat: photonRing.material,
     };
+    sceneRef.current = { core, entities };
 
     // ── Animation ─────────────────────────────────────────────────────────────
     const clock = new Clock();
@@ -72,14 +68,21 @@ export default function BlackHole() {
       raf = requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
       const p = paramsRef.current;
-      const refs = sceneRef.current!;
+      const refs = sceneRef.current;
+
+      if (!refs) {
+        return;
+      }
+      const { core, entities } = refs;
+      const { orbit } = core;
+      const { diskGroup, photonMat, photonSphere } = entities;
 
       orbit.updateCamera(camera);
 
       // Disk rotation (Keplerian)
-      if (refs.diskGroup && p.showDisk) {
-        refs.diskGroup.children.forEach((child, i) => {
-          child.rotation.y = t * (0.08 + (1 - i / refs.diskGroup.children.length) * 0.12);
+      if (diskGroup && p.showDisk) {
+        diskGroup.children.forEach((child, i) => {
+          child.rotation.y = t * (0.08 + (1 - i / diskGroup.children.length) * 0.12);
         });
       }
 
@@ -87,17 +90,19 @@ export default function BlackHole() {
       const pulse = 1 + Math.sin(t * 2.1) * 0.015;
       const s = Math.cbrt(p.mass / 10);
       const oblate = 1 - p.spin * 0.15;
-      refs.photonSphere.scale.set(s * pulse, s * oblate * pulse, s * pulse);
+      photonSphere.scale.set(s * pulse, s * oblate * pulse, s * pulse);
 
       // Update glow view vectors
-      refs.photonMat.uniforms.viewVector?.value.copy(camera.position);
-      refs.outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
+      photonMat.uniforms.viewVector?.value.copy(camera.position);
+      outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
 
-      if (p.showStars) refs.stars.rotation.y = t * 0.003;
+      if (p.showStars) {
+        stars.rotation.y = t * 0.003;
+      }
 
       // Lensing rings face camera
-      refs.photonRing.lookAt(camera.position);
-      refs.einsteinRing.lookAt(camera.position);
+      photonRing.lookAt(camera.position);
+      einsteinRing.lookAt(camera.position);
 
       renderer.render(scene, camera);
     }
@@ -116,8 +121,8 @@ export default function BlackHole() {
     if (!refs) {
       return;
     }
-    const { blackHole, photonSphere, outerGlow, photonRing, einsteinRing } = refs;
-
+    const { entities } = refs;
+    const { blackHole, photonSphere, outerGlow, photonRing, einsteinRing } = entities;
     applyMassScale({ blackHole, photonSphere, outerGlow, photonRing, einsteinRing }, params.mass, params.spin);
   }, [params.mass, params.spin]);
 
@@ -126,20 +131,21 @@ export default function BlackHole() {
     if (!refs) {
       return;
     }
-    refs.scene.remove(refs.diskGroup);
-    refs.diskGroup.traverse((o) => {
+    const { core, entities } = refs;
+    core.scene.remove(entities.diskGroup);
+    entities.diskGroup.traverse((o) => {
       if (o instanceof Mesh) {
         o.geometry?.dispose();
         o.material?.dispose();
       }
     });
     const newDisk = createAccretionDisk(params.temp, params.dopplerShift);
-    refs.diskGroup = newDisk;
+    entities.diskGroup = newDisk;
     if (sceneRef.current) {
-      sceneRef.current.diskGroup = newDisk;
+      sceneRef.current.entities.diskGroup = newDisk;
     }
     if (params.showDisk) {
-      refs.scene.add(newDisk);
+      refs.core.scene.add(newDisk);
     }
   }, [params.temp, params.dopplerShift]);
 
@@ -148,10 +154,11 @@ export default function BlackHole() {
     if (!refs) {
       return;
     }
+    const { core, entities } = refs;
     if (params.showDisk) {
-      refs.scene.add(refs.diskGroup);
+      core.scene.add(entities.diskGroup);
     } else {
-      refs.scene.remove(refs.diskGroup);
+      core.scene.remove(entities.diskGroup);
     }
   }, [params.showDisk]);
 
@@ -161,9 +168,9 @@ export default function BlackHole() {
       return;
     }
     if (params.showJets) {
-      refs.scene.add(refs.jetsGroup);
+      refs.core.scene.add(refs.entities.jetsGroup);
     } else {
-      refs.scene.remove(refs.jetsGroup);
+      refs.core.scene.remove(refs.entities.jetsGroup);
     }
   }, [params.showJets]);
 
@@ -172,7 +179,7 @@ export default function BlackHole() {
     if (!refs) {
       return;
     }
-    refs.stars.visible = params.showStars;
+    refs.core.stars.visible = params.showStars;
   }, [params.showStars]);
 
   useEffect(() => {
@@ -180,9 +187,10 @@ export default function BlackHole() {
     if (!refs) {
       return;
     }
-    refs.photonRingMat.opacity = params.lensStrength * 0.9;
-    refs.einsteinMat.opacity = params.lensStrength * 0.5;
-    refs.photonMat.uniforms.glowColor?.value.setRGB(1.0, 0.67 * params.lensStrength, 0.27 * params.lensStrength);
+    const { entities } = refs;
+    entities.photonRingMat.opacity = params.lensStrength * 0.9;
+    entities.einsteinMat.opacity = params.lensStrength * 0.5;
+    entities.photonMat.uniforms.glowColor?.value.setRGB(1.0, 0.67 * params.lensStrength, 0.27 * params.lensStrength);
   }, [params.lensStrength]);
 
   return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;

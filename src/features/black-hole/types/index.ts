@@ -10,24 +10,21 @@ import type {
   SphereGeometry,
   WebGLRenderer,
 } from 'three';
-import type { createOrbitControls } from '@/utils/camera';
+import type { BaseSceneRef } from '@/types';
 
-export interface SceneRef {
-  blackHole: Mesh<SphereGeometry, MeshBasicMaterial>;
-  camera: PerspectiveCamera;
-  diskGroup: Group;
-  einsteinMat: MeshBasicMaterial;
-  einsteinRing: Mesh<RingGeometry, MeshBasicMaterial>;
-  jetsGroup: Group;
-  orbit: ReturnType<typeof createOrbitControls>;
-  outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
-  photonMat: ShaderMaterial;
-  photonRing: Mesh<RingGeometry, MeshBasicMaterial>;
-  photonRingMat: MeshBasicMaterial;
-  photonSphere: Mesh<SphereGeometry, ShaderMaterial>;
-  renderer: WebGLRenderer;
-  scene: Scene;
-  stars: Points;
+export interface SceneRef extends BaseSceneRef {
+  entities: {
+    blackHole: Mesh<SphereGeometry, MeshBasicMaterial>;
+    diskGroup: Group;
+    einsteinMat: MeshBasicMaterial;
+    einsteinRing: Mesh<RingGeometry, MeshBasicMaterial>;
+    jetsGroup: Group;
+    outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
+    photonMat: ShaderMaterial;
+    photonRing: Mesh<RingGeometry, MeshBasicMaterial>;
+    photonRingMat: MeshBasicMaterial;
+    photonSphere: Mesh<SphereGeometry, ShaderMaterial>;
+  };
 }
 
 export interface Params {
