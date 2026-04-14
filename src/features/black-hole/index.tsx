@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { Clock, Mesh } from 'three';
+import { Mesh } from 'three';
 
 import SceneLayout from '@/components/app/scene-layout';
 
+import { useAnimate } from './hooks/animate';
 import { useControls } from './hooks/controls';
 import { useHud } from './hooks/hud';
 import { useInit } from './hooks/init';
@@ -18,66 +19,7 @@ export default function BlackHole() {
   const hud = useHud(params);
 
   useInit(canvasRef, sceneRef);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      return;
-    }
-
-    // ── Animation ─────────────────────────────────────────────────────────────
-    const clock = new Clock();
-    let raf: number;
-
-    function animate() {
-      raf = requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-      const p = paramsRef.current;
-      const refs = sceneRef.current;
-
-      if (!refs) {
-        return;
-      }
-      const { core, entities } = refs;
-      const { orbit, camera, stars, renderer, scene } = core;
-      const { diskGroup, photonMat, photonSphere, outerGlow, photonRing, einsteinRing } = entities;
-
-      orbit.updateCamera(camera);
-
-      // Disk rotation (Keplerian)
-      if (diskGroup && p.showDisk) {
-        diskGroup.children.forEach((child, i) => {
-          child.rotation.y = t * (0.08 + (1 - i / diskGroup.children.length) * 0.12);
-        });
-      }
-
-      // Photon sphere pulse
-      const pulse = 1 + Math.sin(t * 2.1) * 0.015;
-      const s = Math.cbrt(p.mass / 10);
-      const oblate = 1 - p.spin * 0.15;
-      photonSphere.scale.set(s * pulse, s * oblate * pulse, s * pulse);
-
-      // Update glow view vectors
-      photonMat.uniforms.viewVector?.value.copy(camera.position);
-      outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
-
-      if (p.showStars) {
-        stars.rotation.y = t * 0.003;
-      }
-
-      // Lensing rings face camera
-      photonRing.lookAt(camera.position);
-      einsteinRing.lookAt(camera.position);
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    return () => {
-      cancelAnimationFrame(raf);
-    };
-  }, []);
+  useAnimate(sceneRef, paramsRef);
 
   // ── React to param changes ────────────────────────────────────────────────
   useEffect(() => {
