@@ -11,7 +11,7 @@ import {
   PointsMaterial,
   Vector3,
 } from 'three';
-import type { CanvasRefType, SceneRefType } from '@/types';
+import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
 import { massScale } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 import { MAX_RADIUS, PARAMS, PARTICLE_POOL } from '../constants';
@@ -83,11 +83,11 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     // extract typed uniform refs
     const photonUniforms = photonGlow.material.uniforms as {
-      viewVector: { value: Vector3 };
-      glowColor: { value: Color };
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
     };
     const haloUniforms = outerHalo.material.uniforms as {
-      viewVector: { value: Vector3 };
+      viewVector: UniformValue<Vector3>;
     };
 
     const core = { renderer, scene, camera, orbit, stars };

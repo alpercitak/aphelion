@@ -10,9 +10,7 @@ import type {
   WebGLRenderer,
   WebGLRenderTarget,
 } from 'three';
-import type { SliderProps } from '@/components/ui/slider';
-import type { ToggleProps } from '@/components/ui/toggle';
-import type { RadioProps } from '@/components/ui/radio';
+import type { UniformValue } from '@/types';
 import type { createOrbitControls } from '@/utils/camera';
 
 export type SceneRef = {
@@ -33,17 +31,17 @@ export type SceneRef = {
   destinationStars: Points;
   stars: Points;
   rimUniforms: {
-    viewVector: { value: Vector3 };
+    viewVector: UniformValue<Vector3>;
   };
   innerGlowUniforms: {
-    viewVector: { value: Vector3 };
+    viewVector: UniformValue<Vector3>;
   };
   outerGlowUniforms: {
-    viewVector: { value: Vector3 };
+    viewVector: UniformValue<Vector3>;
   };
   portalUniforms: {
-    time: { value: number };
-    distortion: { value: number };
+    time: UniformValue<number>;
+    distortion: UniformValue<number>;
   };
 };
 

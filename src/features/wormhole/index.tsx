@@ -16,6 +16,7 @@ import {
 
 import SceneLayout from '@/components/app/scene-layout';
 import { useSceneAnimation } from '@/hooks/scene-animation';
+import type { UniformValue } from '@/types';
 import { setupScene } from '@/utils/setup';
 
 import { DESTINATION_COLOR_MAP, PARAMS } from './constants';
@@ -90,10 +91,20 @@ export default function Wormhole() {
     scene.add(exoticHalo);
 
     // Extract typed uniform refs
-    const rimUniforms = rim.material.uniforms as { viewVector: { value: Vector3 }; glowColor: { value: Color } };
-    const innerGlowUniforms = innerGlow.material.uniforms as { viewVector: { value: Vector3 } };
-    const outerGlowUniforms = outerGlow.material.uniforms as { viewVector: { value: Vector3 } };
-    const portalUniforms = portalDisc.material.uniforms as { time: { value: number }; distortion: { value: number } };
+    const rimUniforms = rim.material.uniforms as {
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
+    };
+    const innerGlowUniforms = innerGlow.material.uniforms as {
+      viewVector: UniformValue<Vector3>;
+    };
+    const outerGlowUniforms = outerGlow.material.uniforms as {
+      viewVector: UniformValue<Vector3>;
+    };
+    const portalUniforms = portalDisc.material.uniforms as {
+      time: UniformValue<number>;
+      distortion: UniformValue<number>;
+    };
 
     sceneRef.current = {
       renderer,
@@ -198,7 +209,10 @@ export default function Wormhole() {
     const newRim = createThroatRim(r);
     scene.add(newRim);
     refs.rim = newRim;
-    refs.rimUniforms = newRim.material.uniforms as { viewVector: { value: Vector3 }; glowColor: { value: Color } };
+    refs.rimUniforms = newRim.material.uniforms as {
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
+    };
 
     // Rebuild portal disc
     scene.remove(refs.portalDisc);
@@ -221,8 +235,8 @@ export default function Wormhole() {
     scene.add(newInner, newOuter);
     refs.innerGlow = newInner;
     refs.outerGlow = newOuter;
-    refs.innerGlowUniforms = newInner.material.uniforms as { viewVector: { value: Vector3 } };
-    refs.outerGlowUniforms = newOuter.material.uniforms as { viewVector: { value: Vector3 } };
+    refs.innerGlowUniforms = newInner.material.uniforms as { viewVector: UniformValue<Vector3> };
+    refs.outerGlowUniforms = newOuter.material.uniforms as { viewVector: UniformValue<Vector3> };
 
     // Rebuild lensing rings
     refs.lensingRings.forEach((ring) => {

@@ -9,7 +9,7 @@ import type {
   SphereGeometry,
   Vector3,
 } from 'three';
-import type { BaseSceneRef } from '@/types';
+import type { BaseSceneRef, UniformValue } from '@/types';
 
 export type Params = {
   initialMass: number; // 0.001–1 M☉
@@ -32,9 +32,19 @@ export interface SceneRef extends BaseSceneRef {
     pairPoints: Points;
     pairGeo: BufferGeometry;
     // typed uniform refs
-    photonUniforms: { viewVector: { value: Vector3 }; glowColor: { value: Color } };
-    outerUniforms: { viewVector: { value: Vector3 }; glowColor: { value: Color } };
-    haloUniforms: { innerColor: { value: Color }; outerColor: { value: Color }; opacity: { value: number } };
+    photonUniforms: {
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
+    };
+    outerUniforms: {
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
+    };
+    haloUniforms: {
+      innerColor: UniformValue<Color>;
+      outerColor: UniformValue<Color>;
+      opacity: UniformValue<number>;
+    };
   };
 }
 

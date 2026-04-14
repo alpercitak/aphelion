@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Vector3 } from 'three';
-import type { CanvasRefType, SceneRefType } from '@/types';
+import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
 import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 import { PAIR_POOL, PARAMS } from '../constants';
@@ -62,17 +62,17 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     // Typed uniform refs
     const photonUniforms = photonGlow.material.uniforms as {
-      viewVector: { value: Vector3 };
-      glowColor: { value: Color };
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
     };
     const outerUniforms = outerGlow.material.uniforms as {
-      viewVector: { value: Vector3 };
-      glowColor: { value: Color };
+      viewVector: UniformValue<Vector3>;
+      glowColor: UniformValue<Color>;
     };
     const haloUniforms = halo.material.uniforms as {
-      innerColor: { value: Color };
-      outerColor: { value: Color };
-      opacity: { value: number };
+      innerColor: UniformValue<Color>;
+      outerColor: UniformValue<Color>;
+      opacity: UniformValue<number>;
     };
 
     const core = { renderer, scene, camera, orbit, stars };
