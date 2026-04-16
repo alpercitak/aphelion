@@ -1,9 +1,9 @@
+import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
+import type { ToggleProps } from '@/components/ui/toggle';
 import { useSceneControls } from '@/hooks/scene-controls';
 import { PARAMS } from '../constants';
 import type { InspiralOption, Params } from '../types';
-import type { ToggleProps } from '@/components/ui/toggle';
-import type { RadioProps } from '@/components/ui/radio';
 
 interface SliderItem extends Partial<SliderProps> {
   id: keyof Pick<Params, 'mass1' | 'mass2' | 'waveAmplitude'>;

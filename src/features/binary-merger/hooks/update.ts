@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import type { SceneRefType } from '@/types';
-import { applyBlackHoleScale } from '../utils/black-hole';
 import type { Params, Phase, SceneRef } from '../types';
+import { applyBlackHoleScale } from '../utils/black-hole';
 
 export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params, phase: Phase) => {
   useEffect(() => {
@@ -19,7 +19,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params, phas
 
     entities.grid.visible = params.showGrid;
 
-    // Toggle accretion disks based on params
+    // toggle accretion disks based on params
     if (entities.bh1.userData.diskGroup) {
       entities.bh1.userData.diskGroup.visible = params.showDisks;
     }

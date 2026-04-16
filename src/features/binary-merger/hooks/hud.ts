@@ -79,7 +79,7 @@ const BASE_HUD_PROPS = {
 export const useHud = (params: Params, phase: Phase) =>
   useMemo(() => {
     const totalMass = params.mass1 + params.mass2;
-    // Chirp mass formula: (m1*m2)^0.6 / (m1+m2)^0.2
+    // chirp mass formula: (m1*m2)^0.6 / (m1+m2)^0.2
     const chirpMass = Math.pow(params.mass1 * params.mass2, 0.6) / Math.pow(totalMass, 0.2);
 
     const stats = [

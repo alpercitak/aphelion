@@ -69,7 +69,7 @@ export default function Wormhole() {
     const r = PARAMS.throatRadius;
 
     const portalDisc = createPortalDisc(r, renderTarget);
-    // Face portal disc toward camera (opening faces +Z)
+    // face portal disc toward camera (opening faces +Z)
     portalDisc.rotation.x = Math.PI * 0.5;
     scene.add(portalDisc);
 
@@ -90,7 +90,7 @@ export default function Wormhole() {
     exoticHalo.visible = PARAMS.showExoticHalo;
     scene.add(exoticHalo);
 
-    // Extract typed uniform refs
+    // extract typed uniform refs
     const rimUniforms = rim.material.uniforms as {
       viewVector: UniformValue<Vector3>;
       glowColor: UniformValue<Color>;
@@ -195,7 +195,7 @@ export default function Wormhole() {
   });
 
   // ── Param effects ─────────────────────────────────────────────────────────
-  // Rebuild geometry when throat radius changes
+  // rebuild geometry when throat radius changes
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs) return;
@@ -260,7 +260,7 @@ export default function Wormhole() {
     refs.exoticHalo = newHalo;
   }, [params.throatRadius]);
 
-  // Destination star field color
+  // destination star field color
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs) return;
@@ -271,7 +271,7 @@ export default function Wormhole() {
     refs.destinationStars = newStars;
   }, [params.destination]);
 
-  // Exotic halo density
+  // exotic halo density
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs) return;

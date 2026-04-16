@@ -189,8 +189,7 @@ export const useAnimate = (
     if (!refs) {
       return;
     }
-    const { core } = refs;
     animate(refs, paramsRef.current, time, stateRef.current, setPhase, resetScene);
-    core.renderer.render(core.scene, core.camera);
+    refs.core.renderer.render(refs.core.scene, refs.core.camera);
   });
 };

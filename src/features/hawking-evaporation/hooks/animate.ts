@@ -132,7 +132,7 @@ export const useAnimate = (
   setLiveMass: (m: number) => void,
   resetScene: () => void,
 ) => {
-  // Persistence for throttled UI updates without triggering re-renders
+  // persistence for throttled UI updates without triggering re-renders
   const frameCounter = useRef({ count: 0 });
 
   useSceneAnimation((time, delta) => {
@@ -145,8 +145,6 @@ export const useAnimate = (
     }
 
     animate(refs, params, state, setLiveMass, setPhase, resetScene, time, delta, frameCounter.current);
-
-    const { renderer, scene, camera } = refs.core;
-    renderer.render(scene, camera);
+    refs.core.renderer.render(refs.core.scene, refs.core.camera);
   });
 };

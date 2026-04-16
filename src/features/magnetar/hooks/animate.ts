@@ -26,7 +26,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   // surface shader
   body.material.uniforms['time']!.value = time;
   body.material.uniforms['fieldStrength']!.value = fieldStrength;
-  // Nnrmalise surfaceTemp from [1e6, 1e8] to [0, 1]
+  // normalise surfaceTemp from [1e6, 1e8] to [0, 1]
   body.material.uniforms['surfaceTemp']!.value = (surfaceTemp - 1e6) / (1e8 - 1e6);
 
   // slow body rotation — magnetars spin slower than pulsars (~0.1–10 RPM)
@@ -109,8 +109,6 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   } else {
     flash.material.opacity = 0;
   }
-
-  renderer.render(scene, camera);
 };
 
 export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObject<Params>) => {
@@ -119,10 +117,7 @@ export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObjec
     if (!refs) {
       return;
     }
-    console.log(refs);
-    const { core } = refs;
-    const { renderer, scene, camera } = core;
     animate(refs, paramsRef.current, time);
-    renderer.render(scene, camera);
+    refs.core.renderer.render(refs.core.scene, refs.core.camera);
   });
 };

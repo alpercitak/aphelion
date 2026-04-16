@@ -113,9 +113,7 @@ export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObjec
     if (!refs) {
       return;
     }
-    const { core } = refs;
-    const { camera, scene, renderer } = core;
     animate(refs, paramsRef.current, time);
-    renderer.render(scene, camera);
+    refs.core.renderer.render(refs.core.scene, refs.core.camera);
   });
 };

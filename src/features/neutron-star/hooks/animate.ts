@@ -8,7 +8,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   const { camera, orbit, stars } = core;
   const { starBody, glow, outerGlow, flash, fieldLines, accretionDisk, rotator } = entities;
 
-  // core Motion
+  // core motion
   orbit.updateCamera(camera);
   stars!.rotation.y = time * 0.002;
 
@@ -31,14 +31,14 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
     const alignment = Math.abs(beamAxisWorld.dot(camDir));
 
     const prevOpacity = flash.material.opacity;
-    // We use a small delta check or fixed step here
+    // small delta check or fixed step here
     flash.material.opacity =
       alignment > BEAM_FLASH_THRESHOLD ? Math.min(0.35, prevOpacity + 0.06) : Math.max(0, prevOpacity - 0.04);
   } else {
     flash.material.opacity = 0;
   }
 
-  // object Updates
+  // object updates
   fieldLines.children.forEach((child) => {
     if (child instanceof Mesh && child.material instanceof MeshBasicMaterial) {
       child.material.opacity = params.fieldStrength * 0.3;
@@ -57,7 +57,8 @@ export const useAnimate = (sceneRef: React.RefObject<SceneRef | null>, paramsRef
       return;
     }
     const { core } = refs;
+    const { renderer, scene, camera } = core;
     animate(refs, paramsRef.current, time);
-    core.renderer.render(core.scene, core.camera);
+    renderer.render(scene, camera);
   });
 };
