@@ -36,12 +36,11 @@ export default function SceneLayout({ canvasRef, hud, controls }: SceneLayoutPro
   return (
     <div className={styles['scene-layout']}>
       <canvas ref={canvasRef} />
-      <Hud>
-        <Header title={hud.title} subtitle={hud.subtitle} onGlossaryClick={() => setGlossaryOpen((o) => !o)} />
-        {hud.stats && <Stats items={hud.stats} />}
-        {hud.hints && <Hints items={hud.hints} />}
-        {hud.status && <Status status={hud.status} />}
-      </Hud>
+      <Hud />
+      <Header title={hud.title} subtitle={hud.subtitle} onGlossaryClick={() => setGlossaryOpen((o) => !o)} />
+      {hud.stats && <Stats items={hud.stats} />}
+      {hud.hints && <Hints items={hud.hints} />}
+      {hud.status && <Status status={hud.status} />}
       {controls && <Controls {...controls} />}
       <Scanlines />
       <Crosshair />
