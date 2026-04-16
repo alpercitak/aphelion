@@ -15,7 +15,7 @@ export const NS_RADIUS = 0.38;
 
 export const STARQUAKE_DURATION = 1.8; // seconds a crack stays visible
 
-export const STARQUAKE_RATES = {
+export const STARQUAKE_RATE_MAP = {
   off: Infinity,
   rare: 8.0,
   frequent: 2.5,

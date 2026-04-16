@@ -8,7 +8,7 @@ export interface BaseSceneRef {
     scene: Scene;
     camera: PerspectiveCamera;
     orbit: ReturnType<typeof createOrbitControls>;
-    stars: Object3D;
+    stars?: Object3D;
   };
 }
 

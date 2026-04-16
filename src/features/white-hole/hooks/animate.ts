@@ -12,7 +12,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   const { photonUniforms, haloUniforms, ejectaHaze, particleGeo, outerHalo, trailGroup } = entities;
 
   orbit.updateCamera(camera);
-  stars.rotation.y = time * 0.002;
+  stars!.rotation.y = time * 0.002;
 
   // Update glow view vectors
   photonUniforms.viewVector.value.copy(camera.position);

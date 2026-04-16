@@ -24,7 +24,7 @@ const animate = (
 
   // Basic Scene Updates
   orbit.updateCamera(camera);
-  stars.rotation.y = time * 0.002;
+  stars!.rotation.y = time * 0.002;
 
   if (state.phase === 'evaporating') {
     // 1. Mass Decay Logic (Accelerates as mass approaches zero)

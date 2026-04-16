@@ -61,7 +61,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params) => {
 
     entities.photonGlow.visible = params.showPhotonSphere;
     entities.ejectaHaze.visible = params.showEjectaHaze;
-    core.stars.visible = params.showStars;
+    core.stars!.visible = params.showStars;
 
     entities.particles.forEach((p) => {
       p.color = tempToColor(params.temperature * (0.6 + Math.random() * 0.8));

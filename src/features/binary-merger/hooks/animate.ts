@@ -160,7 +160,7 @@ const animate = (
 ) => {
   const { core } = refs;
   core.orbit.updateCamera(core.camera);
-  core.stars.rotation.y = time * 0.002;
+  core.stars!.rotation.y = time * 0.002;
 
   switch (state.phase) {
     case 'orbit':

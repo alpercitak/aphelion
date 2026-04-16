@@ -1,4 +1,4 @@
-import { type RefObject } from 'react';
+import type { RefObject } from 'react';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import type { Params, SceneRef } from '../types';
@@ -28,7 +28,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
 
   if (params.showStars) {
-    stars.rotation.y = time * 0.003;
+    stars!.rotation.y = time * 0.003;
   }
 
   // Lensing rings face camera
