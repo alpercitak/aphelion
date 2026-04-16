@@ -1,0 +1,33 @@
+.glossary-section-item {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.glossary-section-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.glossary-section-item__term {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing-sm);
+  color: var(--color-accent-bright);
+  margin-bottom: var(--spacing-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+.glossary-section-item__formula {
+  font-size: var(--font-size-sm);
+  color: var(--color-cold-glow);
+}
+.glossary-section-item__def {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.glossary-section-item__def em {
+  color: var(--color-text-bright);
+  font-style: normal;
+}

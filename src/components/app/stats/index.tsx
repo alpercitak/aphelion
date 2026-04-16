@@ -12,7 +12,7 @@ interface StatsProps {
 
 export default function Stats({ items = [] }: StatsProps) {
   return (
-    <div className={styles.stats}>
+    <div className={styles['stats']}>
       {items.map(({ label, value, unit }) => (
         <div key={label} className={styles['stats__item']}>
           <span className={styles['stats__item-label']}>{label}</span>

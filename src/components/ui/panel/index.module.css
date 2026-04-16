@@ -1,8 +1,7 @@
 .panel {
   width: 240px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 16px;
+  border: 1px solid var(--color-accent-soft);
+  padding: var(--spacing-lg);
   backdrop-filter: blur(16px);
   pointer-events: all;
 }

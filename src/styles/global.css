@@ -9,13 +9,48 @@
 :root {
   --void: #000000;
   --deep: #020408;
-  --accent: #ff6b1a;
-  --accent2: #ffaa44;
-  --cold: #4fc3f7;
   --panel: rgba(2, 6, 12, 0.85);
-  --border: rgba(255, 107, 26, 0.2);
-  --font-mono: 'Share Tech Mono', monospace;
-  --font-body: 'Rajdhani', sans-serif;
+
+  --color-accent-base: 255, 107, 26;
+  --color-accent: rgb(var(--color-accent-base));
+  --color-accent-glimmer: rgba(var(--color-accent-base), 0.06);
+  --color-accent-soft: rgba(var(--color-accent-base), 0.2);
+  --color-accent-glow: rgba(var(--color-accent-base), 0.4);
+
+  --color-accent-bright: #ffaa44;
+
+  --color-cold-base: 79, 195, 247;
+  --color-cold: rgb(var(--color-cold-base));
+  --color-cold-soft: rgba(var(--color-cold-base), 0.2);
+  --color-cold-glow: rgba(var(--color-cold-base), 0.4);
+
+  --color-white-base: 255, 255, 255;
+  --color-text-bright: rgba(var(--color-white-base), 1);
+  --color-text-primary: rgba(var(--color-white-base), 0.75);
+  --color-text-muted: rgba(var(--color-white-base), 0.35);
+  --color-text-dim: rgba(var(--color-white-base), 0.15);
+  --color-border-subtle: rgba(var(--color-white-base), 0.05);
+
+  --font-family-mono: 'Share Tech Mono', monospace;
+  --font-family-sans: 'Rajdhani', sans-serif;
+
+  --font-size-xs: 8px;
+  --font-size-sm: 9px;
+  --font-size-md: 10px;
+  --font-size-lg: 11px;
+  --font-size-xl: 12px;
+
+  --letter-spacing-sm: 0.15em;
+  --letter-spacing-md: 0.25em;
+  --letter-spacing-lg: 0.35em;
+
+  --safe-area-inset: 20px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
 }
 
 html,
@@ -25,17 +60,17 @@ body,
   height: 100%;
   background: var(--void);
   color: white;
-  font-family: var(--font-body);
+  font-family: var(--font-family-sans);
   overflow: hidden;
   cursor: crosshair;
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: var(--spacing-xs);
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--color-accent-soft);
 }

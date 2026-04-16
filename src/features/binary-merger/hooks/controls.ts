@@ -45,7 +45,7 @@ const SLIDER_ITEMS = [
     step: 0.05,
     format: (v: number) => v.toFixed(2),
     tooltip:
-      'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width — amplified here for visibility.',
+      'Spacetime grid deformation intensity. Real gravitational waves distort space by less than a proton width: amplified here for visibility.',
   },
 ] as const satisfies ReadonlyArray<SliderItem>;
 
@@ -60,7 +60,7 @@ const RADIO_ITEMS = [
   {
     id: 'inspiralRate',
     label: 'Inspiral',
-    labelTooltip: 'How fast the orbit decays. Real inspiral takes millions of years — compressed here.',
+    labelTooltip: 'How fast the orbit decays. Real inspiral takes millions of years, compressed here.',
     options: (['slow', 'medium', 'fast'] satisfies Array<InspiralOption>).map((item) => ({ id: item, label: item })),
   },
 ] as const satisfies ReadonlyArray<RadioItem>;

@@ -14,8 +14,10 @@ export default function Header({ title, subtitle, onGlossaryClick }: HeaderProps
   return (
     <div className={styles['header']}>
       <div className={styles['header__title-wrapper']}>
-        <h1 className={styles['header__title']}>{title}</h1>
-        <Button onClick={onGlossaryClick}>?</Button>
+        <div className={styles['header__title']}>{title}</div>
+        <Button variant="tertiary" onClick={onGlossaryClick}>
+          ?
+        </Button>
       </div>
       <div className={styles['header__subtitle']}>{subtitle}</div>
       <Button variant="tertiary" onClick={() => navigate('/')}>

@@ -20,7 +20,9 @@ export default function Slider({ label, tooltip, value, min, max, step, format, 
   return (
     <div className={styles['slider']}>
       <div className={styles['slider__header']}>
-        <Text tooltip={tooltip}>{label}</Text>
+        <Text family="mono" color="gray" tooltip={tooltip}>
+          {label}
+        </Text>
         <span className={styles['slider__value']}>{format(value)}</span>
       </div>
       <div className={styles['slider__track-wrapper']}>

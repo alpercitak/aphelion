@@ -1,0 +1,11 @@
+.glossary-section {
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-accent-soft);
+}
+.glossary-section__title {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-lg);
+  color: var(--color-accent-glow);
+  margin-bottom: var(--spacing-md);
+}

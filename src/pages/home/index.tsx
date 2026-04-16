@@ -21,16 +21,14 @@ export default function Home() {
 
       <main className={styles['home__main']}>
         {SCENES.map((scene, i) => (
-          <button key={scene.id} className={styles['card']} onClick={() => navigate(`/${scene.id}`)}>
-            <div className={styles.cardIndex}>0{i + 1}</div>
-            <div className={styles.cardBody}>
-              <div className={styles.cardTitle}>{scene.title}</div>
-              <div className={styles.cardSubtitle}>{scene.subtitle}</div>
-              <div className={styles.cardDesc}>{scene.description}</div>
+          <button key={scene.id} className={styles['home__card']} onClick={() => navigate(`/${scene.id}`)}>
+            <div className={styles['home__card-index']}>0{i + 1}</div>
+            <div className={styles['home__card-body']}>
+              <div className={styles['home__card-title']}>{scene.title}</div>
+              <div className={styles['home__card-subtitle']}>{scene.subtitle}</div>
+              <div className={styles['home__card-description']}>{scene.description}</div>
             </div>
-            <div className={styles.cardStatus}>
-              <span className={styles.available}>ENTER →</span>
-            </div>
+            <div className={styles['home__card-action']}>ENTER →</div>
           </button>
         ))}
       </main>

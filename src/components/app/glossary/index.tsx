@@ -1,52 +1,31 @@
+import clsx from 'clsx';
 import Button from '@/components/ui/button';
 import Panel from '@/components/ui/panel';
+import GlossarySection, { type GlossarySectionProps } from '@/components/app/glossary-section';
 import styles from './index.module.css';
-
-interface GlossaryItem {
-  term: string;
-  def: string;
-  formula?: string;
-}
-
-export interface GlossarySection {
-  title: string;
-  items: Array<GlossaryItem>;
-}
+import Text from '@/components/ui/text';
 
 interface GlossaryProps {
   isOpen: boolean;
   onClose: () => void;
-  entries: ReadonlyArray<GlossarySection>;
+  entries: ReadonlyArray<GlossarySectionProps>;
 }
 
 const TITLE = 'PHYSICS GLOSSARY';
+const ARIA_LABEL_CLOSE_BUTTON = 'Close glossary';
 
 export default function Glossary({ isOpen, onClose, entries = [] }: GlossaryProps) {
   return (
-    <Panel className={`${styles.panel} ${isOpen ? styles.open : ''}`} aria-hidden={!isOpen}>
-      <div className={styles.inner}>
-        <div className={styles.header}>
-          <h2>{TITLE}</h2>
-          <Button onClick={onClose} aria-label="Close glossary">
-            ✕
-          </Button>
-        </div>
-
-        {entries.map((section) => (
-          <div key={section.title} className={styles.section}>
-            <h3 className={styles.sectionTitle}>{section.title}</h3>
-            {section.items.map((item) => (
-              <article key={item.term} className={styles.entry}>
-                <div className={styles.term}>
-                  {item.term}
-                  {item.formula && <span className={styles.formula}>{item.formula}</span>}
-                </div>
-                <div className={styles.def} dangerouslySetInnerHTML={{ __html: item.def }} />
-              </article>
-            ))}
-          </div>
-        ))}
+    <Panel className={clsx(styles['glossary'], isOpen && styles['glossary--open'])} aria-hidden={!isOpen}>
+      <div className={styles['glossary__header']}>
+        <Text>{TITLE}</Text>
+        <Button onClick={onClose} aria-label={ARIA_LABEL_CLOSE_BUTTON}>
+          ✕
+        </Button>
       </div>
+      {entries.map((section) => (
+        <GlossarySection key={section.title} {...section} />
+      ))}
     </Panel>
   );
 }

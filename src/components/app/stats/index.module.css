@@ -1,23 +1,23 @@
 .stats {
   position: absolute;
-  top: 20px;
-  right: 24px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
+  top: var(--safe-area-inset);
+  right: var(--safe-area-inset);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-sm);
   color: rgba(255, 255, 255, 0.25);
-  text-align: right;
   line-height: 1.8;
   pointer-events: none;
 }
 .stats__item {
   display: flex;
   justify-content: flex-end;
-  gap: 6px;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 .stats__item-label {
   text-transform: uppercase;
 }
 .stats__item-value {
-  color: var(--cold);
+  color: var(--color-cold);
 }

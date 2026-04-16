@@ -17,16 +17,16 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'INSPIRAL',
-          def: 'As two massive objects orbit each other, they radiate gravitational wave energy. This loss of energy causes the orbit to shrink — the objects spiral inward, orbiting faster and faster as the separation decreases. The frequency of emitted waves increases, forming a characteristic <em>chirp</em>.',
+          def: 'As two massive objects orbit each other, they radiate gravitational wave energy. This loss of energy causes the orbit to shrink; the objects spiral inward, orbiting faster and faster as the separation decreases. The frequency of emitted waves increases, forming a characteristic <em>chirp</em>.',
         },
         {
           term: 'CHIRP MASS',
           formula: 'ℳ = (m₁m₂)³/⁵ / (m₁+m₂)¹/⁵',
-          def: 'The most precisely measurable quantity from a gravitational wave signal. It sets the <em>rate of inspiral</em> — how quickly the orbital frequency sweeps upward. For GW150914, the chirp mass was about <em>28 M☉</em>.',
+          def: 'The most precisely measurable quantity from a gravitational wave signal. It sets the <em>rate of inspiral</em> how quickly the orbital frequency sweeps upward. For GW150914, the chirp mass was about <em>28 M☉</em>.',
         },
         {
           term: 'MERGER',
-          def: 'The moment the two event horizons touch and merge into a single black hole. Releases an enormous burst of energy — GW150914 radiated more power than <em>all visible stars in the observable universe combined</em>, for a fraction of a second.',
+          def: 'The moment the two event horizons touch and merge into a single black hole. Releases an enormous burst of energy: GW150914 radiated more power than <em>all visible stars in the observable universe combined</em>, for a fraction of a second.',
         },
         {
           term: 'RINGDOWN',
@@ -39,7 +39,7 @@ const BASE_HUD_PROPS = {
       items: [
         {
           term: 'MASS 1 & MASS 2',
-          def: 'The individual masses of the two black holes in solar masses. GW150914 involved masses of approximately <em>36 M☉ and 29 M☉</em>. The mass ratio determines orbital asymmetry — unequal masses produce stronger gravitational wave emission.',
+          def: 'The individual masses of the two black holes in solar masses. GW150914 involved masses of approximately <em>36 M☉ and 29 M☉</em>. The mass ratio determines orbital asymmetry: unequal masses produce stronger gravitational wave emission.',
         },
         {
           term: 'INSPIRAL RATE',
@@ -47,7 +47,7 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'WAVE AMPLITUDE',
-          def: "The visual intensity of spacetime grid deformation. Real gravitational waves from GW150914 distorted space by a fraction of a proton's width over a 4 km detector — <em>h ~ 10⁻²¹</em>. Here it's amplified enormously for visibility.",
+          def: "The visual intensity of spacetime grid deformation. Real gravitational waves from GW150914 distorted space by a fraction of a proton's width over a 4 km detector <em>h ~ 10⁻²¹</em>. Here it's amplified enormously for visibility.",
         },
       ],
     },
@@ -64,7 +64,7 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'SPACETIME FABRIC',
-          def: 'A visual metaphor for the metric tensor — the mathematical object that describes the geometry of spacetime. Gravitational waves are oscillations in this geometry. The rubber-sheet analogy is imperfect but captures how mass curves spacetime.',
+          def: 'A visual metaphor for the metric tensor. The mathematical object that describes the geometry of spacetime. Gravitational waves are oscillations in this geometry. The rubber-sheet analogy is imperfect but captures how mass curves spacetime.',
         },
         {
           term: 'MASS RATIO',

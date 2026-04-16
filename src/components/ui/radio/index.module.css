@@ -1,12 +1,12 @@
 .radio {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--spacing-sm);
   width: 100%;
 }
 .radio__options {
   display: flex;
-  gap: 2px;
+  gap: var(--spacing-xs);
   width: 100%;
 }
 .radio__options > button {

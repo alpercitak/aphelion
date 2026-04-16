@@ -1,25 +1,25 @@
 .header {
   position: absolute;
-  top: 20px;
-  left: 24px;
+  top: var(--safe-area-inset);
+  left: var(--safe-area-inset);
 }
 .header__title-wrapper {
-  display: inline-flex;
+  display: flex;
   gap: 0.6em;
   align-items: center;
 }
 .header__title {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.35em;
-  color: var(--accent);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-lg);
+  letter-spacing: var(--letter-spacing-lg);
+  color: var(--color-accent);
   text-transform: uppercase;
   opacity: 0.9;
 }
 .header__subtitle {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.2em;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-md);
   color: rgba(255, 255, 255, 0.3);
-  margin-top: 3px;
+  margin: var(--spacing-sm) 0;
 }

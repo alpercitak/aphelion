@@ -1,9 +1,8 @@
 import { useState, type Ref } from 'react';
-
 import Controls, { type ControlsProps } from '@/components/app/controls';
 import Crosshair from '@/components/app/crosshair';
-import type { GlossarySection } from '@/components/app/glossary';
 import Glossary from '@/components/app/glossary';
+import type { GlossarySectionProps } from '@/components/app/glossary-section';
 import Header from '@/components/app/header';
 import Hints, { type HintItem } from '@/components/app/hints';
 import Hud from '@/components/app/hud';
@@ -18,7 +17,7 @@ export interface SceneLayoutHudProps {
   title: string;
   subtitle: string;
   stats: ReadonlyArray<StatsItem>;
-  glossary: ReadonlyArray<GlossarySection>;
+  glossary: ReadonlyArray<GlossarySectionProps>;
   hints: ReadonlyArray<HintItem>;
   status?: string;
 }

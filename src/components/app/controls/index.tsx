@@ -3,6 +3,7 @@ import ButtonGroup from '@/components/ui/button-group';
 import RadioGroup from '@/components/ui/radio-group';
 import SliderGroup from '@/components/ui/slider-group';
 import ToggleGroup from '@/components/ui/toggle-group';
+import Text from '@/components/ui/text';
 import type { ButtonProps } from '@/components/ui/button';
 import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
@@ -18,7 +19,8 @@ export interface ControlsProps {
 
 export default function Controls({ sliders, toggles, radios, buttons }: ControlsProps) {
   return (
-    <Panel className={styles['controls']}>
+    <Panel className={styles['controls']} title="Parameters">
+      <Text className={styles['controls__header']}>Parameters</Text>
       {sliders && <SliderGroup items={sliders} />}
       {radios && <RadioGroup items={radios} />}
       {toggles && <ToggleGroup items={toggles} />}

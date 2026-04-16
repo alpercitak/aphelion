@@ -21,7 +21,11 @@ export interface RadioProps {
 export default function Radio({ options, value, onChange, label, labelTooltip, className }: RadioProps) {
   return (
     <div className={clsx(styles['radio'], className)}>
-      {label && <Text tooltip={labelTooltip}>{label}</Text>}
+      {label && (
+        <Text color="gray" family="mono" tooltip={labelTooltip}>
+          {label}
+        </Text>
+      )}
       <div className={styles['radio__options']}>
         {options.map((option) => {
           const isActive = option.id === value;

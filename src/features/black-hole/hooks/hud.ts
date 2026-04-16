@@ -13,7 +13,7 @@ const BASE_HUD_PROPS = {
         {
           term: 'EVENT HORIZON',
           formula: 'r = rₛ',
-          def: "The point of <em>no return</em>. Once matter or light crosses this boundary, escape is impossible — not even light travels fast enough to overcome the gravitational pull. It's not a physical surface, just a mathematical threshold in spacetime.",
+          def: "The point of <em>no return</em>. Once matter or light crosses this boundary, escape is impossible; not even light travels fast enough to overcome the gravitational pull. It's not a physical surface, just a mathematical threshold in spacetime.",
         },
         {
           term: 'SCHWARZSCHILD RADIUS',
@@ -23,7 +23,7 @@ const BASE_HUD_PROPS = {
         {
           term: 'PHOTON SPHERE',
           formula: 'r = 1.5 rₛ',
-          def: 'A region where gravity is strong enough that photons travel in circles. Light here is in unstable orbit — the bright glowing ring you see. Any photon slightly too close spirals inward; slightly too far, it escapes.',
+          def: 'A region where gravity is strong enough that photons travel in circles. Light here is in unstable orbit; the bright glowing ring you see. Any photon slightly too close spirals inward; slightly too far, it escapes.',
         },
         {
           term: 'SINGULARITY',

@@ -1,15 +1,15 @@
 .hints {
   position: absolute;
-  bottom: 28px;
-  right: 28px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
+  bottom: var(--safe-area-inset);
+  right: var(--safe-area-inset);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-sm);
   color: rgba(255, 255, 255, 0.2);
   line-height: 2;
   text-align: right;
   text-transform: uppercase;
 }
 .hints__item-title {
-  color: var(--cold);
+  color: var(--color-cold);
 }

@@ -1,31 +1,58 @@
 .text {
-  font-size: 10px;
-  letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   position: relative;
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+}
+.text--family-mono {
+  font-family: var(--font-family-mono);
+}
+.text--size-small {
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-sm);
+}
+.text--size-medium {
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing-md);
+}
+.text--size-large {
+  font-size: var(--font-size-lg);
+  letter-spacing: var(--letter-spacing-lg);
+}
+.text--color-orange {
+  color: var(--color-accent);
+}
+.text--color-orange-light {
+  color: var(--color-accent-bright);
+}
+.text--color-blue {
+  color: var(--color-cold);
+}
+.text--color-gray {
+  color: var(--color-text-muted);
+}
+.text--color-gray-light {
+  color: var(--color-text-dim);
 }
 .text[data-tip] {
   cursor: help;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
 }
 .text[data-tip]:hover::after {
   content: attr(data-tip);
   position: absolute;
   left: 0;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + var(--spacing-sm));
   width: 200px;
   background: rgba(2, 6, 12, 0.97);
-  border: 1px solid rgba(255, 107, 26, 0.35);
+  border: 1px solid var(--color-accent-glow);
   color: rgba(255, 255, 255, 0.75);
-  font-family: var(--font-body);
-  font-size: 11px;
-  letter-spacing: 0.03em;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-lg);
+  letter-spacing: var(--letter-spacing-sm);
   line-height: 1.5;
-  padding: 8px 10px;
+  padding: var(--spacing-sm);
   pointer-events: none;
   z-index: 50;
   white-space: normal;
   text-transform: none;
-  border-bottom: none;
 }

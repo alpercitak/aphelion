@@ -1,6 +1,5 @@
 import { Camera } from 'three';
 
-// --- Control Constants ---
 const ROTATION_SENSITIVITY = 0.005;
 const ZOOM_SENSITIVITY = 0.01;
 const PHI_LIMIT_MIN = 0.1;
