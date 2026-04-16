@@ -1,15 +1,4 @@
-import type {
-  Group,
-  Mesh,
-  MeshBasicMaterial,
-  PerspectiveCamera,
-  Points,
-  RingGeometry,
-  Scene,
-  ShaderMaterial,
-  SphereGeometry,
-  WebGLRenderer,
-} from 'three';
+import type { Group, Mesh, MeshBasicMaterial, RingGeometry, ShaderMaterial, SphereGeometry } from 'three';
 import type { BaseSceneRef } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {

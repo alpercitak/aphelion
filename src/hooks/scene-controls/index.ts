@@ -6,7 +6,7 @@ import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import { useSceneParams } from '../scene-params';
 
-interface GenericButtonItem<T> extends ButtonProps {}
+interface GenericButtonItem extends ButtonProps {}
 
 interface GenericRadioItem<T> extends Omit<RadioProps, 'id' | 'value' | 'onChange'> {
   id: keyof T & string;
@@ -24,7 +24,7 @@ interface SceneControlsProps<T> {
   sliders?: ReadonlyArray<GenericSliderItem<T>>;
   toggles?: ReadonlyArray<GenericToggleItem<T>>;
   radios?: ReadonlyArray<GenericRadioItem<T>>;
-  buttons?: ReadonlyArray<GenericButtonItem<T>>;
+  buttons?: ReadonlyArray<GenericButtonItem>;
 }
 
 export const useSceneControls = <T extends object>(

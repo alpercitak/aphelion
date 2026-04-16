@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Timer } from 'three';
 
-export const useSceneAnimation = (callback: (time: number, delta: number) => void) => {
+type SceneAnimationCallback = (time: number, delta: number) => void;
+
+export const useSceneAnimation = (callback: SceneAnimationCallback) => {
   const callbackRef = useRef(callback);
 
   useEffect(() => {

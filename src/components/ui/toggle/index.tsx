@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import styles from './index.module.css';
 import Button from '../button';
 

@@ -7,11 +7,9 @@ import type {
   SphereGeometry,
   TorusGeometry,
   Vector3,
-  WebGLRenderer,
   WebGLRenderTarget,
 } from 'three';
 import type { BaseSceneRef, UniformValue } from '@/types';
-import type { createOrbitControls } from '@/utils/camera';
 
 export interface SceneRef extends BaseSceneRef {
   entities: {
