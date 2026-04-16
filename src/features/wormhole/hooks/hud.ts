@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { DESTINATION_LABEL_MAP } from '../constants';
-import type { Params } from '../types';
+import type { SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'Wormhole',
@@ -70,12 +70,12 @@ const BASE_HUD_PROPS = {
   ],
 } as const satisfies Partial<SceneLayoutHudProps>;
 
-export const useHud = (params: Params) =>
+export const useHud = (sceneParams: SceneParams) =>
   useMemo(() => {
     const stats = [
-      { label: 'THROAT', value: params.throatRadius.toFixed(2), unit: 'r₀' },
-      { label: 'EXOTIC', value: params.exoticDensity.toFixed(2), unit: 'ρ' },
-      { label: 'DEST', value: DESTINATION_LABEL_MAP[params.destination].toUpperCase() },
+      { label: 'THROAT', value: sceneParams.throatRadius.toFixed(2), unit: 'r₀' },
+      { label: 'EXOTIC', value: sceneParams.exoticDensity.toFixed(2), unit: 'ρ' },
+      { label: 'DEST', value: DESTINATION_LABEL_MAP[sceneParams.destination].toUpperCase() },
       { label: 'STATUS', value: 'THEORETICAL' },
     ];
 
@@ -83,4 +83,4 @@ export const useHud = (params: Params) =>
       ...BASE_HUD_PROPS,
       stats,
     };
-  }, [params.throatRadius, params.exoticDensity, params.destination]);
+  }, [sceneParams.throatRadius, sceneParams.exoticDensity, sceneParams.destination]);

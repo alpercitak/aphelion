@@ -10,42 +10,38 @@ import type {
   WebGLRenderer,
   WebGLRenderTarget,
 } from 'three';
-import type { UniformValue } from '@/types';
+import type { BaseSceneRef, UniformValue } from '@/types';
 import type { createOrbitControls } from '@/utils/camera';
 
-export type SceneRef = {
-  renderer: WebGLRenderer;
-  scene: Scene;
-  portalScene: Scene; // secondary scene rendered to texture
-  camera: PerspectiveCamera;
-  portalCamera: PerspectiveCamera;
-  orbit: ReturnType<typeof createOrbitControls>;
-  renderTarget: WebGLRenderTarget;
-  // objects
-  rim: Mesh<TorusGeometry, ShaderMaterial>;
-  portalDisc: Mesh<SphereGeometry, ShaderMaterial>;
-  innerGlow: Mesh<SphereGeometry, ShaderMaterial>;
-  outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
-  lensingRings: Array<Mesh>;
-  exoticHalo: Points;
-  destinationStars: Points;
-  stars: Points;
-  rimUniforms: {
-    viewVector: UniformValue<Vector3>;
+export interface SceneRef extends BaseSceneRef {
+  entities: {
+    portalScene: Scene; // secondary scene rendered to texture
+    portalCamera: PerspectiveCamera;
+    renderTarget: WebGLRenderTarget;
+    rim: Mesh<TorusGeometry, ShaderMaterial>;
+    portalDisc: Mesh<SphereGeometry, ShaderMaterial>;
+    innerGlow: Mesh<SphereGeometry, ShaderMaterial>;
+    outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
+    lensingRings: Array<Mesh>;
+    exoticHalo: Points;
+    destinationStars: Points;
+    rimUniforms: {
+      viewVector: UniformValue<Vector3>;
+    };
+    innerGlowUniforms: {
+      viewVector: UniformValue<Vector3>;
+    };
+    outerGlowUniforms: {
+      viewVector: UniformValue<Vector3>;
+    };
+    portalUniforms: {
+      time: UniformValue<number>;
+      distortion: UniformValue<number>;
+    };
   };
-  innerGlowUniforms: {
-    viewVector: UniformValue<Vector3>;
-  };
-  outerGlowUniforms: {
-    viewVector: UniformValue<Vector3>;
-  };
-  portalUniforms: {
-    time: UniformValue<number>;
-    distortion: UniformValue<number>;
-  };
-};
+}
 
-export type Params = {
+export type SceneParams = {
   throatRadius: number;
   exoticDensity: number;
   lensingStrength: number;

@@ -1,6 +1,6 @@
-import type { Destination, Params } from '../types';
+import type { Destination, SceneParams } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   throatRadius: 1.0,
   exoticDensity: 0.6,
   lensingStrength: 1.0,
@@ -8,7 +8,7 @@ export const PARAMS = {
   showExoticHalo: true,
   showLensingRings: true,
   showStars: true,
-} as const satisfies Params;
+} as const satisfies SceneParams;
 
 export const DESTINATION_OPTIONS = ['distant', 'nebula'] as const satisfies ReadonlyArray<Destination>;
 
