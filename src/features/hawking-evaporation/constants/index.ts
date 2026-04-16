@@ -1,7 +1,7 @@
-import type { Params, StateRef, TimeCompression } from '../types';
+import type { SceneParams, StateRef, TimeCompression } from '../types';
 import type { Phase } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   initialMass: 0.1,
   timeCompression: 'medium',
   pairOpacity: 0.8,
@@ -10,10 +10,10 @@ export const PARAMS = {
   showHalo: true,
   showTempReadout: true,
   autoLoop: true,
-} as const satisfies Params;
+} as const satisfies SceneParams;
 
 export const INITIAL_STATE = {
-  mass: PARAMS.initialMass,
+  mass: SCENE_PARAMS.initialMass,
   phase: 'evaporating',
   flashOpacity: 0,
   pairs: [],

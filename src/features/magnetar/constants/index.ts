@@ -1,6 +1,6 @@
-import type { Params, StarquakeRate } from '../types';
+import type { SceneParams, StarquakeRate } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   fieldStrength: 1.0,
   burstIntensity: 1.0,
   surfaceTemp: 5e6,
@@ -9,7 +9,7 @@ export const PARAMS = {
   showStarquakes: true,
   showGammaBursts: true,
   showFieldDistortion: true,
-} as const satisfies Params;
+} as const satisfies SceneParams;
 
 export const NS_RADIUS = 0.38;
 

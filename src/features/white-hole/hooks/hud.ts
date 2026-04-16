@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { schwarzschildRadius } from '@/utils/physics';
-import type { Params } from '../types';
+import type { SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'White Hole',
@@ -70,7 +70,7 @@ const BASE_HUD_PROPS = {
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
-export const useHud = (params: Params) =>
+export const useHud = (params: SceneParams) =>
   useMemo(() => {
     const rs = schwarzschildRadius(params.mass);
     const stats = [

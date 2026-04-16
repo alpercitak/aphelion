@@ -2,19 +2,19 @@ import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import { useSceneControls } from '@/hooks/scene-controls';
-import { PARAMS } from '../constants';
-import type { Params } from '../types';
+import { SCENE_PARAMS } from '../constants';
+import type { SceneParams } from '../types';
 
 interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'initialMass' | 'pairOpacity' | 'radiationIntensity'>;
+  id: keyof Pick<SceneParams, 'initialMass' | 'pairOpacity' | 'radiationIntensity'>;
 }
 
 interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showPairs' | 'showHalo' | 'showTempReadout' | 'autoLoop'>;
+  id: keyof Pick<SceneParams, 'showPairs' | 'showHalo' | 'showTempReadout' | 'autoLoop'>;
 }
 
 interface RadioItem extends Partial<RadioProps> {
-  id: keyof Pick<Params, 'timeCompression'>;
+  id: keyof Pick<SceneParams, 'timeCompression'>;
 }
 
 const SLIDER_ITEMS = [
@@ -67,7 +67,7 @@ const RADIO_ITEMS = [
 ] as const satisfies ReadonlyArray<RadioItem>;
 
 export const useControls = () => {
-  const { params, paramsRef, controls } = useSceneControls(PARAMS, {
+  const { params, paramsRef, controls } = useSceneControls(SCENE_PARAMS, {
     sliders: SLIDER_ITEMS,
     toggles: TOGGLE_ITEMS,
     radios: RADIO_ITEMS,

@@ -1,15 +1,15 @@
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import { useSceneControls } from '@/hooks/scene-controls';
-import { PARAMS } from '../constants';
-import type { Params } from '../types';
+import { SCENE_PARAMS } from '../constants';
+import type { SceneParams } from '../types';
 
 interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<Params, 'mass' | 'spin' | 'temp' | 'lensStrength'>;
+  id: keyof Pick<SceneParams, 'mass' | 'spin' | 'temp' | 'lensStrength'>;
 }
 
 interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<Params, 'showDisk' | 'showJets' | 'showStars' | 'dopplerShift'>;
+  id: keyof Pick<SceneParams, 'showDisk' | 'showJets' | 'showStars' | 'dopplerShift'>;
 }
 
 const SLIDER_ITEMS = [
@@ -61,7 +61,7 @@ const TOGGLE_ITEMS = [
 ] as const satisfies ReadonlyArray<ToggleItem>;
 
 export const useControls = () => {
-  const { params, paramsRef, controls } = useSceneControls(PARAMS, {
+  const { params, paramsRef, controls } = useSceneControls(SCENE_PARAMS, {
     sliders: SLIDER_ITEMS,
     toggles: TOGGLE_ITEMS,
   });

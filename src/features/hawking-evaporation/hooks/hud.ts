@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { hawkingTemperatureKelvin } from '@/utils/physics';
 import { PHASE_LABEL_MAP } from '../constants';
-import type { Params, Phase } from '../types';
+import type { SceneParams, Phase } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'Hawking Evaporation',
@@ -73,9 +73,9 @@ const BASE_HUD_PROPS = {
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
-export const useHud = (params: Params, liveMass: number, phase: Phase) =>
+export const useHud = (params: SceneParams, liveMass: number, phase: Phase) =>
   useMemo(() => {
-    // Format Hawking Temperature
+    // format Hawking Temperature
     const tk = hawkingTemperatureKelvin(liveMass);
     const tempDisp =
       tk > 1e6

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
-import { PARAMS } from '../constants';
+import { SCENE_PARAMS } from '../constants';
 import type { SceneRef } from '../types';
 import { createAccretionDisk } from '../utils/accretion-disk';
 import { createEventHorizon } from '../utils/event-horizon';
@@ -27,7 +27,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     const photonSphere = createPhotonSphere(camera.position);
     const outerGlow = createOuterGlow(camera.position);
     const { photonRing, einsteinRing } = createLensingRings();
-    const diskGroup = createAccretionDisk(PARAMS.temp, false);
+    const diskGroup = createAccretionDisk(SCENE_PARAMS.temp, false);
     const jetsGroup = createRelativisticJets();
     scene.add(blackHole, photonSphere, outerGlow, photonRing, einsteinRing, diskGroup, jetsGroup);
 

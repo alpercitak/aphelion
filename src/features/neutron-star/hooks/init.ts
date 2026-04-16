@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Object3D } from 'three';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
-import { PARAMS } from '../constants';
+import { SCENE_PARAMS } from '../constants';
 import type { SceneRef } from '../types';
 import { createAccretionDisk } from '../utils/accretion-disk';
 import { createBeamFlash } from '../utils/beam-flash';
@@ -24,12 +24,12 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       orbitOptions: { radius: 5, minRadius: 1.5, maxRadius: 20 },
     });
 
-    const starBody = createNeutronStarBody(PARAMS.mass);
+    const starBody = createNeutronStarBody(SCENE_PARAMS.mass);
     const glow = createGlow(camera.position);
     const outerGlow = createOuterGlow(camera.position);
     const rotator = new Object3D();
     const accretionDisk = createAccretionDisk();
-    accretionDisk.visible = PARAMS.showAccretionDisk;
+    accretionDisk.visible = SCENE_PARAMS.showAccretionDisk;
 
     scene.add(starBody, glow, outerGlow, rotator, accretionDisk);
 
@@ -37,10 +37,10 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     fieldTiltObj.rotation.z = 0.25;
     rotator.add(fieldTiltObj);
 
-    const beams = createPulsarBeams(PARAMS.beamWidth);
+    const beams = createPulsarBeams(SCENE_PARAMS.beamWidth);
     fieldTiltObj.add(beams);
 
-    const fieldLines = createFieldLines(PARAMS.fieldStrength);
+    const fieldLines = createFieldLines(SCENE_PARAMS.fieldStrength);
     fieldTiltObj.add(fieldLines);
 
     const flash = createBeamFlash();
@@ -48,9 +48,10 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     flash.position.z = -1;
     scene.add(camera);
 
-    const core = { renderer, scene, camera, orbit, stars };
-    const entities = { starBody, glow, outerGlow, rotator, beams, fieldLines, accretionDisk, flash };
-    sceneRef.current = { core, entities };
+    sceneRef.current = {
+      core: { renderer, scene, camera, orbit, stars },
+      entities: { starBody, glow, outerGlow, rotator, beams, fieldLines, accretionDisk, flash },
+    };
 
     return () => dispose();
   }, [canvasRef, sceneRef]);

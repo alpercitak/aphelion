@@ -29,10 +29,10 @@ export interface StateRef {
   flashOpacity: number;
   waveRings: Array<WaveRing>;
   lastRingTime: number;
-  params: Params;
+  sceneParams: SceneParams;
 }
 
-export interface Params {
+export type SceneParams = {
   mass1: number;
   mass2: number;
   waveAmplitude: number;
@@ -41,7 +41,7 @@ export interface Params {
   showDisks: boolean;
   autoLoop: boolean;
   inspiralRate: InspiralOption;
-}
+};
 
 export type InspiralOption = 'slow' | 'medium' | 'fast';
 

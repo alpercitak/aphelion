@@ -3,12 +3,12 @@ import { LineBasicMaterial, Mesh, MeshBasicMaterial, PointsMaterial, Vector3 } f
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { NS_RADIUS, STARQUAKE_DURATION, STARQUAKE_RATE_MAP } from '../constants';
-import type { ActiveCrack, Params, SceneRef } from '../types';
+import type { ActiveCrack, SceneParams, SceneRef } from '../types';
 import { createStarquakeCrack } from '../utils/starquake-crack';
 
-const animate = (refs: SceneRef, params: Params, time: number) => {
+const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   const { core, entities } = refs;
-  const { orbit, camera, renderer, scene } = core;
+  const { orbit, camera, scene } = core;
   const { body, innerGlow, outerGlow, fieldLines, fieldHalo, flash, lastQuakeTime, activeCracks } = entities;
   const {
     burstIntensity,
@@ -111,7 +111,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   }
 };
 
-export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObject<Params>) => {
+export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObject<SceneParams>) => {
   useSceneAnimation((time) => {
     const refs = sceneRef.current;
     if (!refs) {

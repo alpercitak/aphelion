@@ -1,6 +1,6 @@
-import type { Params } from '../types';
+import type { SceneParams } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   mass: 1.4,
   rpm: 30,
   fieldStrength: 1.0,
@@ -9,7 +9,7 @@ export const PARAMS = {
   showFieldLines: true,
   showBeamFlash: true,
   showAccretionDisk: false,
-} as const satisfies Params;
+} as const satisfies SceneParams;
 
 export const BEAM_FLASH_THRESHOLD = 0.92;
 

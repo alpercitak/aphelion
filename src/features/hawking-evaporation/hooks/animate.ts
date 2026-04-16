@@ -3,12 +3,12 @@ import { BufferAttribute, PointsMaterial } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { DECAY_RATE_MAP, PAIR_POOL, VISUAL_SCALE } from '../constants';
-import type { Params, Phase, SceneRef, StateRef, VirtualPair } from '../types';
+import type { Phase, SceneParams, SceneRef, StateRef, VirtualPair } from '../types';
 import { spawnPair } from '../utils/virtual-pair';
 
 const animate = (
   refs: SceneRef,
-  params: Params,
+  params: SceneParams,
   state: StateRef,
   setLiveMass: (m: number) => void,
   setPhase: (p: Phase) => void,
@@ -126,7 +126,7 @@ const animate = (
 
 export const useAnimate = (
   sceneRef: RefObject<SceneRef | null>,
-  paramsRef: RefObject<Params>,
+  paramsRef: RefObject<SceneParams>,
   stateRef: RefObject<StateRef>,
   setPhase: (p: Phase) => void,
   setLiveMass: (m: number) => void,

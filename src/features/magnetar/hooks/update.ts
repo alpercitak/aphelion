@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Mesh } from 'three';
 import type { SceneRefType } from '@/types';
-import type { Params, SceneRef } from '../types';
+import type { SceneParams, SceneRef } from '../types';
 import { createFieldLines } from '../utils/field-lines';
 
-export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params) => {
+export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams) => {
   // rebuild field lines
   useEffect(() => {
     const refs = sceneRef.current;

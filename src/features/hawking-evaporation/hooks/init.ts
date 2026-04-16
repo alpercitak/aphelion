@@ -3,7 +3,7 @@ import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, Point
 import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
 import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
-import { PAIR_POOL, PARAMS } from '../constants';
+import { PAIR_POOL, SCENE_PARAMS } from '../constants';
 import type { SceneRef } from '../types';
 import { createEventHorizon } from '../utils/event-horizon';
 import { createFlash } from '../utils/flash';
@@ -23,16 +23,16 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       orbitOptions: { radius: 6, minRadius: 2, maxRadius: 20 },
     });
 
-    const initTemp = hawkingTemperatureKelvin(PARAMS.initialMass);
+    const initTemp = hawkingTemperatureKelvin(SCENE_PARAMS.initialMass);
     const initColor = hawkingGlowColor(initTemp);
 
     const horizon = createEventHorizon();
     const photonGlow = createPhotonGlow(camera.position, initColor);
     const outerGlow = createOuterGlow(camera.position, initColor);
-    const halo = createRadiationHalo(initColor, new Color(0x4488ff), PARAMS.radiationIntensity);
+    const halo = createRadiationHalo(initColor, new Color(0x4488ff), SCENE_PARAMS.radiationIntensity);
 
     scene.add(horizon, photonGlow, outerGlow, halo);
-    halo.visible = PARAMS.showHalo;
+    halo.visible = SCENE_PARAMS.showHalo;
 
     // Virtual pair points — fixed pool
     const pairPositions = new Float32Array(PAIR_POOL * 2 * 3); // pairs × 2 particles × xyz
@@ -46,12 +46,12 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
         size: 0.05,
         vertexColors: true,
         transparent: true,
-        opacity: PARAMS.pairOpacity,
+        opacity: SCENE_PARAMS.pairOpacity,
         blending: AdditiveBlending,
         depthWrite: false,
       }),
     );
-    pairPoints.visible = PARAMS.showPairs;
+    pairPoints.visible = SCENE_PARAMS.showPairs;
     scene.add(pairPoints);
 
     // Flash overlay — attached to camera
@@ -75,20 +75,21 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       opacity: UniformValue<number>;
     };
 
-    const core = { renderer, scene, camera, orbit, stars };
-    const entities = {
-      horizon,
-      photonGlow,
-      outerGlow,
-      halo,
-      flash,
-      pairPoints,
-      pairGeo,
-      photonUniforms,
-      outerUniforms,
-      haloUniforms,
+    sceneRef.current = {
+      core: { renderer, scene, camera, orbit, stars },
+      entities: {
+        horizon,
+        photonGlow,
+        outerGlow,
+        halo,
+        flash,
+        pairPoints,
+        pairGeo,
+        photonUniforms,
+        outerUniforms,
+        haloUniforms,
+      },
     };
-    sceneRef.current = { core, entities };
 
     return () => dispose();
   }, [canvasRef, sceneRef]);

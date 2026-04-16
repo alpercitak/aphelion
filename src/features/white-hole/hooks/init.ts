@@ -14,7 +14,7 @@ import {
 import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
 import { massScale } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
-import { MAX_RADIUS, PARAMS, PARTICLE_POOL } from '../constants';
+import { MAX_RADIUS, PARTICLE_POOL, SCENE_PARAMS } from '../constants';
 import type { Particle, SceneRef } from '../types';
 import { createCentralBody } from '../utils/central-body';
 import { createEjectaHaze } from '../utils/ejecta-haze';
@@ -35,14 +35,14 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       toneMappingExposure: 1.4,
     });
 
-    const s = massScale(PARAMS.mass) * 0.9;
-    const body = createCentralBody(PARAMS.mass);
-    const photonGlow = createPhotonGlow(PARAMS.mass, camera.position);
-    const outerHalo = createOuterHalo(PARAMS.mass, camera.position);
-    const ejectaHaze = createEjectaHaze(PARAMS.mass);
+    const s = massScale(SCENE_PARAMS.mass) * 0.9;
+    const body = createCentralBody(SCENE_PARAMS.mass);
+    const photonGlow = createPhotonGlow(SCENE_PARAMS.mass, camera.position);
+    const outerHalo = createOuterHalo(SCENE_PARAMS.mass, camera.position);
+    const ejectaHaze = createEjectaHaze(SCENE_PARAMS.mass);
 
-    ejectaHaze.visible = PARAMS.showEjectaHaze;
-    photonGlow.visible = PARAMS.showPhotonSphere;
+    ejectaHaze.visible = SCENE_PARAMS.showEjectaHaze;
+    photonGlow.visible = SCENE_PARAMS.showPhotonSphere;
     scene.add(body, photonGlow, outerHalo, ejectaHaze);
 
     // Particle system — fixed pool of positions updated each frame
@@ -70,8 +70,8 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     scene.add(trailGroup);
 
     // initialise particle pool: spread outward from body
-    const particles: Particle[] = Array.from({ length: PARTICLE_POOL }, () =>
-      spawnParticle(PARAMS.ejectionVelocity * 0.12, PARAMS.temperature, s),
+    const particles: Array<Particle> = Array.from({ length: PARTICLE_POOL }, () =>
+      spawnParticle(SCENE_PARAMS.ejectionVelocity * 0.12, SCENE_PARAMS.temperature, s),
     );
 
     // stagger lifetimes so particles aren't all at the same radius on first frame

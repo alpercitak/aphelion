@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import SceneLayout from '@/components/app/scene-layout';
-import { INITIAL_STATE, PARAMS } from './constants';
+import { INITIAL_STATE, SCENE_PARAMS } from './constants';
 import { useAnimate } from './hooks/animate';
 import { useControls } from './hooks/controls';
 import { useHud } from './hooks/hud';
@@ -14,7 +14,7 @@ export default function HawkingEvaporation() {
   const stateRef = useRef<StateRef>({ ...INITIAL_STATE });
 
   const [phase, setPhase] = useState<Phase>('evaporating');
-  const [liveMass, setLiveMass] = useState<number>(PARAMS.initialMass);
+  const [liveMass, setLiveMass] = useState<number>(SCENE_PARAMS.initialMass);
 
   const { params, paramsRef, controls } = useControls();
   const hud = useHud(params, liveMass, phase);

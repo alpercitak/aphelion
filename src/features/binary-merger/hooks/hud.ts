@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { PHASE_LABEL_MAP } from '../constants';
-import type { Params, Phase } from '../types';
+import type { Phase, SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'Binary Merger',
@@ -76,7 +76,7 @@ const BASE_HUD_PROPS = {
   hints: [{ title: 'GW150914', values: ['36 + 29 → 62 M☉', '3 M☉ RADIATED'] }],
 } as const satisfies Partial<SceneLayoutHudProps>;
 
-export const useHud = (params: Params, phase: Phase) =>
+export const useHud = (params: SceneParams, phase: Phase) =>
   useMemo(() => {
     const totalMass = params.mass1 + params.mass2;
     // chirp mass formula: (m1*m2)^0.6 / (m1+m2)^0.2

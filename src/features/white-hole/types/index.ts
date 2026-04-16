@@ -36,7 +36,7 @@ export interface SceneRef extends BaseSceneRef {
   };
 }
 
-export type Params = {
+export type SceneParams = {
   mass: number;
   ejectionRate: EjectionRate;
   ejectionVelocity: number; // 0.1–0.9 (fraction of c, visual only)

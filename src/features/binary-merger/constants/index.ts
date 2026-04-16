@@ -1,6 +1,6 @@
-import type { InspiralOption, Params, Phase, StateRef } from '../types';
+import type { InspiralOption, Phase, SceneParams, StateRef } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   mass1: 30,
   mass2: 25,
   inspiralRate: 'medium',
@@ -9,7 +9,7 @@ export const PARAMS = {
   showWaveRings: true,
   showDisks: true,
   autoLoop: true,
-} as const satisfies Params;
+} as const satisfies SceneParams;
 
 export const PHASE_LABEL_MAP = {
   orbit: '● INSPIRAL IN PROGRESS',
@@ -35,5 +35,5 @@ export const INITIAL_STATE: StateRef = {
   flashOpacity: 0,
   waveRings: [],
   lastRingTime: 0,
-  params: PARAMS,
+  sceneParams: SCENE_PARAMS,
 };

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Mesh, Points } from 'three';
 import type { SceneRefType } from '@/types';
-import type { Params, SceneRef } from '../types';
+import type { SceneParams, SceneRef } from '../types';
 import { createPulsarBeams } from '../utils/pulsar-beams';
 
-export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params) => {
+export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams) => {
   // visibility toggles
   useEffect(() => {
     const refs = sceneRef.current;

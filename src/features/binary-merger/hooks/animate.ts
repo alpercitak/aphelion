@@ -3,7 +3,7 @@ import { Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION, INSPIRAL_RATE_MAP, MERGE_THRESHOLD } from '../constants';
-import type { Params, ResetScene, SceneRef, SetPhase, StateRef } from '../types';
+import type { ResetScene, SceneParams, SceneRef, SetPhase, StateRef } from '../types';
 import { orbitalOmega } from '../utils/orbital-omega';
 import { orbitalPositions } from '../utils/orbital-positions';
 import { createWaveRing } from '../utils/wave-ring';
@@ -43,7 +43,7 @@ const updateWaveRings = (refs: SceneRef, state: StateRef) => {
   });
 };
 
-const handleOrbit = (refs: SceneRef, params: Params, time: number, state: StateRef, setPhase: SetPhase) => {
+const handleOrbit = (refs: SceneRef, params: SceneParams, time: number, state: StateRef, setPhase: SetPhase) => {
   const { entities, core } = refs;
   const { bh1, bh2, grid } = entities;
 
@@ -93,7 +93,7 @@ const handleOrbit = (refs: SceneRef, params: Params, time: number, state: StateR
   }
 };
 
-const handleMerging = (refs: SceneRef, params: Params, time: number, state: StateRef, setPhase: SetPhase) => {
+const handleMerging = (refs: SceneRef, params: SceneParams, time: number, state: StateRef, setPhase: SetPhase) => {
   const { entities, core } = refs;
   const { bh1, bh2, grid, flash, mergedBH } = entities;
 
@@ -131,7 +131,7 @@ const handleMerging = (refs: SceneRef, params: Params, time: number, state: Stat
   }
 };
 
-const handleMerged = (refs: SceneRef, params: Params, time: number, _: StateRef, resetScene: ResetScene) => {
+const handleMerged = (refs: SceneRef, params: SceneParams, time: number, resetScene: ResetScene) => {
   const { entities, core } = refs;
   const { grid, flash, mergedBH } = entities;
 
@@ -152,7 +152,7 @@ const handleMerged = (refs: SceneRef, params: Params, time: number, _: StateRef,
 
 const animate = (
   refs: SceneRef,
-  params: Params,
+  params: SceneParams,
   time: number,
   state: StateRef,
   setPhase: SetPhase,
@@ -170,7 +170,7 @@ const animate = (
       handleMerging(refs, params, time, state, setPhase);
       break;
     case 'merged':
-      handleMerged(refs, params, time, state, resetScene);
+      handleMerged(refs, params, time, resetScene);
       break;
   }
 
@@ -179,7 +179,7 @@ const animate = (
 
 export const useAnimate = (
   sceneRef: SceneRefType<SceneRef>,
-  paramsRef: RefObject<Params>,
+  paramsRef: RefObject<SceneParams>,
   stateRef: RefObject<StateRef>,
   setPhase: SetPhase,
   resetScene: ResetScene,

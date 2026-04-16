@@ -25,7 +25,7 @@ export interface SceneRef extends BaseSceneRef {
   };
 }
 
-export type Params = {
+export type SceneParams = {
   fieldStrength: number; // 0–2, visual scale for 10¹³–10¹⁵ G
   burstIntensity: number; // 0–2
   surfaceTemp: number; // 1e6–1e8 K

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { GRAVITATIONAL_CONSTANT, SOLAR_MASS_KG, schwarzschildRadius } from '@/utils/physics';
-import type { Params } from '../types';
+import type { SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'Neutron Star',
@@ -77,7 +77,7 @@ const BASE_HUD_PROPS = {
 
 const R_NS = 1e4; // 10km Neutron Star radius in meters
 
-export const useHud = (params: Params) =>
+export const useHud = (params: SceneParams) =>
   useMemo(() => {
     const rs = schwarzschildRadius(params.mass);
     const hz = params.rpm / 60;

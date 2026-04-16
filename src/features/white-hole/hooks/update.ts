@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { LineBasicMaterial } from 'three';
 import type { SceneRefType } from '@/types';
 import { massScale, tempToColor } from '@/utils/physics';
-import type { Params, SceneRef } from '../types';
+import type { SceneParams, SceneRef } from '../types';
 import { createCentralBody } from '../utils/central-body';
 import { createEjectaHaze } from '../utils/ejecta-haze';
 import { createOuterHalo, createPhotonGlow } from '../utils/photon-glow';
 
-export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params) => {
+export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams) => {
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs) {

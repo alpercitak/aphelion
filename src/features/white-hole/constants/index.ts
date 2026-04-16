@@ -1,6 +1,6 @@
-import type { EjectionRate, Params } from '../types';
+import type { EjectionRate, SceneParams } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   mass: 10,
   ejectionRate: 'low',
   ejectionVelocity: 0.01,
@@ -9,7 +9,7 @@ export const PARAMS = {
   showPhotonSphere: true,
   showEjectaHaze: true,
   showStars: true,
-} as const satisfies Params;
+} as const satisfies SceneParams;
 
 // Spawn rates: particles per frame
 export const EJECTION_RATE_MAP = {

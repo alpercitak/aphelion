@@ -1,9 +1,9 @@
 import { Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import { BEAM_FLASH_THRESHOLD } from '../constants';
-import type { Params, SceneRef } from '../types';
+import type { SceneParams, SceneRef } from '../types';
 
-const animate = (refs: SceneRef, params: Params, time: number) => {
+const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   const { core, entities } = refs;
   const { camera, orbit, stars } = core;
   const { starBody, glow, outerGlow, flash, fieldLines, accretionDisk, rotator } = entities;
@@ -50,7 +50,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   }
 };
 
-export const useAnimate = (sceneRef: React.RefObject<SceneRef | null>, paramsRef: React.RefObject<Params>) => {
+export const useAnimate = (sceneRef: React.RefObject<SceneRef | null>, paramsRef: React.RefObject<SceneParams>) => {
   useSceneAnimation((time) => {
     const refs = sceneRef.current;
     if (!refs) {

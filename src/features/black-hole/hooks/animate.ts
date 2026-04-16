@@ -1,11 +1,11 @@
 import type { RefObject } from 'react';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
-import type { Params, SceneRef } from '../types';
+import type { SceneParams, SceneRef } from '../types';
 
-const animate = (refs: SceneRef, params: Params, time: number) => {
+const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   const { core, entities } = refs;
-  const { orbit, camera, stars, renderer, scene } = core;
+  const { orbit, camera, stars } = core;
   const { diskGroup, photonMat, photonSphere, outerGlow, photonRing, einsteinRing } = entities;
 
   orbit.updateCamera(camera);
@@ -36,7 +36,7 @@ const animate = (refs: SceneRef, params: Params, time: number) => {
   einsteinRing.lookAt(camera.position);
 };
 
-export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObject<Params>) => {
+export const useAnimate = (sceneRef: SceneRefType<SceneRef>, paramsRef: RefObject<SceneParams>) => {
   useSceneAnimation((time) => {
     const refs = sceneRef.current;
     if (!refs) {

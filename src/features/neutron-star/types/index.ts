@@ -1,7 +1,4 @@
 import type { Group, Mesh, MeshBasicMaterial, Object3D, PlaneGeometry, ShaderMaterial, SphereGeometry } from 'three';
-import type { RadioProps } from '@/components/ui/radio';
-import type { SliderProps } from '@/components/ui/slider';
-import type { ToggleProps } from '@/components/ui/toggle';
 import type { BaseSceneRef } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {
@@ -17,7 +14,7 @@ export interface SceneRef extends BaseSceneRef {
   };
 }
 
-export type Params = {
+export type SceneParams = {
   mass: number;
   rpm: number;
   fieldStrength: number;

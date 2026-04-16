@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import type { SceneRefType } from '@/types';
-import type { Params, Phase, SceneRef } from '../types';
+import type { Phase, SceneParams, SceneRef } from '../types';
 import { applyBlackHoleScale } from '../utils/black-hole';
 
-export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: Params, phase: Phase) => {
+export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams, phase: Phase) => {
   useEffect(() => {
     const refs = sceneRef.current;
     if (!refs) {

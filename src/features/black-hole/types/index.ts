@@ -27,7 +27,7 @@ export interface SceneRef extends BaseSceneRef {
   };
 }
 
-export interface Params {
+export type SceneParams = {
   mass: number;
   spin: number;
   temp: number;
@@ -36,4 +36,4 @@ export interface Params {
   showJets: boolean;
   showStars: boolean;
   dopplerShift: boolean;
-}
+};

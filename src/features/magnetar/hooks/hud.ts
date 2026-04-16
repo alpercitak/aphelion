@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
-import type { Params } from '../types';
+import type { SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'Magnetar',
@@ -73,7 +73,7 @@ const BASE_HUD_PROPS = {
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
-export const useHud = (params: Params) =>
+export const useHud = (params: SceneParams) =>
   useMemo(() => {
     const fieldGauss = `10^${(13 + params.fieldStrength).toFixed(1)}`;
     const tempMK = (params.surfaceTemp / 1e6).toFixed(0);

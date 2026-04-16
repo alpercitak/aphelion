@@ -11,7 +11,7 @@ import type {
 } from 'three';
 import type { BaseSceneRef, UniformValue } from '@/types';
 
-export type Params = {
+export type SceneParams = {
   initialMass: number; // 0.001–1 M☉
   timeCompression: TimeCompression;
   pairOpacity: number; // 0–1

@@ -1,6 +1,6 @@
-import type { Params } from '../types';
+import type { SceneParams } from '../types';
 
-export const PARAMS = {
+export const SCENE_PARAMS = {
   mass: 10,
   spin: 0,
   temp: 8000,
@@ -9,4 +9,4 @@ export const PARAMS = {
   showJets: true,
   showStars: true,
   dopplerShift: false,
-} as const satisfies Params;
+} as const satisfies SceneParams;

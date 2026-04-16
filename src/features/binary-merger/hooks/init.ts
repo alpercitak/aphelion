@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
-import { INITIAL_SEPARATION, PARAMS } from '../constants';
+import { INITIAL_SEPARATION, SCENE_PARAMS } from '../constants';
 import type { SceneRef } from '../types';
 import { createBlackHoleUnit, createMergedBlackHole } from '../utils/black-hole';
 import { createMergerFlash } from '../utils/merger-flash';
@@ -22,9 +22,9 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     });
 
     const grid = createSpacetimeGrid();
-    const bh1 = createBlackHoleUnit(PARAMS.mass1, camera.position);
-    const bh2 = createBlackHoleUnit(PARAMS.mass2, camera.position);
-    const mergedBH = createMergedBlackHole(PARAMS.mass1, PARAMS.mass2, camera.position);
+    const bh1 = createBlackHoleUnit(SCENE_PARAMS.mass1, camera.position);
+    const bh2 = createBlackHoleUnit(SCENE_PARAMS.mass2, camera.position);
+    const mergedBH = createMergedBlackHole(SCENE_PARAMS.mass1, SCENE_PARAMS.mass2, camera.position);
     mergedBH.visible = false;
 
     const flash = createMergerFlash();
