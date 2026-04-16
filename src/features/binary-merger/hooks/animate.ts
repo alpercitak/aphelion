@@ -1,8 +1,9 @@
-import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { RefObject } from 'react';
 import { Vector3 } from 'three';
+import { useSceneAnimation } from '@/hooks/scene-animation';
+import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION, INSPIRAL_RATE_MAP, MERGE_THRESHOLD } from '../constants';
-import type { Params, Phase, SceneRef, StateRef } from '../types';
+import type { Params, ResetScene, SceneRef, SetPhase, StateRef } from '../types';
 import { orbitalOmega } from '../utils/orbital-omega';
 import { orbitalPositions } from '../utils/orbital-positions';
 import { createWaveRing } from '../utils/wave-ring';
@@ -10,7 +11,7 @@ import { createWaveRing } from '../utils/wave-ring';
 /**
  * Shared logic for wave ring propagation and lifecycle
  */
-const updateWaveRings = (refs: SceneRef, state: StateRef, time: number) => {
+const updateWaveRings = (refs: SceneRef, state: StateRef) => {
   const { core, entities } = refs;
   const toRemoveIdx: Array<number> = [];
 
@@ -42,7 +43,7 @@ const updateWaveRings = (refs: SceneRef, state: StateRef, time: number) => {
   });
 };
 
-const handleOrbit = (refs: SceneRef, state: StateRef, params: Params, time: number, setPhase: (p: Phase) => void) => {
+const handleOrbit = (refs: SceneRef, params: Params, time: number, state: StateRef, setPhase: SetPhase) => {
   const { entities, core } = refs;
   const { bh1, bh2, grid } = entities;
 
@@ -92,7 +93,7 @@ const handleOrbit = (refs: SceneRef, state: StateRef, params: Params, time: numb
   }
 };
 
-const handleMerging = (refs: SceneRef, state: StateRef, params: Params, time: number, setPhase: (p: Phase) => void) => {
+const handleMerging = (refs: SceneRef, params: Params, time: number, state: StateRef, setPhase: SetPhase) => {
   const { entities, core } = refs;
   const { bh1, bh2, grid, flash, mergedBH } = entities;
 
@@ -130,7 +131,7 @@ const handleMerging = (refs: SceneRef, state: StateRef, params: Params, time: nu
   }
 };
 
-const handleMerged = (refs: SceneRef, state: StateRef, params: Params, time: number, resetScene: () => void) => {
+const handleMerged = (refs: SceneRef, params: Params, time: number, _: StateRef, resetScene: ResetScene) => {
   const { entities, core } = refs;
   const { grid, flash, mergedBH } = entities;
 
@@ -149,40 +150,47 @@ const handleMerged = (refs: SceneRef, state: StateRef, params: Params, time: num
   }
 };
 
+const animate = (
+  refs: SceneRef,
+  params: Params,
+  time: number,
+  state: StateRef,
+  setPhase: SetPhase,
+  resetScene: ResetScene,
+) => {
+  const { core } = refs;
+  core.orbit.updateCamera(core.camera);
+  core.stars.rotation.y = time * 0.002;
+
+  switch (state.phase) {
+    case 'orbit':
+      handleOrbit(refs, params, time, state, setPhase);
+      break;
+    case 'merging':
+      handleMerging(refs, params, time, state, setPhase);
+      break;
+    case 'merged':
+      handleMerged(refs, params, time, state, resetScene);
+      break;
+  }
+
+  updateWaveRings(refs, state);
+};
+
 export const useAnimate = (
-  sceneRef: RefObject<SceneRef | null>,
+  sceneRef: SceneRefType<SceneRef>,
   paramsRef: RefObject<Params>,
   stateRef: RefObject<StateRef>,
-  setPhase: (p: Phase) => void,
-  resetScene: () => void,
+  setPhase: SetPhase,
+  resetScene: ResetScene,
 ) => {
   useSceneAnimation((time) => {
     const refs = sceneRef.current;
     if (!refs) {
       return;
     }
-
     const { core } = refs;
-    const params = paramsRef.current;
-    const state = stateRef.current;
-
-    core.orbit.updateCamera(core.camera);
-    core.stars.rotation.y = time * 0.002;
-
-    switch (state.phase) {
-      case 'orbit':
-        handleOrbit(refs, state, params, time, setPhase);
-        break;
-      case 'merging':
-        handleMerging(refs, state, params, time, setPhase);
-        break;
-      case 'merged':
-        handleMerged(refs, state, params, time, resetScene);
-        break;
-    }
-
-    updateWaveRings(refs, state, time);
-
+    animate(refs, paramsRef.current, time, stateRef.current, setPhase, resetScene);
     core.renderer.render(core.scene, core.camera);
   });
 };

@@ -65,3 +65,7 @@ export interface WaveRing {
   mesh: Mesh<RingGeometry, MeshBasicMaterial, Object3DEventMap>;
   born: number;
 }
+
+export type SetPhase = (phase: Phase) => void;
+
+export type ResetScene = () => void;
