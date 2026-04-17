@@ -1,13 +1,4 @@
-import {
-  AdditiveBlending,
-  Color,
-  Mesh,
-  ShaderMaterial,
-  SphereGeometry,
-  type BackSide,
-  type FrontSide,
-  type Vector3,
-} from 'three';
+import { AdditiveBlending, Color, Mesh, ShaderMaterial, SphereGeometry, type Side, type Vector3 } from 'three';
 
 const VERTEX_SHADER = `
   uniform vec3 viewVector;
@@ -32,7 +23,7 @@ export const createGlow = (
   cameraPos: Vector3,
   color: number,
   radius: number,
-  side: typeof FrontSide | typeof BackSide,
+  side: Side,
 ): Mesh<SphereGeometry, ShaderMaterial> =>
   new Mesh(
     new SphereGeometry(radius, 48, 48),

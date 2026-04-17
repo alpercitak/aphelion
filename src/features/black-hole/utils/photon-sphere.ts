@@ -1,4 +1,4 @@
-import { AdditiveBlending, Color, FrontSide, ShaderMaterial, SphereGeometry, Vector3, Mesh } from 'three';
+import { AdditiveBlending, Color, FrontSide, Mesh, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
 
 const FRESNEL_VERT = `
   uniform vec3 viewVector;

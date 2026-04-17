@@ -13,9 +13,9 @@ import {
   type MeshBasicMaterialParameters,
 } from 'three';
 
-const RINGS = 80;
-const INNER_R = 1.5;
-const OUTER_R = 6.0;
+const RINGS = 80 as const;
+const INNER_R = 1.5 as const;
+const OUTER_R = 6.0 as const;
 const DIFF_R = OUTER_R - INNER_R;
 
 const createMeshBasicMaterial = (brightness: number, params: MeshBasicMaterialParameters) =>

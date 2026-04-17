@@ -1,5 +1,4 @@
-import type { SceneParams, StateRef, TimeCompression } from '../types';
-import type { Phase } from '../types';
+import type { Phase, SceneParams, StateRef, TimeCompression } from '../types';
 
 export const SCENE_PARAMS = {
   initialMass: 0.1,

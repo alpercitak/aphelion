@@ -11,6 +11,6 @@ export const SCENE_PARAMS = {
   showAccretionDisk: false,
 } as const satisfies SceneParams;
 
-export const BEAM_FLASH_THRESHOLD = 0.92;
+export const BEAM_FLASH_THRESHOLD = 0.92 as const;
 
-export const NS_RADIUS = 0.35; // visual radius — neutron stars are tiny
+export const NS_RADIUS = 0.35 as const; // visual radius — neutron stars are tiny

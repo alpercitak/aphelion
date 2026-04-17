@@ -12,9 +12,9 @@ import {
 } from 'three';
 import { NS_RADIUS } from '../constants';
 
-const BEAM_LENGTH = 12;
-const CONE_ANGLE_NARROW = 0.06;
-const CONE_ANGLE_WIDE = 0.14;
+const BEAM_LENGTH = 12 as const;
+const CONE_ANGLE_NARROW = 0.06 as const;
+const CONE_ANGLE_WIDE = 0.14 as const;
 
 export const createPulsarBeams = (beamWidth: string): Group => {
   const group = new Group();

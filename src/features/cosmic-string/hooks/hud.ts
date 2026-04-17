@@ -1,5 +1,5 @@
-import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { useMemo } from 'react';
+import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import type { SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {

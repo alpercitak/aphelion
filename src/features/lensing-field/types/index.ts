@@ -46,6 +46,7 @@ export interface LensUniforms {
     masses: Array<number>;
   };
 }
+
 export type BackgroundDensity = 'sparse' | 'medium' | 'dense';
 
 export type LensState = {

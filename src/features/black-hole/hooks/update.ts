@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Mesh } from 'three';
+import type { SceneRefType } from '@/types';
 import { applyMassScale } from '../utils/mass-scale';
 import { createAccretionDisk } from '../utils/accretion-disk';
 import type { SceneRef, SceneParams } from '../types';
-import type { SceneRefType } from '@/types';
 
 export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams) => {
   useEffect(() => {

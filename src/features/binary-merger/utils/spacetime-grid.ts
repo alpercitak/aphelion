@@ -1,7 +1,7 @@
 import { Mesh, PlaneGeometry, ShaderMaterial, Vector2 } from 'three';
 
-const SIZE = 28;
-const SEGMENTS = 90;
+const SIZE = 28 as const;
+const SEGMENTS = 90 as const;
 
 // Vertex shader deforms Y with wave equation
 const VERTEX_SHADER = `

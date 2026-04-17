@@ -1,5 +1,5 @@
-import { massScale } from '@/utils/physics';
 import type { Mesh } from 'three';
+import { massScale } from '@/utils/physics';
 
 export const applyMassScale = (objects: Record<string, Mesh>, mass: number, spin = 0): void => {
   const s = massScale(mass);

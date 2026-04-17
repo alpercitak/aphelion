@@ -11,9 +11,9 @@ export const SCENE_PARAMS = {
   showFieldDistortion: true,
 } as const satisfies SceneParams;
 
-export const NS_RADIUS = 0.38;
+export const NS_RADIUS = 0.38 as const;
 
-export const STARQUAKE_DURATION = 1.8; // seconds a crack stays visible
+export const STARQUAKE_DURATION = 1.8 as const; // seconds a crack stays visible
 
 export const STARQUAKE_RATE_MAP = {
   off: Infinity,

@@ -1,7 +1,7 @@
 import { AdditiveBlending, Color, DoubleSide, Group, Mesh, MeshBasicMaterial, RingGeometry } from 'three';
 import { NS_RADIUS } from '../constants';
 
-const DISK_RING_COUNT = 10;
+const DISK_RING_COUNT = 10 as const;
 const INNER_R = NS_RADIUS * 3.5;
 const OUTER_R = NS_RADIUS * 9;
 const DIFF_R = OUTER_R - INNER_R;

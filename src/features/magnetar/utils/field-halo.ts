@@ -1,13 +1,14 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, PointsMaterial } from 'three';
 import { NS_RADIUS } from '../constants';
 
+const COUNT = 1200 as const;
+
 // Particle halo around the star representing field energy density
 export const createFieldHalo = (): Points => {
-  const count = 1200;
-  const pos = new Float32Array(count * 3);
-  const colors = new Float32Array(count * 3);
+  const pos = new Float32Array(COUNT * 3);
+  const colors = new Float32Array(COUNT * 3);
 
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < COUNT; i++) {
     const r = NS_RADIUS * 1.4 + Math.random() * NS_RADIUS * 2.5;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);

@@ -10,12 +10,13 @@ import {
 } from 'three';
 import { NS_RADIUS } from '../constants';
 
-const FIELD_LINE_COUNT = 18;
+const FIELD_LINE_COUNT = 18 as const;
+const STEPS = 50 as const;
 
 // Chaotic multipole field line — randomised higher-order path
 const createChaoticFieldLine = (seed: number, fieldStrength: number): Mesh<TubeGeometry, MeshBasicMaterial> => {
   const points: Array<Vector3> = [];
-  const steps = 50;
+
   // Random tilt and phase per line
   const tilt = ((seed * 1.618) % (Math.PI * 0.6)) - Math.PI * 0.3;
   const phase = (seed * 2.399) % (Math.PI * 2);
@@ -24,8 +25,8 @@ const createChaoticFieldLine = (seed: number, fieldStrength: number): Mesh<TubeG
   const multipoleAmp = ((seed * 0.537) % 1.0) * 0.4;
   const multipoleFreq = 2 + Math.floor((seed * 0.213) % 3);
 
-  for (let i = 0; i <= steps; i++) {
-    const t = (i / steps) * Math.PI;
+  for (let i = 0; i <= STEPS; i++) {
+    const t = (i / STEPS) * Math.PI;
     const sinT = Math.sin(t);
     const cosT = Math.cos(t);
     // Base dipole

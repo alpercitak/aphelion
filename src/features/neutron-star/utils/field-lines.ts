@@ -10,7 +10,7 @@ import {
 } from 'three';
 import { NS_RADIUS } from '../constants';
 
-const FIELD_LINE_COUNT = 12;
+const FIELD_LINE_COUNT = 12 as const;
 
 // Dipole field line — parametric curve from pole to pole
 const dipoleFieldLine = (tiltAngle: number, phiOffset: number, arcScale: number): CatmullRomCurve3 => {

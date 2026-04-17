@@ -7,7 +7,7 @@ import {
   type MeshBasicMaterialParameters,
 } from 'three';
 
-const BASE_OPACITY = 0.7;
+const BASE_OPACITY = 0.7 as const;
 
 const MATERIAL_PARAMS = {
   color: 0x4fc3f7,
