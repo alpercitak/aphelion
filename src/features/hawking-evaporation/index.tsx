@@ -11,7 +11,7 @@ import type { Phase, SceneRef, StateRef } from './types';
 export default function HawkingEvaporation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef | null>(null);
-  const stateRef = useRef<StateRef>({ ...INITIAL_STATE });
+  const stateRef = useRef<StateRef>(INITIAL_STATE);
 
   const [phase, setPhase] = useState<Phase>('evaporating');
   const [liveMass, setLiveMass] = useState<number>(SCENE_PARAMS.initialMass);
