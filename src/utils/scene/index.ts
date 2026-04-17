@@ -57,6 +57,13 @@ export const SCENES = [
     description: 'Invisible mass bending starlight. Einstein rings and dark matter mapping.',
     component: lazy(() => import('@/features/lensing-field')),
   },
+  {
+    id: 'cosmic-string',
+    title: 'Cosmic String',
+    subtitle: 'Topological Defect',
+    description: 'A relic of the early universe. Infinite, thin, and conical spacetime.',
+    component: lazy(() => import('@/features/cosmic-string')),
+  },
 ];
 
 export const getScene = (id: string) => {
