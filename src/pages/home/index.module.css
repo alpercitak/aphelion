@@ -32,8 +32,7 @@
 .home__main {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   padding: 0 48px 48px;
   position: relative;
   z-index: 2;

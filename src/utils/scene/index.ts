@@ -50,6 +50,13 @@ export const SCENES = [
     description: 'Virtual particle pairs at the horizon. A micro black hole evaporates.',
     component: lazy(() => import('@/features/hawking-evaporation')),
   },
+  {
+    id: 'lensing-field',
+    title: 'Lensing Field',
+    subtitle: 'Gravitational Optics',
+    description: 'Invisible mass bending starlight. Einstein rings and dark matter mapping.',
+    component: lazy(() => import('@/features/lensing-field')),
+  },
 ];
 
 export const getScene = (id: string) => {
