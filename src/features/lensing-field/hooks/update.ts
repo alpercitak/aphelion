@@ -15,14 +15,10 @@ export const useUpdate = (
       if (!refs) {
         return;
       }
-      const { core, entities } = refs;
-      const nw = window.innerWidth;
-      const nh = window.innerHeight;
-      entities.bgCamera.aspect = nw / nh;
-      entities.bgCamera.updateProjectionMatrix();
-      core.renderer.setSize(nw, nh);
-      entities.renderTarget.setSize(nw, nh);
-      entities.lensUniforms.resolution.value.set(nw, nh);
+      const NW = window.innerWidth;
+      const NH = window.innerHeight;
+      refs.entities.renderTarget.setSize(NW, NH);
+      refs.entities.lensUniforms.resolution.value.set(NW, NH);
     };
     window.addEventListener('resize', onResize);
 
@@ -55,17 +51,17 @@ export const useUpdate = (
     const { backgroundDensity } = params;
 
     // remove old
-    entities.bgScene.remove(core.stars!);
+    core.scene.remove(core.stars!);
     entities.galaxies.forEach((g) => {
-      entities.bgScene.remove(g);
+      core.scene.remove(g);
       g.material.dispose();
     });
 
     // add new
     const newStars = createBackground(backgroundDensity);
     const newGalaxies = createGalaxies(backgroundDensity);
-    entities.bgScene.add(newStars);
-    newGalaxies.forEach((g) => entities.bgScene.add(g));
+    core.scene.add(newStars);
+    newGalaxies.forEach((g) => core.scene.add(g));
     core.stars = newStars;
     entities.galaxies = newGalaxies;
   }, [params.backgroundDensity]);

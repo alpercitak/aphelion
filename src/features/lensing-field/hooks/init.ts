@@ -35,15 +35,15 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     const H = window.innerHeight;
 
     // ── Background scene ─────────────────────────────────────────────────────
-    const bgScene = new Scene();
+
     const bgCamera = new PerspectiveCamera(55, W / H, 0.01, 100);
     bgCamera.position.set(0, 0, 5);
     bgCamera.lookAt(0, 0, 0);
 
     const stars = createBackground(SCENE_PARAMS.backgroundDensity);
     const galaxies = createGalaxies(SCENE_PARAMS.backgroundDensity);
-    bgScene.add(stars);
-    galaxies.forEach((g) => bgScene.add(g));
+    scene.add(stars);
+    galaxies.forEach((g) => scene.add(g));
 
     // ── Render target ────────────────────────────────────────────────────────
     const renderTarget = new WebGLRenderTarget(W, H, {
@@ -87,7 +87,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     sceneRef.current = {
       core: { renderer, scene, orbit, stars, camera },
-      entities: { bgScene, lensScene, bgCamera, lensCamera, renderTarget, galaxies, lensQuad, lensUniforms },
+      entities: { lensScene, lensCamera, renderTarget, galaxies, lensQuad, lensUniforms },
     };
 
     return () => {

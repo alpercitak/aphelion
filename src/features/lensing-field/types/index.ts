@@ -1,7 +1,6 @@
 import type {
   Mesh,
   OrthographicCamera,
-  PerspectiveCamera,
   PlaneGeometry,
   Scene,
   ShaderMaterial,
@@ -22,9 +21,7 @@ export type SceneParams = {
 
 export interface SceneRef extends BaseSceneRef {
   entities: {
-    bgScene: Scene; // background — rendered to texture
     lensScene: Scene; // fullscreen quad with lensing shader
-    bgCamera: PerspectiveCamera;
     lensCamera: OrthographicCamera;
     renderTarget: WebGLRenderTarget;
     galaxies: Array<Sprite>;

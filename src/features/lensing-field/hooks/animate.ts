@@ -9,7 +9,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number, lensState: L
   }
   const { core, entities } = refs;
 
-  core.orbit.updateCamera(entities.bgCamera);
+  core.orbit.updateCamera(core.camera);
 
   // auto-drift lens along a Lissajous path when mouse control is off
   if (!params.mouseLens) {
@@ -53,7 +53,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number, lensState: L
   // ── Two-pass render ─────────────────────────────────────────────────
   // pass 1: render background to texture
   core.renderer.setRenderTarget(entities.renderTarget);
-  core.renderer.render(entities.bgScene, entities.bgCamera);
+  core.renderer.render(core.scene, core.camera);
 
   // pass 2: lensing fullscreen pass to screen
   core.renderer.setRenderTarget(null);
