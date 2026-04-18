@@ -64,6 +64,13 @@ export const SCENES = [
     description: 'A relic of the early universe. Infinite, thin, and conical spacetime.',
     component: lazy(() => import('@/features/cosmic-string')),
   },
+  {
+    id: 'supernova',
+    title: 'Supernova',
+    subtitle: 'Core Collapse · Shockwave',
+    description: 'Stellar explosion sequence: collapse, shockwave, ejecta, and remnant.',
+    component: lazy(() => import('@/features/supernova')),
+  },
 ];
 
 export const getScene = (id: string) => {
