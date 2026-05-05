@@ -1,8 +1,8 @@
 # Aphelion
 
+![React](https://img.shields.io/badge/React-000000?style=flat-square&logo=react&logoColor=61DAFB)
+![Three.js](https://img.shields.io/badge/Three.js-000000?style=flat-square&logo=three.js&logoColor=white)
 ![Build](https://img.shields.io/github/actions/workflow/status/alpercitak/aphelion/build.yaml?branch=main&label=Build&color=4ade80&style=flat-square)
-![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
-![Three.js](https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-4ade80?style=flat-square)
 
 Interactive deep-space physics renderer. Ten scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
