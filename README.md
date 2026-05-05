@@ -1,6 +1,6 @@
 # Aphelion
 
-![Build](https://img.shields.io/github/actions/workflow/status/alpercitak/aphelion/build.yaml?logo=github&label=Build)
+![Build](https://img.shields.io/github/actions/workflow/status/alpercitak/aphelion/build.yaml?branch=main&label=Build&color=4ade80&style=flat-square)
 ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
 ![Three.js](https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-4ade80?style=flat-square)
