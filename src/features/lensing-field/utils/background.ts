@@ -11,7 +11,7 @@ const PALETTE = [
   [0.7, 0.8, 1.0], // pale blue
 ];
 
-export const createBackground = (density: BackgroundDensity): Points => {
+export const createBackground = (density: BackgroundDensity): Points<BufferGeometry, PointsMaterial> => {
   const count = STAR_COUNT_MAP[density];
   const pos = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);

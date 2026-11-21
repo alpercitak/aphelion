@@ -1,7 +1,10 @@
 import type {
+  BufferGeometry,
   Mesh,
   OrthographicCamera,
   PlaneGeometry,
+  Points,
+  PointsMaterial,
   Scene,
   ShaderMaterial,
   Sprite,
@@ -20,6 +23,7 @@ export type SceneParams = {
 };
 
 export interface SceneRef extends BaseSceneRef {
+  core: BaseSceneRef['core'] & { stars: Points<BufferGeometry, PointsMaterial> };
   entities: {
     lensScene: Scene; // fullscreen quad with lensing shader
     lensCamera: OrthographicCamera;

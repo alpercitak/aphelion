@@ -51,9 +51,12 @@ export const useUpdate = (
     const { backgroundDensity } = params;
 
     // remove old
-    core.scene.remove(core.stars!);
+    core.scene.remove(core.stars);
+    core.stars.geometry.dispose();
+    core.stars.material.dispose();
     entities.galaxies.forEach((g) => {
       core.scene.remove(g);
+      g.material.map?.dispose();
       g.material.dispose();
     });
 
