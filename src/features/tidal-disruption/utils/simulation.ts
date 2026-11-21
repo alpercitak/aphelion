@@ -140,8 +140,8 @@ const stepDebris = (debris: DebrisSystem, state: StateRef, h: number) => {
     const r = Math.sqrt(r2);
     const bound = 0.5 * (vx * vx + vy * vy + vz * vz) - GM_BH / r < 0;
 
-    // Bound debris back near the star damps its radial velocity and settles into a disk
-    if (bound && r < captureR) {
+    // Bound debris back near the star after the first orbit damps its radial velocity and settles into a disk
+    if (bound && fallbackStarted && r < captureR) {
       const f = (CIRCULARIZATION_RATE * h * (x * vx + y * vy + z * vz)) / r2;
       vx -= f * x;
       vy -= f * y;
