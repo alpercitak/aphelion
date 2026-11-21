@@ -2,11 +2,8 @@
 
 ## Open
 
-- Cosmic string deficit angle: code (`cosmic-string/hooks/hud.ts`) and README use `δ = 8π²Gµ`; the standard result is `8πGµ`. Confirm and fix both.
 - Social preview image: upload a scene screenshot in GitHub repo settings.
-- Supernova remnant rebuild (`supernova/hooks/update.ts`) doesn't dispose the old material and resets `visible = false` mid-run.
 - Visibility toggles in magnetar, neutron-star, white-hole, and wormhole now rebuild geometry instead of only flipping `visible`; split rebuild and visibility effects if it shows up in profiling.
-- `white-hole/hooks/update.ts` repeats inline uniform types from `init.ts`; use a named type like magnetar/neutron-star.
 - Shader uniforms are cast once at construction (`material.uniforms as XUniforms`); cast-free would mean factories returning `{ mesh, uniforms }`.
 - Large shared chunk: three.js is ~540 kB in the `setup` chunk (build warning).
 
