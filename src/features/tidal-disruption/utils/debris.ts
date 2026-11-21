@@ -55,7 +55,7 @@ export const createDebrisSystem = (count: number): DebrisSystem => {
   const points = new Points(
     geo,
     new PointsMaterial({
-      size: 0.06,
+      size: 0.12,
       vertexColors: true,
       transparent: true,
       opacity: 0.9,
