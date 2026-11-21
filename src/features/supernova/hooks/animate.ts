@@ -114,7 +114,7 @@ const animate = (
   if (refs.entities.remnant) {
     refs.entities.remnant.visible = params.showRemnant && params.supernovaType === 'type-ii' && expansionP > 0.3;
     if (refs.entities.remnant.visible && refs.entities.remnant.material instanceof ShaderMaterial) {
-      refs.entities.remnant.material.uniforms['viewVector']!.value.copy(refs.core.camera.position);
+      refs.entities.remnant.material.uniforms.viewVector?.value.copy(refs.core.camera.position);
     }
   }
 };
