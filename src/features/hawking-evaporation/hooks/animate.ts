@@ -12,7 +12,7 @@ const animate = (
   state: StateRef,
   setLiveMass: (m: number) => void,
   setPhase: (p: Phase) => void,
-  resetScene: () => void,
+  resetScene: (initialMass: number) => void,
   time: number,
   delta: number,
   frameCounter: { count: number },
@@ -121,7 +121,7 @@ const animate = (
 
   if (state.phase === 'done' && params.autoLoop) {
     if (time - state.lastPairTime > 3.0) {
-      resetScene();
+      resetScene(params.initialMass);
     }
   }
 };
@@ -132,7 +132,7 @@ export const useAnimate = (
   stateRef: RefObject<StateRef>,
   setPhase: (p: Phase) => void,
   setLiveMass: (m: number) => void,
-  resetScene: () => void,
+  resetScene: (initialMass: number) => void,
 ) => {
   // persistence for throttled UI updates without triggering re-renders
   const frameCounter = useRef({ count: 0 });
