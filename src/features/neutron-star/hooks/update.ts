@@ -16,7 +16,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.beams.visible = params.showBeams;
     entities.fieldLines.visible = params.showFieldLines;
     entities.accretionDisk.visible = params.showAccretionDisk;
-  }, [params.showBeams, params.showFieldLines, params.showAccretionDisk]);
+  }, [sceneRef, params.showBeams, params.showFieldLines, params.showAccretionDisk]);
 
   // structural rebuilds
   useEffect(() => {
@@ -31,7 +31,11 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.beams.traverse((o) => {
       if (o instanceof Mesh || o instanceof Points) {
         o.geometry.dispose();
-        Array.isArray(o.material) ? o.material.forEach((m) => m.dispose()) : o.material.dispose();
+        Array.isArray(o.material)
+          ? o.material.forEach((m) => {
+              m.dispose();
+            })
+          : o.material.dispose();
       }
     });
 
@@ -40,5 +44,5 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     newBeams.visible = params.showBeams;
     tiltObj.add(newBeams);
     entities.beams = newBeams;
-  }, [params.beamWidth]);
+  }, [sceneRef, params.beamWidth, params.showBeams]);
 };
