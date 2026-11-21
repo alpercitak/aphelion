@@ -78,6 +78,14 @@ export const SCENES = [
     description: 'A star torn apart by a supermassive black hole. Debris stream, fallback and accretion disk.',
     component: lazy(() => import('@/features/tidal-disruption')),
   },
+  {
+    id: 'ergosphere',
+    title: 'Ergosphere',
+    subtitle: 'Kerr Metric · Penrose Process',
+    description:
+      'A spinning black hole drags spacetime around. Inside the ergosphere nothing stands still, and energy can be extracted.',
+    component: lazy(() => import('@/features/ergosphere')),
+  },
 ];
 
 export const getScene = (id: string) => {
