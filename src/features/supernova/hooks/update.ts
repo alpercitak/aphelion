@@ -22,15 +22,18 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.star = newStar;
     entities.starUniforms = newStar.material.uniforms as StarUniforms;
 
-    // Rebuild remnant
+    // Rebuild remnant, keeping the old one's visibility (animate.ts re-applies it each frame)
+    let remnantVisible = false;
     if (entities.remnant) {
+      remnantVisible = entities.remnant.visible;
       scene.remove(entities.remnant);
       entities.remnant.geometry.dispose();
+      entities.remnant.material.dispose();
     }
     const rt = getRemnantType(params.progenitorMass);
     if (rt !== 'none') {
       const newRemnant = createRemnant(rt);
-      newRemnant.visible = false;
+      newRemnant.visible = remnantVisible;
       scene.add(newRemnant);
       entities.remnant = newRemnant;
     } else {
