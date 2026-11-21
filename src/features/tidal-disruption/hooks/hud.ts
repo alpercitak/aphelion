@@ -37,7 +37,7 @@ const BASE_HUD_PROPS = {
         {
           term: 'FALLBACK & THE t^-5/3 LAW',
           formula: 'Ṁ ∝ t^(-5/3)',
-          def: 'The rate at which debris returns peaks at <em>t_min</em>, roughly half the orbital period of the most bound debris, then falls as <em>t^(-5/3)</em>. The HUD shows the rate relative to its peak.',
+          def: 'The rate at which debris returns peaks at <em>t_min</em>, one orbital period of the most bound debris, then falls as <em>t^(-5/3)</em>. The HUD shows the rate relative to its peak.',
         },
         {
           term: 'CIRCULARIZATION',

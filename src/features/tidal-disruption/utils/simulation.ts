@@ -17,11 +17,11 @@ import { debrisTemperature, writeColor } from './debris';
 
 const SOFTENING_SQ = SOFTENING * SOFTENING;
 
-/** Time from disruption to the fallback peak: half the period of the most bound debris, whose energy spread is GM·R★/r². */
+/** Time from disruption to the fallback peak: the period of the most bound debris, whose energy spread is GM·R★/r². */
 export const fallbackTimescale = (releaseRadius: number) => {
   const energySpread = (GM_BH * STAR_RADIUS_VISUAL) / releaseRadius ** 2;
   const semiMajor = GM_BH / (2 * energySpread);
-  return Math.PI * Math.sqrt(semiMajor ** 3 / GM_BH);
+  return 2 * Math.PI * Math.sqrt(semiMajor ** 3 / GM_BH);
 };
 
 /** Point-mass kick-drift for the star center (semi-implicit Euler). */
