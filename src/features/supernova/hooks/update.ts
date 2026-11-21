@@ -36,5 +36,5 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     } else {
       entities.remnant = null;
     }
-  }, [params.progenitorMass]);
+  }, [sceneRef, params.progenitorMass]);
 };
