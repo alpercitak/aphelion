@@ -13,6 +13,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
   return (
     <div className={styles['button-group']}>
       {items.map((item, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: buttons are a static list per scene and never reorder
         <Button key={`${item.id}-${index}`} {...item} />
       ))}
     </div>
