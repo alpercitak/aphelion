@@ -30,7 +30,7 @@ const FRESNEL_FRAG = `
   varying vec3 vViewDir;
   void main() {
     float fresnel = pow(1.0 - abs(dot(normalize(vNormal), normalize(vViewDir))), 2.5);
-    float intensity = 0.06 + fresnel * 0.9;
+    float intensity = 0.16 + fresnel * 0.9;
     gl_FragColor = vec4(glowColor * intensity, intensity * 0.6);
   }
 `;

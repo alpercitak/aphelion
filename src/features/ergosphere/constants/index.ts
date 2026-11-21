@@ -51,7 +51,7 @@ export const LIVE_REFRESH_FRAMES = 10;
 /** RGB per particle state, used for vertex colors. Values above 1 are allowed (additive blending). */
 export const COLOR = {
   retrograde: [1, 0.28, 0.22],
-  prograde: [0.72, 0.86, 1],
+  prograde: [0.3, 0.65, 1.4],
   plunge: [0.45, 0.06, 0.04],
   escape: [2.2, 2, 1.6],
 } as const;
