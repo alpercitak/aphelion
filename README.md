@@ -15,20 +15,20 @@ Each scene is a self-contained physics simulation with real equations driving th
 
 ## Scenes
 
-| # | Scene | What it shows |
-|---|-------|---------------|
-| 01 | **Black Hole** | Schwarzschild metric, with Kerr spin approximated as horizon oblateness. Accretion disk with blackbody temperature coloring, relativistic jets, gravitational lensing, Doppler shift mode |
-| 02 | **Binary Merger** | Two black holes in decaying orbit. Spacetime grid deformed by gravitational wave equation. Three-phase state machine: inspiral → merger → ringdown |
-| 03 | **Neutron Star** | Rotating pulsar with dipole magnetic field lines, lighthouse beam sweep, beam flash detection via dot product alignment |
-| 04 | **Magnetar** | Chaotic multipole field topology, writhing field lines, starquake crack propagation, gamma ray burst flash |
-| 05 | **Wormhole** | Two-pass render. Einstein-Rosen bridge with a live portal to a second scene via `WebGLRenderTarget`. Exotic matter halo, geometry-based lensing approximation |
-| 06 | **White Hole** | Time-reversal of a black hole. Spherical particle ejecta with blackbody temperature coloring, photon sphere on the outward face |
-| 07 | **Hawking Evaporation** | Micro black hole shrinking in real time. `T = ℏc³/8πGMk` drives glow color and pair spawn rate. Virtual particle pairs at the horizon |
-| 08 | **Lensing Field** | No visible object. Full-screen UV displacement shader sampling a `WebGLRenderTarget`. Mouse-interactive invisible mass, Einstein rings, dark matter mode |
-| 09 | **Cosmic String** | Three-pass render. `CatmullRomCurve3` oscillating filament, conical spacetime lensing shader, intercommutation loop events |
-| 10 | **Supernova** | Five-phase scrubbable timeline: progenitor → collapse → shock breakout → ejecta expansion → remnant. Neutrino burst, element-composition particle colors, mass-dependent remnant type |
-| 11 | **Tidal Disruption** | A star torn apart by a black hole. Parabolic orbit, free-particle debris stream, `t^(-5/3)` fallback and circularization into a disk. Penetration factor β sets full or partial disruption |
-| 12 | **Ergosphere** | Kerr black hole with spin. Ergosphere, frame dragging with no standing still inside it, Penrose process energy extraction, irreducible mass limit |
+| #   | Scene                   | What it shows                                                                                                                                                                              |
+| --- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 01  | **Black Hole**          | Schwarzschild metric, with Kerr spin approximated as horizon oblateness. Accretion disk with blackbody temperature coloring, relativistic jets, gravitational lensing, Doppler shift mode  |
+| 02  | **Binary Merger**       | Two black holes in decaying orbit. Spacetime grid deformed by gravitational wave equation. Three-phase state machine: inspiral → merger → ringdown                                         |
+| 03  | **Neutron Star**        | Rotating pulsar with dipole magnetic field lines, lighthouse beam sweep, beam flash detection via dot product alignment                                                                    |
+| 04  | **Magnetar**            | Chaotic multipole field topology, writhing field lines, starquake crack propagation, gamma ray burst flash                                                                                 |
+| 05  | **Wormhole**            | Two-pass render. Einstein-Rosen bridge with a live portal to a second scene via `WebGLRenderTarget`. Exotic matter halo, geometry-based lensing approximation                              |
+| 06  | **White Hole**          | Time-reversal of a black hole. Spherical particle ejecta with blackbody temperature coloring, photon sphere on the outward face                                                            |
+| 07  | **Hawking Evaporation** | Micro black hole shrinking in real time. `T = ℏc³/8πGMk` drives glow color and pair spawn rate. Virtual particle pairs at the horizon                                                      |
+| 08  | **Lensing Field**       | No visible object. Full-screen UV displacement shader sampling a `WebGLRenderTarget`. Mouse-interactive invisible mass, Einstein rings, dark matter mode                                   |
+| 09  | **Cosmic String**       | Three-pass render. `CatmullRomCurve3` oscillating filament, conical spacetime lensing shader, intercommutation loop events                                                                 |
+| 10  | **Supernova**           | Five-phase scrubbable timeline: progenitor → collapse → shock breakout → ejecta expansion → remnant. Neutrino burst, element-composition particle colors, mass-dependent remnant type      |
+| 11  | **Tidal Disruption**    | A star torn apart by a black hole. Parabolic orbit, free-particle debris stream, `t^(-5/3)` fallback and circularization into a disk. Penetration factor β sets full or partial disruption |
+| 12  | **Ergosphere**          | Kerr black hole with spin. Ergosphere, frame dragging with no standing still inside it, Penrose process energy extraction, irreducible mass limit                                          |
 
 ## Controls
 
