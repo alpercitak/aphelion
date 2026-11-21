@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import type { ButtonProps } from '@/components/ui/button';
 import type { RadioProps } from '@/components/ui/radio';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
@@ -66,11 +68,15 @@ const RADIO_ITEMS = [
 ] as const satisfies ReadonlyArray<RadioItem>;
 
 export const useControls = (resetScene: () => void) => {
+  const buttons = useMemo<ReadonlyArray<ButtonProps>>(
+    () => [{ variant: 'secondary', onClick: resetScene, children: '↺ RESET' }],
+    [resetScene],
+  );
   const { params, paramsRef, controls } = useSceneControls(SCENE_PARAMS, {
     radios: RADIO_ITEMS,
     sliders: SLIDER_ITEMS,
     toggles: TOGGLE_ITEMS,
-    buttons: [{ variant: 'secondary', onClick: resetScene, children: '↺ RESET' }],
+    buttons,
   });
   return { params, paramsRef, controls };
 };

@@ -52,7 +52,7 @@ export const useSceneControls = <T extends object>(
       })),
       buttons: (buttons ?? []).map((item) => item),
     }),
-    [params, set, sliders, toggles, radios],
+    [params, set, sliders, toggles, radios, buttons],
   );
 
   return { params, paramsRef, controls, set };
