@@ -9,7 +9,17 @@ import { createStarquakeCrack } from '../utils/starquake-crack';
 const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   const { core, entities } = refs;
   const { orbit, camera, scene } = core;
-  const { body, innerGlow, outerGlow, fieldLines, fieldHalo, flash, lastQuakeTime, activeCracks } = entities;
+  const {
+    body,
+    bodyUniforms,
+    innerGlowUniforms,
+    outerGlowUniforms,
+    fieldLines,
+    fieldHalo,
+    flash,
+    lastQuakeTime,
+    activeCracks,
+  } = entities;
   const {
     burstIntensity,
     fieldStrength,
@@ -24,17 +34,17 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   orbit.updateCamera(camera);
 
   // surface shader
-  body.material.uniforms['time']!.value = time;
-  body.material.uniforms['fieldStrength']!.value = fieldStrength;
+  bodyUniforms.time.value = time;
+  bodyUniforms.fieldStrength.value = fieldStrength;
   // normalise surfaceTemp from [1e6, 1e8] to [0, 1]
-  body.material.uniforms['surfaceTemp']!.value = (surfaceTemp - 1e6) / (1e8 - 1e6);
+  bodyUniforms.surfaceTemp.value = (surfaceTemp - 1e6) / (1e8 - 1e6);
 
   // slow body rotation — magnetars spin slower than pulsars (~0.1–10 RPM)
   body.rotation.y = time * 0.3;
 
   // glow view vectors
-  innerGlow.material.uniforms['viewVector']!.value.copy(camera.position);
-  outerGlow.material.uniforms['viewVector']!.value.copy(camera.position);
+  innerGlowUniforms.viewVector.value.copy(camera.position);
+  outerGlowUniforms.viewVector.value.copy(camera.position);
 
   // writhing field lines: sine-based phase offset per child
   if (showFieldLines) {

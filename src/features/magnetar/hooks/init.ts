@@ -3,7 +3,7 @@ import { BackSide, FrontSide } from 'three';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { NS_RADIUS, SCENE_PARAMS } from '../constants';
-import type { SceneRef } from '../types';
+import type { BodyUniforms, GlowUniforms, SceneRef } from '../types';
 import { createFieldHalo } from '../utils/field-halo';
 import { createFieldLines } from '../utils/field-lines';
 import { createGammaBurstFlash } from '../utils/gamma-burst';
@@ -40,6 +40,9 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
         body,
         innerGlow,
         outerGlow,
+        bodyUniforms: body.material.uniforms as BodyUniforms,
+        innerGlowUniforms: innerGlow.material.uniforms as GlowUniforms,
+        outerGlowUniforms: outerGlow.material.uniforms as GlowUniforms,
         fieldLines,
         fieldHalo,
         flash,

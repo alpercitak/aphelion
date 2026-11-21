@@ -9,14 +9,18 @@ import type {
   Points,
   ShaderMaterial,
   SphereGeometry,
+  Vector3,
 } from 'three';
-import type { BaseSceneRef } from '@/types';
+import type { BaseSceneRef, UniformValue } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {
   entities: {
     body: Mesh<SphereGeometry, ShaderMaterial>;
     innerGlow: Mesh<SphereGeometry, ShaderMaterial>;
     outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
+    bodyUniforms: BodyUniforms;
+    innerGlowUniforms: GlowUniforms;
+    outerGlowUniforms: GlowUniforms;
     fieldLines: Group;
     fieldHalo: Points;
     flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
@@ -26,6 +30,16 @@ export interface SceneRef extends BaseSceneRef {
     burstOpacity: number;
   };
 }
+
+export type BodyUniforms = {
+  time: UniformValue<number>;
+  fieldStrength: UniformValue<number>;
+  surfaceTemp: UniformValue<number>;
+};
+
+export type GlowUniforms = {
+  viewVector: UniformValue<Vector3>;
+};
 
 export type SceneParams = {
   fieldStrength: number; // 0–2, visual scale for 10¹³–10¹⁵ G
