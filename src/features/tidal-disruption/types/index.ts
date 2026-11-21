@@ -55,7 +55,6 @@ export interface StateRef {
   released: boolean;
   releaseTime: number;
   boundFraction: number;
-  diskReady: boolean;
   accreted: number;
   prevRadialDot: number;
   frame: number;

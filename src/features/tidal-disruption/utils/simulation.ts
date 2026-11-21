@@ -2,6 +2,7 @@ import type { Vector3 } from 'three';
 import {
   CIRCULARIZATION_RATE,
   COLOR_REFRESH_FRAMES,
+  DISK_AFTER_TMIN,
   GM_BH,
   MAX_FRAME_DT,
   MAX_SUBSTEP,
@@ -167,8 +168,6 @@ const stepDebris = (debris: DebrisSystem, state: StateRef, h: number) => {
     const rNew = Math.sqrt(x * x + y * y + z * z);
     if (rNew < state.horizonR) {
       accrete(debris, state, i);
-    } else if (bound && fallbackStarted && rNew < captureR) {
-      state.diskReady = true;
     }
   }
 };
@@ -203,10 +202,11 @@ const phaseOf = (state: StateRef): Phase => {
   if (!state.released) {
     return 'approach';
   }
-  if (state.diskReady) {
+  const sinceRelease = state.elapsed - state.releaseTime;
+  if (sinceRelease >= DISK_AFTER_TMIN * state.tMin) {
     return 'disk';
   }
-  return state.elapsed - state.releaseTime >= state.tMin ? 'fallback' : 'disruption';
+  return sinceRelease >= state.tMin ? 'fallback' : 'disruption';
 };
 
 const refreshDebrisColors = (debris: DebrisSystem, periapsis: number) => {

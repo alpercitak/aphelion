@@ -43,6 +43,8 @@ export const MAX_SUBSTEP = 0.01;
 export const SOFTENING = 0.05;
 /** Fraction of radial velocity removed per unit time for bound debris inside 2 r_p. */
 export const CIRCULARIZATION_RATE = 0.5;
+/** Disk phase starts at this multiple of t_min, when ~37% of bound debris has returned (1 − (t/t_min)^(−2/3)). */
+export const DISK_AFTER_TMIN = 2;
 
 export const SUN_TEMPERATURE_K = 5800;
 export const COLOR_REFRESH_FRAMES = 4;
@@ -74,7 +76,6 @@ export const INITIAL_STATE: StateRef = {
   released: false,
   releaseTime: 0,
   boundFraction: 0,
-  diskReady: false,
   accreted: 0,
   prevRadialDot: 0,
   frame: 0,

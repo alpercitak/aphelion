@@ -27,7 +27,6 @@ export const useReset = (
       s.released = false;
       s.releaseTime = 0;
       s.boundFraction = 0;
-      s.diskReady = false;
       s.accreted = 0;
       s.prevRadialDot = s.starPos.dot(s.starVel);
       s.frame = 0;
