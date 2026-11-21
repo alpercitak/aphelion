@@ -3,7 +3,7 @@ import { Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION, INSPIRAL_RATE_MAP, MERGE_THRESHOLD } from '../constants';
-import type { ResetScene, SceneParams, SceneRef, SetPhase, StateRef } from '../types';
+import type { ResetScene, SceneParams, SceneRef, SetPhase, StateRef, WaveRing } from '../types';
 import { orbitalOmega } from '../utils/orbital-omega';
 import { orbitalPositions } from '../utils/orbital-positions';
 import { createWaveRing } from '../utils/wave-ring';
@@ -13,9 +13,9 @@ import { createWaveRing } from '../utils/wave-ring';
  */
 const updateWaveRings = (refs: SceneRef, state: StateRef) => {
   const { core, entities } = refs;
-  const toRemoveIdx: Array<number> = [];
+  const expired: Array<WaveRing> = [];
 
-  state.waveRings.forEach((ringData, i) => {
+  state.waveRings.forEach((ringData) => {
     const { mesh } = ringData;
     if (!mesh.parent) {
       return;
@@ -26,26 +26,25 @@ const updateWaveRings = (refs: SceneRef, state: StateRef) => {
     mesh.material.opacity = Math.max(0, baseOpacity - mesh.scale.x * 0.07);
 
     if (mesh.material.opacity <= 0) {
-      toRemoveIdx.push(i);
+      expired.push(ringData);
     }
   });
 
   // Cleanup
-  toRemoveIdx.reverse().forEach((i) => {
-    const { mesh } = state.waveRings[i]!;
+  expired.forEach(({ mesh }) => {
     core.scene.remove(mesh);
     mesh.geometry.dispose();
     mesh.material.dispose();
 
-    state.waveRings.splice(i, 1);
     const meshIdx = entities.waveRingMeshes.indexOf(mesh);
     if (meshIdx > -1) entities.waveRingMeshes.splice(meshIdx, 1);
   });
+  state.waveRings = state.waveRings.filter((ring) => !expired.includes(ring));
 };
 
 const handleOrbit = (refs: SceneRef, params: SceneParams, time: number, state: StateRef, setPhase: SetPhase) => {
   const { entities, core } = refs;
-  const { bh1, bh2, grid } = entities;
+  const { bh1, bh2, grid, gridUniforms } = entities;
 
   const rate = INSPIRAL_RATE_MAP[params.inspiralRate];
   state.separation = Math.max(MERGE_THRESHOLD, state.separation - rate * 0.016);
@@ -61,11 +60,11 @@ const handleOrbit = (refs: SceneRef, params: SceneParams, time: number, state: S
   bh1.userData.diskGroup.rotation.y = time * 0.35;
   bh2.userData.diskGroup.rotation.y = -time * 0.28;
 
-  grid.material.uniforms['source1']!.value.set(pos.x1, pos.z1);
-  grid.material.uniforms['source2']!.value.set(pos.x2, pos.z2);
-  grid.material.uniforms['separation']!.value = state.separation;
-  grid.material.uniforms['amplitude']!.value = params.waveAmplitude;
-  grid.material.uniforms['time']!.value = time * 1.8;
+  gridUniforms.source1.value.set(pos.x1, pos.z1);
+  gridUniforms.source2.value.set(pos.x2, pos.z2);
+  gridUniforms.separation.value = state.separation;
+  gridUniforms.amplitude.value = params.waveAmplitude;
+  gridUniforms.time.value = time * 1.8;
   grid.visible = params.showGrid;
 
   // View Vectors
@@ -95,7 +94,7 @@ const handleOrbit = (refs: SceneRef, params: SceneParams, time: number, state: S
 
 const handleMerging = (refs: SceneRef, params: SceneParams, time: number, state: StateRef, setPhase: SetPhase) => {
   const { entities, core } = refs;
-  const { bh1, bh2, grid, flash, mergedBH } = entities;
+  const { bh1, bh2, gridUniforms, flash, mergedBH } = entities;
 
   state.mergeProgress = Math.min(1, state.mergeProgress + 0.025);
   const mp = state.mergeProgress;
@@ -107,11 +106,11 @@ const handleMerging = (refs: SceneRef, params: SceneParams, time: number, state:
 
   flash.material.opacity = Math.sin(mp * Math.PI) * 0.7;
 
-  grid.material.uniforms['time']!.value = time * 1.8;
-  grid.material.uniforms['source1']!.value.set(bh1.position.x, bh1.position.z);
-  grid.material.uniforms['source2']!.value.set(bh2.position.x, bh2.position.z);
-  grid.material.uniforms['separation']!.value = bh1.position.distanceTo(bh2.position);
-  grid.material.uniforms['amplitude']!.value = params.waveAmplitude * (1 + mp * 2);
+  gridUniforms.time.value = time * 1.8;
+  gridUniforms.source1.value.set(bh1.position.x, bh1.position.z);
+  gridUniforms.source2.value.set(bh2.position.x, bh2.position.z);
+  gridUniforms.separation.value = bh1.position.distanceTo(bh2.position);
+  gridUniforms.amplitude.value = params.waveAmplitude * (1 + mp * 2);
 
   if (mp > 0.5 && time - state.lastRingTime > 0.05) {
     const ring = createWaveRing(mp * 2);
@@ -133,19 +132,19 @@ const handleMerging = (refs: SceneRef, params: SceneParams, time: number, state:
 
 const handleMerged = (refs: SceneRef, params: SceneParams, time: number, resetScene: ResetScene) => {
   const { entities, core } = refs;
-  const { grid, flash, mergedBH } = entities;
+  const { gridUniforms, flash, mergedBH } = entities;
 
   flash.material.opacity = Math.max(0, flash.material.opacity - 0.02);
   mergedBH.userData.diskGroup.rotation.y = time * 0.2;
   mergedBH.userData.glowMat.uniforms.viewVector?.value.copy(core.camera.position);
   mergedBH.userData.haloMat.uniforms.viewVector?.value.copy(core.camera.position);
 
-  grid.material.uniforms['amplitude']!.value = Math.max(0, grid.material.uniforms['amplitude']!.value - 0.005);
-  grid.material.uniforms['time']!.value = time * 1.8;
-  grid.material.uniforms['source1']!.value.set(0, 0);
-  grid.material.uniforms['source2']!.value.set(0, 0);
+  gridUniforms.amplitude.value = Math.max(0, gridUniforms.amplitude.value - 0.005);
+  gridUniforms.time.value = time * 1.8;
+  gridUniforms.source1.value.set(0, 0);
+  gridUniforms.source2.value.set(0, 0);
 
-  if (params.autoLoop && grid.material.uniforms['amplitude']!.value <= 0.02) {
+  if (params.autoLoop && gridUniforms.amplitude.value <= 0.02) {
     resetScene();
   }
 };
@@ -160,7 +159,7 @@ const animate = (
 ) => {
   const { core } = refs;
   core.orbit.updateCamera(core.camera);
-  core.stars!.rotation.y = time * 0.002;
+  core.stars.rotation.y = time * 0.002;
 
   switch (state.phase) {
     case 'orbit':

@@ -1,4 +1,5 @@
-import { Mesh, PlaneGeometry, ShaderMaterial, Vector2 } from 'three';
+import { Mesh, PlaneGeometry, ShaderMaterial } from 'three';
+import type { GridUniforms } from '../types';
 
 const SIZE = 28 as const;
 const SEGMENTS = 90 as const;
@@ -39,17 +40,11 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-export const createSpacetimeGrid = (): Mesh<PlaneGeometry, ShaderMaterial> => {
+export const createSpacetimeGrid = (uniforms: GridUniforms): Mesh<PlaneGeometry, ShaderMaterial> => {
   const geo = new PlaneGeometry(SIZE, SIZE, SEGMENTS, SEGMENTS);
   geo.rotateX(-Math.PI / 2);
   const mat = new ShaderMaterial({
-    uniforms: {
-      time: { value: 0 },
-      amplitude: { value: 1.0 },
-      source1: { value: new Vector2(2, 0) },
-      source2: { value: new Vector2(-2, 0) },
-      separation: { value: 4.0 },
-    },
+    uniforms,
     vertexShader: VERTEX_SHADER,
     fragmentShader: FRAGMENT_SHADER,
     transparent: true,

@@ -7,8 +7,9 @@ import type {
   RingGeometry,
   ShaderMaterial,
   SphereGeometry,
+  Vector2,
 } from 'three';
-import type { BaseSceneRef } from '@/types';
+import type { BaseSceneRef, UniformValue } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {
   entities: {
@@ -16,6 +17,7 @@ export interface SceneRef extends BaseSceneRef {
     bh2: BlackHoleUnit;
     flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
     grid: Mesh<PlaneGeometry, ShaderMaterial>;
+    gridUniforms: GridUniforms;
     mergedBH: BlackHoleUnit;
     waveRingMeshes: Array<Mesh<RingGeometry, MeshBasicMaterial>>;
   };
@@ -41,6 +43,14 @@ export type SceneParams = {
   showDisks: boolean;
   autoLoop: boolean;
   inspiralRate: InspiralOption;
+};
+
+export type GridUniforms = {
+  time: UniformValue<number>;
+  amplitude: UniformValue<number>;
+  source1: UniformValue<Vector2>;
+  source2: UniformValue<Vector2>;
+  separation: UniformValue<number>;
 };
 
 export type InspiralOption = 'slow' | 'medium' | 'fast';
