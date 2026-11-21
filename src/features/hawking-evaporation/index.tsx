@@ -23,6 +23,8 @@ export default function HawkingEvaporation() {
 
   const resetScene = useReset(sceneRef, stateRef, paramsRef, setPhase, setLiveMass);
 
+  // resetScene reads initialMass from paramsRef; re-run it whenever the slider changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: params.initialMass is the trigger, not a captured value
   useEffect(() => {
     resetScene();
   }, [params.initialMass, resetScene]);

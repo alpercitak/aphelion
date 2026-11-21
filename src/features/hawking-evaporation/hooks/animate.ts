@@ -103,7 +103,9 @@ const animate = (
       state.phase = 'flashing';
       state.flashOpacity = 1.0;
       setPhase('flashing');
-      [horizon, photonGlow, outerGlow].forEach((m) => (m.visible = false));
+      [horizon, photonGlow, outerGlow].forEach((m) => {
+        m.visible = false;
+      });
     }
   }
 

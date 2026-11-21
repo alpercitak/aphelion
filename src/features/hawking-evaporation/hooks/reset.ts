@@ -28,4 +28,4 @@ export const useReset = (
     entities.horizon.visible = true;
     entities.photonGlow.visible = true;
     entities.outerGlow.visible = true;
-  }, [sceneRef, stateRef, setPhase]);
+  }, [sceneRef, stateRef, paramsRef, setPhase, setLiveMass]);
