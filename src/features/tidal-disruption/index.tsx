@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import SceneLayout from '@/components/app/scene-layout';
 import { INITIAL_LIVE, INITIAL_STATE } from './constants';
 import { useAnimate } from './hooks/animate';
@@ -17,11 +17,14 @@ export default function TidalDisruption() {
 
   const resetScene = useReset(sceneRef, stateRef, setLive);
 
-  const { params, paramsRef, controls } = useControls(() => resetScene(paramsRef.current));
+  const [run, setRun] = useState(0);
+  const replay = useCallback(() => setRun((n) => n + 1), []);
+
+  const { params, controls } = useControls(replay);
   const hud = useHud(params, live);
 
   useInit(canvasRef, sceneRef);
-  useUpdate(sceneRef, params, resetScene);
+  useUpdate(sceneRef, params, run, resetScene);
   useAnimate(sceneRef, stateRef, setLive);
 
   return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;

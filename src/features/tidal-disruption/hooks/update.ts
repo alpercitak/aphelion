@@ -5,13 +5,15 @@ import type { RunParams, SceneParams, SceneRef } from '../types';
 export const useUpdate = (
   sceneRef: SceneRefType<SceneRef>,
   params: SceneParams,
+  run: number,
   resetScene: (run: RunParams) => void,
 ) => {
   const { logMass, starMass, beta, showTidal, showOrbit, showStars } = params;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `run` is the replay trigger
   useEffect(() => {
     resetScene({ logMass, starMass, beta });
-  }, [logMass, starMass, beta, resetScene]);
+  }, [logMass, starMass, beta, run, resetScene]);
 
   useEffect(() => {
     const refs = sceneRef.current;
