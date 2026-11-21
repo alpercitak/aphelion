@@ -38,4 +38,6 @@ Implement, verify with checks, stop. Don't keep hardening or generalizing once i
 
 ## Before Finishing
 Verify with `bun run build` and `bun run check` (Biome).
+Keep `docs/TODO.md` updated: remove completed work and add newly identified remaining work.
+Commit in small, feature-based Conventional Commits (`fix(wormhole): …`, `refactor: …`); no attribution trailers.
 Cut from your own diff: unneeded abstractions, redundant guards, one-use helpers, speculative config, unrelated changes, obvious-code comments. Equal correctness → ship the smaller one.
