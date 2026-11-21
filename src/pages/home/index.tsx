@@ -24,7 +24,7 @@ export default function Home() {
         <main className={styles['home__main']}>
           {SCENES.map((scene, i) => (
             <button key={scene.id} className={styles['home__card']} onClick={() => navigate(`/${scene.id}`)}>
-              <div className={styles['home__card-index']}>0{i + 1}</div>
+              <div className={styles['home__card-index']}>{String(i + 1).padStart(2, '0')}</div>
               <div className={styles['home__card-body']}>
                 <div className={styles['home__card-title']}>{scene.title}</div>
                 <div className={styles['home__card-subtitle']}>{scene.subtitle}</div>
