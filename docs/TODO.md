@@ -6,20 +6,15 @@
 - Visibility toggles in magnetar, neutron-star, white-hole, and wormhole now rebuild geometry instead of only flipping `visible`; split rebuild and visibility effects if it shows up in profiling.
 - Shader uniforms are cast once at construction (`material.uniforms as XUniforms`); cast-free would mean factories returning `{ mesh, uniforms }`.
 - Large shared chunk: three.js is ~540 kB in the `setup` chunk (build warning).
+- Tidal disruption: debris is non-self-gravitating test particles on frozen-in star velocity; no spiral shocks, and circularization is a radial-velocity drag only, so the disk is not forced into a plane.
+- Tidal disruption: fallback peak `t_min` is an analytic estimate (energy spread `GM·R★/r²`), not measured from the debris; the disk phase starts at `t_min`, so the fallback phase is short.
+- Tidal disruption: partial-disruption rule `|offset·r̂| > R★(1/β − 1)` is ad hoc; for β near 1 most of the star is released. Escaped debris is never removed.
+- Tidal disruption: no flare luminosity or light curve; debris color uses a heuristic temperature, not viscous heating. Visual horizon is clamped to a minimum size below ~2×10⁶ M☉.
+- Tidal disruption: β < 1 runs last ~50 s at the fixed time scale (β = 0.6); there is no time-scale control or scrubber.
 
 ## Next scenes
 
 Each follows the existing feature layout (`src/features/<scene>/`, registered in `src/utils/scene/index.ts`). Ordered by priority.
-
-### 11 · Tidal Disruption
-
-A star passes inside a black hole's tidal radius and is torn into a debris stream; roughly half the debris falls back and circularizes into a transient disk.
-
-- Physics: tidal radius `r_t ≈ R★ (M_BH / m★)^(1/3)`; fallback rate `Ṁ ∝ t^(-5/3)`; star survives (partial disruption) when periapsis > r_t.
-- Visuals: star as particle cloud on a parabolic orbit, stretched along the orbit after periapsis; bound half falls back, unbound half escapes; disk brightens as debris returns.
-- Controls: BH mass, star mass, periapsis (in units of r_t), replay button.
-- HUD: r_t, periapsis / r_t, time since disruption, fallback rate curve.
-- Reuses: black-hole event horizon, lensing rings, accretion-disk coloring; binary-merger reset/phase pattern.
 
 ### 12 · Ergosphere (Penrose Process)
 
