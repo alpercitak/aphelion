@@ -17,7 +17,7 @@ export interface SceneRef extends BaseSceneRef {
     flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
     grid: Mesh<PlaneGeometry, ShaderMaterial>;
     mergedBH: BlackHoleUnit;
-    waveRingMeshes: Array<Mesh>;
+    waveRingMeshes: Array<Mesh<RingGeometry, MeshBasicMaterial>>;
   };
 }
 

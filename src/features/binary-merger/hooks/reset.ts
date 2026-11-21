@@ -34,7 +34,11 @@ export const useReset = (
     mergedBH.visible = false;
     flash.material.opacity = 0;
 
-    waveRingMeshes.forEach((r) => core.scene.remove(r));
+    waveRingMeshes.forEach((r) => {
+      core.scene.remove(r);
+      r.geometry.dispose();
+      r.material.dispose();
+    });
     entities.waveRingMeshes = [];
 
     const pos = orbitalPositions(0, INITIAL_SEPARATION);
