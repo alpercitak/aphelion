@@ -13,6 +13,7 @@ export default function GlossarySectionItem({ term, def, formula }: GlossarySect
         {term}
         {formula && <span className={styles['glossary-section-item__formula']}>{formula}</span>}
       </div>
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static developer-authored glossary markup */}
       <div className={styles['glossary-section-item__def']} dangerouslySetInnerHTML={{ __html: def }} />
     </article>
   );
