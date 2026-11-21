@@ -76,10 +76,11 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const newRings = createLensingRings(params.throatRadius, params.lensingStrength);
     newRings.forEach((ring) => {
       ring.rotation.x = Math.PI * 0.5;
+      ring.visible = params.showLensingRings;
       scene.add(ring);
     });
     entities.lensingRings = newRings;
-  }, [sceneRef, params.throatRadius, params.lensingStrength]);
+  }, [sceneRef, params.throatRadius, params.lensingStrength, params.showLensingRings]);
 
   // destination star field color
   useEffect(() => {
