@@ -6,7 +6,7 @@ import type { SceneParams, SceneRef } from '../types';
 const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   const { core, entities } = refs;
   const { camera, orbit, stars } = core;
-  const { starBody, glow, outerGlow, flash, fieldLines, accretionDisk, rotator } = entities;
+  const { starBody, bodyUniforms, glow, outerGlow, flash, fieldLines, accretionDisk, rotator } = entities;
 
   // core motion
   orbit.updateCamera(camera);
@@ -17,9 +17,9 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   starBody.rotation.y = time * radsPerSec;
 
   // surface shader uniforms
-  starBody.material.uniforms['time']!.value = time;
-  starBody.material.uniforms['rpm']!.value = params.rpm;
-  starBody.material.uniforms['mass']!.value = params.mass;
+  bodyUniforms.time.value = time;
+  bodyUniforms.rpm.value = params.rpm;
+  bodyUniforms.mass.value = params.mass;
 
   glow.material.uniforms.viewVector?.value.copy(camera.position);
   outerGlow.material.uniforms.viewVector?.value.copy(camera.position);

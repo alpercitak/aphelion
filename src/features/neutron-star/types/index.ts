@@ -1,5 +1,5 @@
 import type { Group, Mesh, MeshBasicMaterial, Object3D, PlaneGeometry, ShaderMaterial, SphereGeometry } from 'three';
-import type { BaseSceneRef } from '@/types';
+import type { BaseSceneRef, UniformValue } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {
   entities: {
@@ -7,12 +7,20 @@ export interface SceneRef extends BaseSceneRef {
     glow: Mesh<SphereGeometry, ShaderMaterial>;
     outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
     rotator: Object3D; // beams + star rotate together
+    fieldTilt: Object3D; // child of rotator that holds the beams
+    bodyUniforms: BodyUniforms;
     beams: Group;
     fieldLines: Group;
     accretionDisk: Group;
     flash: Mesh<PlaneGeometry, MeshBasicMaterial>;
   };
 }
+
+export type BodyUniforms = {
+  time: UniformValue<number>;
+  rpm: UniformValue<number>;
+  mass: UniformValue<number>;
+};
 
 export type SceneParams = {
   mass: number;

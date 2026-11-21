@@ -26,23 +26,25 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     }
 
     const { entities } = refs;
+    const { fieldTilt } = entities;
 
-    const tiltObj = entities.rotator.children[0]!;
     entities.beams.traverse((o) => {
       if (o instanceof Mesh || o instanceof Points) {
         o.geometry.dispose();
-        Array.isArray(o.material)
-          ? o.material.forEach((m) => {
-              m.dispose();
-            })
-          : o.material.dispose();
+        if (Array.isArray(o.material)) {
+          o.material.forEach((m) => {
+            m.dispose();
+          });
+        } else {
+          o.material.dispose();
+        }
       }
     });
 
-    tiltObj.remove(entities.beams);
+    fieldTilt.remove(entities.beams);
     const newBeams = createPulsarBeams(params.beamWidth);
     newBeams.visible = params.showBeams;
-    tiltObj.add(newBeams);
+    fieldTilt.add(newBeams);
     entities.beams = newBeams;
   }, [sceneRef, params.beamWidth, params.showBeams]);
 };

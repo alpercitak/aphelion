@@ -3,7 +3,7 @@ import { Object3D } from 'three';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { SCENE_PARAMS } from '../constants';
-import type { SceneRef } from '../types';
+import type { BodyUniforms, SceneRef } from '../types';
 import { createAccretionDisk } from '../utils/accretion-disk';
 import { createBeamFlash } from '../utils/beam-flash';
 import { createFieldLines } from '../utils/field-lines';
@@ -33,15 +33,15 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     scene.add(starBody, glow, outerGlow, rotator, accretionDisk);
 
-    const fieldTiltObj = new Object3D();
-    fieldTiltObj.rotation.z = 0.25;
-    rotator.add(fieldTiltObj);
+    const fieldTilt = new Object3D();
+    fieldTilt.rotation.z = 0.25;
+    rotator.add(fieldTilt);
 
     const beams = createPulsarBeams(SCENE_PARAMS.beamWidth);
-    fieldTiltObj.add(beams);
+    fieldTilt.add(beams);
 
     const fieldLines = createFieldLines(SCENE_PARAMS.fieldStrength);
-    fieldTiltObj.add(fieldLines);
+    fieldTilt.add(fieldLines);
 
     const flash = createBeamFlash();
     camera.add(flash);
@@ -50,7 +50,18 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     sceneRef.current = {
       core: { renderer, scene, camera, orbit, stars },
-      entities: { starBody, glow, outerGlow, rotator, beams, fieldLines, accretionDisk, flash },
+      entities: {
+        starBody,
+        glow,
+        outerGlow,
+        rotator,
+        fieldTilt,
+        bodyUniforms: starBody.material.uniforms as BodyUniforms,
+        beams,
+        fieldLines,
+        accretionDisk,
+        flash,
+      },
     };
 
     return () => dispose();
