@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
-import { PARTICLE_COUNT, R_TIDAL_VISUAL } from '../constants';
+import { CAMERA_RADIUS, PARTICLE_COUNT, R_TIDAL_VISUAL } from '../constants';
 import type { SceneRef } from '../types';
 import { createDebrisSystem } from '../utils/debris';
 import { createEventHorizon } from '../utils/event-horizon';
@@ -19,7 +19,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
       canvas,
       cameraPosition: [0, 18, 32],
-      orbitOptions: { theta: 0.1, phi: Math.PI / 3, radius: 38, minRadius: 6, maxRadius: 80 },
+      orbitOptions: { theta: 0.1, phi: Math.PI / 3, radius: CAMERA_RADIUS, minRadius: 6, maxRadius: 80 },
     });
 
     const horizon = createEventHorizon();

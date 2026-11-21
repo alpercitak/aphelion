@@ -1,6 +1,6 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, PointsMaterial } from 'three';
 import { tempToColor } from '@/utils/physics';
-import { PARTICLE, STAR_RADIUS_VISUAL } from '../constants';
+import { DEBRIS_HOT_GAIN, DEBRIS_POINT_SIZE, PARTICLE, STAR_RADIUS_VISUAL } from '../constants';
 import type { DebrisSystem } from '../types';
 
 const T_MIN = 3000;
@@ -20,13 +20,14 @@ for (let i = 0; i < LUT_SIZE; i++) {
 export const debrisTemperature = (r: number, periapsis: number) =>
   T_MIN + (T_MAX - T_MIN) * Math.min(1, periapsis / r) ** 1.5;
 
-/** Writes the blackbody color for a temperature into the color buffer at index i3. */
+/** Writes the blackbody color for a temperature into the color buffer at index i3, brighter when hotter. */
 export const writeColor = (colors: Float32Array, i3: number, kelvin: number) => {
-  const raw = Math.round(((kelvin - T_MIN) / (T_MAX - T_MIN)) * (LUT_SIZE - 1));
-  const idx = Math.min(LUT_SIZE - 1, Math.max(0, raw)) * 3;
-  colors[i3] = TEMPERATURE_LUT[idx] ?? 0;
-  colors[i3 + 1] = TEMPERATURE_LUT[idx + 1] ?? 0;
-  colors[i3 + 2] = TEMPERATURE_LUT[idx + 2] ?? 0;
+  const t = Math.min(1, Math.max(0, (kelvin - T_MIN) / (T_MAX - T_MIN)));
+  const idx = Math.round(t * (LUT_SIZE - 1)) * 3;
+  const gain = 1 + (DEBRIS_HOT_GAIN - 1) * t;
+  colors[i3] = (TEMPERATURE_LUT[idx] ?? 0) * gain;
+  colors[i3 + 1] = (TEMPERATURE_LUT[idx + 1] ?? 0) * gain;
+  colors[i3 + 2] = (TEMPERATURE_LUT[idx + 2] ?? 0) * gain;
 };
 
 /** Uniformly distributed offsets inside the star's visual sphere. */
@@ -55,7 +56,7 @@ export const createDebrisSystem = (count: number): DebrisSystem => {
   const points = new Points(
     geo,
     new PointsMaterial({
-      size: 0.12,
+      size: DEBRIS_POINT_SIZE,
       vertexColors: true,
       transparent: true,
       opacity: 0.9,

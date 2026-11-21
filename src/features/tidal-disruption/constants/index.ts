@@ -27,6 +27,14 @@ export const START_RADIUS = 5 * R_TIDAL_VISUAL;
 
 export const PARTICLE_COUNT = 3000;
 
+/** Default orbit camera distance (scene units). Start point (r = START_RADIUS) stays on screen. */
+export const CAMERA_RADIUS = 28;
+
+/** Debris point size in world units (perspective-attenuated). */
+export const DEBRIS_POINT_SIZE = 0.16;
+/** Color gain applied at the hottest debris; coldest debris keeps gain 1. Values > 1 rely on additive blending and tone mapping. */
+export const DEBRIS_HOT_GAIN = 1.8;
+
 export const PARTICLE = {
   STAR: 0,
   FREE: 1,
