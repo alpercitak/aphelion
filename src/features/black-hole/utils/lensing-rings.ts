@@ -1,4 +1,4 @@
-import { AdditiveBlending, DoubleSide, Mesh, MeshBasicMaterial, RingGeometry, type ColorRepresentation } from 'three';
+import { AdditiveBlending, type ColorRepresentation, DoubleSide, Mesh, MeshBasicMaterial, RingGeometry } from 'three';
 
 const createMesh = (color: ColorRepresentation, opacity: number) =>
   new MeshBasicMaterial({

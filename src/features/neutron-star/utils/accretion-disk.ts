@@ -21,7 +21,7 @@ export const createAccretionDisk = (): Group => {
         new MeshBasicMaterial({
           color: col,
           transparent: true,
-          opacity: Math.pow(1 - t, 1.8) * 0.6 + 0.03,
+          opacity: (1 - t) ** 1.8 * 0.6 + 0.03,
           side: DoubleSide,
           blending: AdditiveBlending,
           depthWrite: false,

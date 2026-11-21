@@ -1,4 +1,4 @@
-import { Camera } from 'three';
+import type { Camera } from 'three';
 
 const ROTATION_SENSITIVITY = 0.005;
 const ZOOM_SENSITIVITY = 0.01;

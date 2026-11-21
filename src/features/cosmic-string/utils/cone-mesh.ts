@@ -2,7 +2,7 @@ import {
   AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
-  CatmullRomCurve3,
+  type CatmullRomCurve3,
   Mesh,
   MeshBasicMaterial,
   Vector3,

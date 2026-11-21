@@ -59,8 +59,8 @@ export const tempToColor = (kelvin: number): Color => {
     g = BB_CONFIG.GREEN_LOG.slope * Math.log(t) - BB_CONFIG.GREEN_LOG.intercept;
     b = t <= BB_CONFIG.BLUE_STEER ? 0 : BB_CONFIG.BLUE_LOG.slope * Math.log(t - 10) - BB_CONFIG.BLUE_LOG.intercept;
   } else {
-    r = BB_CONFIG.RED_POW.coeff * Math.pow(t - 60, BB_CONFIG.RED_POW.exp);
-    g = BB_CONFIG.GREEN_POW.coeff * Math.pow(t - 60, BB_CONFIG.GREEN_POW.exp);
+    r = BB_CONFIG.RED_POW.coeff * (t - 60) ** BB_CONFIG.RED_POW.exp;
+    g = BB_CONFIG.GREEN_POW.coeff * (t - 60) ** BB_CONFIG.GREEN_POW.exp;
     b = 255;
   }
 

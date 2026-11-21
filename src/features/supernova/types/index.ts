@@ -1,4 +1,13 @@
-import { Color, Mesh, MeshBasicMaterial, PlaneGeometry, Points, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
+import type {
+  Color,
+  Mesh,
+  MeshBasicMaterial,
+  PlaneGeometry,
+  Points,
+  ShaderMaterial,
+  SphereGeometry,
+  Vector3,
+} from 'three';
 import type { BaseSceneRef, UniformValue } from '@/types';
 
 export type SceneParams = {

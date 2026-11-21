@@ -1,7 +1,7 @@
-import Button from '@/components/ui/button';
-import styles from './index.module.css';
-import Text from '../text';
 import clsx from 'clsx';
+import Button from '@/components/ui/button';
+import Text from '../text';
+import styles from './index.module.css';
 
 interface RadioOption {
   id: string;

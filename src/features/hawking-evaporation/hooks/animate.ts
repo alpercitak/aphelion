@@ -1,5 +1,5 @@
-import { useRef, type RefObject } from 'react';
-import { BufferAttribute, PointsMaterial } from 'three';
+import { type RefObject, useRef } from 'react';
+import type { BufferAttribute, PointsMaterial } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { DECAY_RATE_MAP, PAIR_POOL, VISUAL_SCALE } from '../constants';

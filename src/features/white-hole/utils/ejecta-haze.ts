@@ -1,5 +1,5 @@
-import { massScale } from '@/utils/physics';
 import { AdditiveBlending, BackSide, Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
+import { massScale } from '@/utils/physics';
 
 // Ejecta haze — large semi-transparent sphere surrounding the white hole
 export const createEjectaHaze = (mass: number): Mesh<SphereGeometry, MeshBasicMaterial> => {

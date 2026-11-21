@@ -1,4 +1,4 @@
-import { useCallback, type RefObject } from 'react';
+import { type RefObject, useCallback } from 'react';
 import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION } from '../constants';
 import type { ResetScene, SceneRef, SetPhase, StateRef } from '../types';

@@ -31,8 +31,8 @@
   --color-text-dim: rgba(var(--color-white-base), 0.15);
   --color-border-subtle: rgba(var(--color-white-base), 0.05);
 
-  --font-family-mono: 'Share Tech Mono', monospace;
-  --font-family-sans: 'Rajdhani', sans-serif;
+  --font-family-mono: "Share Tech Mono", monospace;
+  --font-family-sans: "Rajdhani", sans-serif;
 
   --font-size-xs: 8px;
   --font-size-sm: 9px;

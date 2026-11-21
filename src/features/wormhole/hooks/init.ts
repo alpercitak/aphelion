@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import {
   BackSide,
-  Color,
+  type Color,
   FrontSide,
   LinearFilter,
   PerspectiveCamera,
   RGBAFormat,
   Scene,
-  Vector3,
+  type Vector3,
   WebGLRenderTarget,
 } from 'three';
 import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';

@@ -1,4 +1,3 @@
-import { tempToColor } from '@/utils/physics';
 import {
   AdditiveBlending,
   BufferAttribute,
@@ -7,11 +6,12 @@ import {
   Group,
   Mesh,
   MeshBasicMaterial,
+  type MeshBasicMaterialParameters,
   Points,
   PointsMaterial,
   RingGeometry,
-  type MeshBasicMaterialParameters,
 } from 'three';
+import { tempToColor } from '@/utils/physics';
 
 const RINGS = 80 as const;
 const INNER_R = 1.5 as const;
@@ -67,7 +67,7 @@ const createDopplerDisk = (temp: number) => {
       indices.push(b, b + 1, b + 2, b + 1, b + 3, b + 2);
     }
     geo.setIndex(indices);
-    const brightness = Math.pow(1 - t, 1.5) * 1.5 + 0.05;
+    const brightness = (1 - t) ** 1.5 * 1.5 + 0.05;
     group.add(new Mesh(geo, createMeshBasicMaterial(brightness, { vertexColors: true })));
   }
 
@@ -83,7 +83,7 @@ const createStandardDisk = (temp: number) => {
     const width = ((OUTER_R - INNER_R) / RINGS) * 1.05;
     const geo = new RingGeometry(r, r + width, 128, 1);
     const color = tempToColor(temp * (1 - t * 0.75));
-    const brightness = Math.pow(1 - t, 1.5) * 1.5 + 0.05;
+    const brightness = (1 - t) ** 1.5 * 1.5 + 0.05;
     group.add(new Mesh(geo, createMeshBasicMaterial(brightness, { color })));
   }
 
@@ -93,7 +93,7 @@ const createStandardDisk = (temp: number) => {
   const colors = new Float32Array(count * 3);
 
   for (let i = 0; i < count; i++) {
-    const r = INNER_R + Math.pow(Math.random(), 1.5) * (OUTER_R - INNER_R);
+    const r = INNER_R + Math.random() ** 1.5 * (OUTER_R - INNER_R);
     const angle = Math.random() * Math.PI * 2;
     const t2 = (r - INNER_R) / (OUTER_R - INNER_R);
     const yJitter = (Math.random() - 0.5) * 0.08 * (1 - t2);

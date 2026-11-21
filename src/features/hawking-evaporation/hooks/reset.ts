@@ -1,6 +1,6 @@
+import { type RefObject, useCallback } from 'react';
 import type { SceneRefType } from '@/types';
-import { useCallback, type RefObject } from 'react';
-import type { SceneParams, Phase, SceneRef, StateRef } from '../types';
+import type { Phase, SceneParams, SceneRef, StateRef } from '../types';
 
 export const useReset = (
   sceneRef: SceneRefType<SceneRef>,

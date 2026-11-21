@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Vector3 } from 'three';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, type Vector3 } from 'three';
 import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
 import { hawkingGlowColor, hawkingTemperatureKelvin } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';

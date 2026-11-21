@@ -1,4 +1,4 @@
-import { DoubleSide, Mesh, ShaderMaterial, SphereGeometry, WebGLRenderTarget } from 'three';
+import { DoubleSide, Mesh, ShaderMaterial, SphereGeometry, type WebGLRenderTarget } from 'three';
 
 // Interior portal — samples the render target texture
 const VERTEX_SHADER = `

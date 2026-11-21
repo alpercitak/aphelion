@@ -1,5 +1,5 @@
-import styles from './index.module.css';
 import Button from '../button';
+import styles from './index.module.css';
 
 export interface ToggleProps {
   id: string;

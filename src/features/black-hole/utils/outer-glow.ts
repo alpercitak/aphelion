@@ -1,4 +1,4 @@
-import { AdditiveBlending, BackSide, Color, Mesh, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
+import { AdditiveBlending, BackSide, Color, Mesh, ShaderMaterial, SphereGeometry, type Vector3 } from 'three';
 
 const VERTEX_SHADER = `
   uniform vec3 viewVector;

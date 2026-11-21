@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { hawkingTemperatureKelvin } from '@/utils/physics';
 import { PHASE_LABEL_MAP } from '../constants';
-import type { SceneParams, Phase } from '../types';
+import type { Phase, SceneParams } from '../types';
 
 const BASE_HUD_PROPS = {
   title: 'Hawking Evaporation',

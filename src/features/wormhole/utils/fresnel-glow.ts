@@ -1,4 +1,13 @@
-import { AdditiveBlending, BackSide, Color, FrontSide, Mesh, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
+import {
+  AdditiveBlending,
+  type BackSide,
+  Color,
+  type FrontSide,
+  Mesh,
+  ShaderMaterial,
+  SphereGeometry,
+  type Vector3,
+} from 'three';
 import { FRESNEL_FRAGMENT_SHADER, FRESNEL_VERTEX_SHADER } from './constants';
 
 export const createFresnelGlow = (

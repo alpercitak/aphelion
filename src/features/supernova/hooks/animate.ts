@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { PointsMaterial, ShaderMaterial, type MeshBasicMaterial } from 'three';
+import { type MeshBasicMaterial, type PointsMaterial, ShaderMaterial } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { PHASE_MAP } from '../constants';

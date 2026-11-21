@@ -3,13 +3,13 @@ import {
   AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
-  Color,
+  type Color,
   Group,
   Line,
-  LineBasicMaterial,
+  type LineBasicMaterial,
   Points,
   PointsMaterial,
-  Vector3,
+  type Vector3,
 } from 'three';
 import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
 import { massScale } from '@/utils/physics';

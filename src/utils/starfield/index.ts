@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, PointsMaterial, Points } from 'three';
+import { BufferAttribute, BufferGeometry, Points, PointsMaterial } from 'three';
 
 // --- Star Field Configuration ---
 const DEFAULT_STAR_COUNT = 4000;

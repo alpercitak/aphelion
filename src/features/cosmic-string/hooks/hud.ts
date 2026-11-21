@@ -71,7 +71,7 @@ const BASE_HUD_PROPS = {
 
 export const useHud = (params: SceneParams) =>
   useMemo(() => {
-    const gmu = Math.pow(10, -12 + params.linearDensity * 6);
+    const gmu = 10 ** (-12 + params.linearDensity * 6);
     const deflectionArcsec = (8 * Math.PI * Math.PI * gmu * 206265).toFixed(4);
     const stats = [
       { label: 'Gµ', value: gmu.toExponential(1) },

@@ -1,4 +1,4 @@
-import { AdditiveBlending, BackSide, Mesh, ShaderMaterial, SphereGeometry, type Color } from 'three';
+import { AdditiveBlending, BackSide, type Color, Mesh, ShaderMaterial, SphereGeometry } from 'three';
 
 const VERTEX_SHADER = `
   varying float vY;

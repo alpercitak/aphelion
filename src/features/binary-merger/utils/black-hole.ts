@@ -9,9 +9,9 @@ import {
   MeshBasicMaterial,
   RingGeometry,
   ShaderMaterial,
+  type Side,
   SphereGeometry,
   Vector3,
-  type Side,
 } from 'three';
 import { massScale } from '@/utils/physics';
 import type { BlackHoleUnit } from '../types';
@@ -93,7 +93,7 @@ export const createBlackHoleUnit = (massSolar: number, cameraPos?: Vector3): Bla
       new MeshBasicMaterial({
         color: col,
         transparent: true,
-        opacity: Math.pow(1 - t, 1.5) * 0.7 + 0.05,
+        opacity: (1 - t) ** 1.5 * 0.7 + 0.05,
         side: DoubleSide,
         blending: AdditiveBlending,
         depthWrite: false,

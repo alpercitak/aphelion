@@ -5,9 +5,9 @@ import {
   FrontSide,
   Mesh,
   ShaderMaterial,
-  SphereGeometry,
-  Vector3,
   type Side,
+  SphereGeometry,
+  type Vector3,
 } from 'three';
 import { NS_RADIUS } from '../constants';
 

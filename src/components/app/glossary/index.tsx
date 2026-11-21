@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import GlossarySection, { type GlossarySectionProps } from '@/components/app/glossary-section';
 import Button from '@/components/ui/button';
 import Panel from '@/components/ui/panel';
-import GlossarySection, { type GlossarySectionProps } from '@/components/app/glossary-section';
-import styles from './index.module.css';
 import Text from '@/components/ui/text';
+import styles from './index.module.css';
 
 interface GlossaryProps {
   isOpen: boolean;

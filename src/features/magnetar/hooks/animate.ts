@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { LineBasicMaterial, Mesh, MeshBasicMaterial, PointsMaterial, Vector3 } from 'three';
+import { type LineBasicMaterial, Mesh, MeshBasicMaterial, type PointsMaterial, Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { NS_RADIUS, STARQUAKE_DURATION, STARQUAKE_RATE_MAP } from '../constants';

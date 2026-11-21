@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { LineBasicMaterial } from 'three';
+import type { LineBasicMaterial } from 'three';
 import type { SceneRefType } from '@/types';
 import { massScale, tempToColor } from '@/utils/physics';
 import type { SceneParams, SceneRef } from '../types';

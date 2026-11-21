@@ -3,8 +3,8 @@ import {
   DoubleSide,
   Mesh,
   MeshBasicMaterial,
-  RingGeometry,
   type MeshBasicMaterialParameters,
+  RingGeometry,
 } from 'three';
 
 const BASE_OPACITY = 0.7 as const;

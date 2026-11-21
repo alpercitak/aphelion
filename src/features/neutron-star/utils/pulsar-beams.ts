@@ -47,7 +47,7 @@ export const createPulsarBeams = (beamWidth: string): Group => {
       pos[i * 3] = Math.cos(angle) * spread;
       pos[i * 3 + 1] = dir * (NS_RADIUS + t * BEAM_LENGTH);
       pos[i * 3 + 2] = Math.sin(angle) * spread;
-      const brightness = Math.pow(1 - t, 1.5);
+      const brightness = (1 - t) ** 1.5;
       colors[i * 3] = 0.4 * brightness;
       colors[i * 3 + 1] = 0.65 * brightness;
       colors[i * 3 + 2] = 1.0 * brightness;

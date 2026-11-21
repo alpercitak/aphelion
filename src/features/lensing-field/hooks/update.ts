@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react';
+import { type RefObject, useEffect } from 'react';
 import type { SceneRefType } from '@/types';
 import type { LensState, SceneParams, SceneRef } from '../types';
 import { createBackground } from '../utils/background';

@@ -1,4 +1,13 @@
-import { AdditiveBlending, BackSide, Color, FrontSide, Mesh, ShaderMaterial, SphereGeometry, Vector3 } from 'three';
+import {
+  AdditiveBlending,
+  BackSide,
+  Color,
+  FrontSide,
+  Mesh,
+  ShaderMaterial,
+  SphereGeometry,
+  type Vector3,
+} from 'three';
 import { massScale } from '@/utils/physics';
 
 // Photon sphere glow — Fresnel but brighter on BackSide (outward facing)

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BackSide, FrontSide, Material, type Color, type Vector3 } from 'three';
+import { BackSide, type Color, FrontSide, type Material, type Vector3 } from 'three';
 import type { SceneRefType, UniformValue } from '@/types';
 import { DESTINATION_COLOR_MAP } from '../constants';
 import type { SceneParams, SceneRef } from '../types';

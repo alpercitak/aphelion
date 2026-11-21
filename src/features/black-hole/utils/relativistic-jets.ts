@@ -21,12 +21,12 @@ export const createRelativisticJets = (): Group => {
     for (let i = 0; i < count; i++) {
       const t = Math.random();
       const y = dir * (1.5 + t * 12);
-      const spread = Math.pow(t, 1.5) * 0.4;
+      const spread = t ** 1.5 * 0.4;
       const angle = Math.random() * Math.PI * 2;
       pos[i * 3] = Math.cos(angle) * spread;
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = Math.sin(angle) * spread;
-      const intensity = Math.pow(1 - t, 1.2);
+      const intensity = (1 - t) ** 1.2;
       colors[i * 3] = 0.3 * intensity;
       colors[i * 3 + 1] = 0.6 * intensity;
       colors[i * 3 + 2] = 1.0 * intensity;

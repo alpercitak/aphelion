@@ -1,4 +1,4 @@
-import { AdditiveBlending, DoubleSide, Mesh, MeshBasicMaterial, TubeGeometry, type CatmullRomCurve3 } from 'three';
+import { AdditiveBlending, type CatmullRomCurve3, DoubleSide, Mesh, MeshBasicMaterial, TubeGeometry } from 'three';
 
 // Generate oscillating control points for the string
 export const createStringMesh = (

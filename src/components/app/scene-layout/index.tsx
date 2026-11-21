@@ -1,4 +1,4 @@
-import { useState, type Ref } from 'react';
+import { type Ref, useState } from 'react';
 import Controls, { type ControlsProps } from '@/components/app/controls';
 import Crosshair from '@/components/app/crosshair';
 import Glossary from '@/components/app/glossary';
@@ -10,7 +10,6 @@ import Scanlines from '@/components/app/scanlines';
 import type { StatsItem } from '@/components/app/stats';
 import Stats from '@/components/app/stats';
 import Status from '@/components/app/status';
-
 import styles from './index.module.css';
 
 export interface SceneLayoutHudProps {

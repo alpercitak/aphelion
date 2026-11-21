@@ -80,7 +80,7 @@ export const useHud = (params: SceneParams, phase: Phase) =>
   useMemo(() => {
     const totalMass = params.mass1 + params.mass2;
     // chirp mass formula: (m1*m2)^0.6 / (m1+m2)^0.2
-    const chirpMass = Math.pow(params.mass1 * params.mass2, 0.6) / Math.pow(totalMass, 0.2);
+    const chirpMass = (params.mass1 * params.mass2) ** 0.6 / totalMass ** 0.2;
 
     const stats = [
       { label: 'M1', value: params.mass1.toFixed(1), unit: 'M☉' },

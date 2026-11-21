@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { Color, PerspectiveCamera, Vector2, Vector3, type MeshBasicMaterial } from 'three';
+import { Color, type MeshBasicMaterial, type PerspectiveCamera, Vector2, type Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { CONTROL_POINTS, GLOW_RADIUS, LOOP_LIFETIME, REBUILD_INTERVAL, STRING_RADIUS } from '../constants';

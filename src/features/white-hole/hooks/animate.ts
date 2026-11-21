@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { AdditiveBlending, BufferAttribute, BufferGeometry, Line, LineBasicMaterial } from 'three';
+import { AdditiveBlending, type BufferAttribute, BufferGeometry, Line, LineBasicMaterial } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { EJECTION_RATE_MAP, MAX_RADIUS } from '../constants';
