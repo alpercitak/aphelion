@@ -8,7 +8,6 @@
 - Large shared chunk: three.js is ~540 kB in the `setup` chunk (build warning).
 - Tidal disruption: debris is non-self-gravitating test particles on frozen-in star velocity; no spiral shocks, and circularization is a radial-velocity drag only, so the disk is not forced into a plane.
 - Tidal disruption: fallback peak `t_min` is an analytic estimate (energy spread `GM·R★/r²`), not measured from the debris. DISK starts at `2·t_min`, when ~37% of bound debris has returned.
-- Tidal disruption visuals: debris points and the forming disk are faint at the default camera distance; consider brighter/larger debris near the BH or a closer camera.
 - Tidal disruption: partial-disruption rule `|offset·r̂| > R★(1/β − 1)` is ad hoc; for β near 1 most of the star is released. Escaped debris is never removed.
 - Tidal disruption: no flare luminosity or light curve; debris color uses a heuristic temperature, not viscous heating. Visual horizon is clamped to a minimum size below ~2×10⁶ M☉.
 - Tidal disruption: `t_min` is ~20 s for β ≥ 1 and ~90 s for β = 0.6 at the fixed time scale; there is no time-scale control or scrubber.
