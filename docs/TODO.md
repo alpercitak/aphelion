@@ -12,20 +12,16 @@
 - Tidal disruption: partial-disruption rule `|offset·r̂| > R★(1/β − 1)` is ad hoc; for β near 1 most of the star is released. Escaped debris is never removed.
 - Tidal disruption: no flare luminosity or light curve; debris color uses a heuristic temperature, not viscous heating. Visual horizon is clamped to a minimum size below ~2×10⁶ M☉.
 - Tidal disruption: `t_min` is ~20 s for β ≥ 1 and ~90 s for β = 0.6 at the fixed time scale; there is no time-scale control or scrubber.
+- Ergosphere: test particles keep a fixed θ and only move in r and φ; no geodesic integration, so orbits are not exact Kerr geodesics.
+- Ergosphere: particle own velocity is a fixed fraction of the Keplerian value at the current r; it is clamped to [Ω₋, Ω₊] each frame, not integrated.
+- Ergosphere: Penrose split energies are not conserved; extracted energy is η_max per event in units of the particle energy, not computed from fragment four-momenta. Escape fragments fade out instead of respawning.
+- Ergosphere: spin changes reshape the surfaces but do not reset particles; a replay is needed to clear the extracted-energy count.
+- Ergosphere: spin is capped at 0.998, so the extremal case is not shown; no spin-down is applied as energy is extracted.
+- Ergosphere: the ergosphere is a single translucent surface with no meridian lines; the particle color only encodes the sign of Ω, not its magnitude.
 
 ## Next scenes
 
 Each follows the existing feature layout (`src/features/<scene>/`, registered in `src/utils/scene/index.ts`). Ordered by priority.
-
-### 12 · Ergosphere (Penrose Process)
-
-A real Kerr scene: rotating black hole with ergosphere, frame dragging, and energy extraction.
-
-- Physics: horizon `r₊ = M + √(M² − a²)`; ergosphere `r_E(θ) = M + √(M² − a² cos²θ)`; frame-dragging angular velocity `ω = 2Mar / ((r² + a²)² − a²Δ sin²θ)`.
-- Visuals: oblate horizon inside a pumpkin-shaped ergosphere; test particles dragged co-rotating inside it; Penrose events where a particle splits, one fragment falls in with negative energy, the other escapes faster.
-- Controls: mass, spin a (0–0.998), particle count, Penrose events toggle.
-- HUD: r₊, ergosphere equatorial radius, extracted energy, max efficiency (~20.7% at a → 1).
-- Reuses: black-hole scene setup; replaces the README's shallow Kerr approximation with a dedicated scene.
 
 ### 13 · Kilonova
 
