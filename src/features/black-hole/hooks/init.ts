@@ -31,7 +31,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     const jetsGroup = createRelativisticJets();
     scene.add(blackHole, photonSphere, outerGlow, photonRing, einsteinRing, diskGroup, jetsGroup);
 
-    sceneRef.current = {
+    const refs: SceneRef = {
       core: { scene, renderer, camera, orbit, stars },
       entities: {
         blackHole,
@@ -46,13 +46,11 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
         photonRingMat: photonRing.material,
       },
     };
+    sceneRef.current = refs;
 
     return () => {
       // jets/disk are removed from the scene when toggled off; re-add so dispose() traverses them
-      const entities = sceneRef.current?.entities;
-      if (entities) {
-        scene.add(entities.jetsGroup, entities.diskGroup);
-      }
+      scene.add(refs.entities.jetsGroup, refs.entities.diskGroup);
       dispose();
     };
   }, [canvasRef, sceneRef]);
