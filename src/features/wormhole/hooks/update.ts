@@ -105,6 +105,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const { core, entities } = refs;
     core.scene.remove(entities.exoticHalo);
     entities.exoticHalo.geometry.dispose();
+    (entities.exoticHalo.material as Material).dispose();
     const newHalo = createExoticHalo(params.throatRadius, params.exoticDensity);
     newHalo.visible = params.showExoticHalo;
     core.scene.add(newHalo);
