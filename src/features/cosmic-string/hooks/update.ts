@@ -12,5 +12,5 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     if (refs.entities.coneMesh) {
       refs.entities.coneMesh.visible = params.showCone;
     }
-  }, [params.showGlow, params.showCone]);
+  }, [sceneRef, params.showGlow, params.showCone]);
 };
