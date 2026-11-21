@@ -20,7 +20,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const { core, entities } = refs;
     const { scene, camera } = core;
 
-    const { throatRadius } = params;
+    const throatRadius = params.throatRadius;
 
     // rebuild rim
     scene.remove(entities.rim);
@@ -58,28 +58,28 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.outerGlow = newOuter;
     entities.innerGlowUniforms = newInner.material.uniforms as { viewVector: UniformValue<Vector3> };
     entities.outerGlowUniforms = newOuter.material.uniforms as { viewVector: UniformValue<Vector3> };
+  }, [sceneRef, params.throatRadius]);
 
-    // rebuild lensing rings
+  // rebuild lensing rings when throat radius or lensing strength changes
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) {
+      return;
+    }
+    const { scene } = refs.core;
+    const { entities } = refs;
     entities.lensingRings.forEach((ring) => {
       scene.remove(ring);
       ring.geometry.dispose();
       (ring.material as Material).dispose();
     });
-    const newRings = createLensingRings(throatRadius, params.lensingStrength);
+    const newRings = createLensingRings(params.throatRadius, params.lensingStrength);
     newRings.forEach((ring) => {
       ring.rotation.x = Math.PI * 0.5;
       scene.add(ring);
     });
     entities.lensingRings = newRings;
-
-    // rebuild exotic halo
-    scene.remove(entities.exoticHalo);
-    entities.exoticHalo.geometry.dispose();
-    const newHalo = createExoticHalo(throatRadius, params.exoticDensity);
-    newHalo.visible = params.showExoticHalo;
-    scene.add(newHalo);
-    entities.exoticHalo = newHalo;
-  }, [params.throatRadius]);
+  }, [sceneRef, params.throatRadius, params.lensingStrength]);
 
   // destination star field color
   useEffect(() => {
@@ -93,7 +93,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const newStars = createDestinationStars(DESTINATION_COLOR_MAP[params.destination]);
     entities.portalScene.add(newStars);
     entities.destinationStars = newStars;
-  }, [params.destination]);
+  }, [sceneRef, params.destination]);
 
   // exotic halo density
   useEffect(() => {
@@ -108,7 +108,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     newHalo.visible = params.showExoticHalo;
     core.scene.add(newHalo);
     entities.exoticHalo = newHalo;
-  }, [params.exoticDensity, params.throatRadius]);
+  }, [sceneRef, params.exoticDensity, params.throatRadius, params.showExoticHalo]);
 
   useEffect(() => {
     const refs = sceneRef.current;
@@ -121,5 +121,5 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
       ring.visible = params.showLensingRings;
     });
     core.stars!.visible = params.showStars;
-  }, [params.showExoticHalo, params.showLensingRings, params.showStars]);
+  }, [sceneRef, params.showExoticHalo, params.showLensingRings, params.showStars]);
 };

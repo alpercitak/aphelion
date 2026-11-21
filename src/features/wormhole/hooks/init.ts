@@ -114,5 +114,5 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       renderTarget.dispose();
       dispose();
     };
-  }, []);
+  }, [canvasRef, sceneRef]);
 };
