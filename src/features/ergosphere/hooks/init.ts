@@ -14,8 +14,8 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
       canvas,
-      cameraPosition: [0, 6, 15],
-      orbitOptions: { theta: 0.1, phi: Math.PI / 2 - 0.35, radius: 17, minRadius: 6, maxRadius: 60 },
+      cameraPosition: [0, 4, 12],
+      orbitOptions: { theta: 0.1, phi: Math.PI / 2 - 0.35, radius: 13, minRadius: 6, maxRadius: 60 },
     });
 
     const { horizon, ergosphere, unit } = createSurfaces();

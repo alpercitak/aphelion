@@ -37,7 +37,7 @@ export const createParticleSystem = (): ParticleSystem => {
   const points = new Points(
     geo,
     new PointsMaterial({
-      size: 0.12,
+      size: 0.16,
       vertexColors: true,
       transparent: true,
       opacity: 0.9,
