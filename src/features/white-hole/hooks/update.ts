@@ -23,7 +23,9 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
       scene.remove(obj);
       obj.geometry.dispose();
       if (Array.isArray(obj.material)) {
-        obj.material.forEach((m) => m.dispose());
+        obj.material.forEach((m) => {
+          m.dispose();
+        });
       } else {
         obj.material.dispose();
       }
@@ -49,7 +51,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     entities.photonUniforms = newGlow.material.uniforms as any;
     entities.haloUniforms = newHalo.material.uniforms as any;
-  }, [params.mass]);
+  }, [sceneRef, params.mass, params.showPhotonSphere, params.showEjectaHaze]);
 
   useEffect(() => {
     const refs = sceneRef.current;
@@ -69,5 +71,5 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
         (p.trailLine.material as LineBasicMaterial).color = p.color;
       }
     });
-  }, [params.temperature, params.showPhotonSphere, params.showEjectaHaze, params.showStars]);
+  }, [sceneRef, params.temperature, params.showPhotonSphere, params.showEjectaHaze, params.showStars]);
 };
