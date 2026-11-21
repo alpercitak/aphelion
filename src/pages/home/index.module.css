@@ -8,7 +8,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   cursor: default;
-  pointer-events: all !important;
+  pointer-events: all;
 }
 .home__header {
   padding: 48px 48px 32px;
