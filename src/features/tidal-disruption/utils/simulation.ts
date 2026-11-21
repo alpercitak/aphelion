@@ -247,10 +247,10 @@ export const stepFrame = (debris: DebrisSystem, state: StateRef, delta: number) 
   syncStarParticles(debris, state.starPos);
   if (state.frame % COLOR_REFRESH_FRAMES === 0) {
     refreshDebrisColors(debris, state.periapsis);
+    debris.colorAttr.needsUpdate = true;
   }
   state.phase = phaseOf(state);
   state.frame++;
 
   debris.positionAttr.needsUpdate = true;
-  debris.colorAttr.needsUpdate = true;
 };
