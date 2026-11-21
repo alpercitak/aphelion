@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "check": "biome check",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "three": "^0.183.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.14",
     "@types/bun": "latest",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
