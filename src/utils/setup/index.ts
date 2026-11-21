@@ -1,4 +1,13 @@
-import { ACESFilmicToneMapping, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import {
+  ACESFilmicToneMapping,
+  type BufferGeometry,
+  type Material,
+  type Object3D,
+  PerspectiveCamera,
+  Scene,
+  Texture,
+  WebGLRenderer,
+} from 'three';
 import { createOrbitControls, type OrbitOptions } from '../camera';
 import { createStarField } from '../starfield';
 
@@ -43,7 +52,7 @@ export const setupScene = ({
     window.removeEventListener('resize', onResize);
     orbit.dispose();
     renderer.setAnimationLoop(null);
-    scene.traverse((object: any) => {
+    scene.traverse((object: Object3D & { geometry?: BufferGeometry; material?: Material | Array<Material> }) => {
       // dispose geometries
       if (object.geometry) {
         object.geometry.dispose();
@@ -53,9 +62,9 @@ export const setupScene = ({
         const materials = Array.isArray(object.material) ? object.material : [object.material];
         for (const mat of materials) {
           // dispose any textures assigned to the material
-          for (const key of Object.keys(mat)) {
-            if (mat[key] && mat[key].isTexture) {
-              mat[key].dispose();
+          for (const value of Object.values(mat)) {
+            if (value instanceof Texture) {
+              value.dispose();
             }
           }
           mat.dispose();
