@@ -84,7 +84,6 @@ export const useHud = (params: SceneParams, live: LiveState) =>
       { label: 'M', value: `10^${params.logMass.toFixed(1)}`, unit: 'M☉' },
       { label: 'r_t', value: rtAu.toFixed(2), unit: 'AU' },
       { label: 'β', value: params.beta.toFixed(1) },
-      { label: 'phase', value: live.phase.toUpperCase() },
       {
         label: 'bound',
         value: hasDebris ? (live.boundFraction * 100).toFixed(0) : '—',
