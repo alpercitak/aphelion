@@ -1,5 +1,6 @@
 import { type RefObject, useCallback } from 'react';
 import type { SceneRefType } from '@/types';
+import { INITIAL_LIVE } from '../constants';
 import type { LiveState, SceneRef, StateRef } from '../types';
 import { resetParticles } from '../utils/particles';
 
@@ -19,5 +20,5 @@ export const useReset = (
       return;
     }
     resetParticles(refs.entities.particles);
-    setLive({ events: 0, extracted: 0 });
+    setLive(INITIAL_LIVE);
   }, [sceneRef, stateRef, setLive]);

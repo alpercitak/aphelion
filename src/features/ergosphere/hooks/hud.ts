@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { SPEED_OF_LIGHT, schwarzschildRadius } from '@/utils/physics';
+import { SCHWARZSCHILD_SPIN_LIMIT } from '../constants';
 import type { LiveState, SceneParams } from '../types';
 import { extractableFraction, horizonRadius, penroseEfficiency } from '../utils/kerr';
 
@@ -110,7 +111,7 @@ export const useHud = (params: SceneParams, live: LiveState) =>
 
     return {
       ...BASE_HUD_PROPS,
-      status: spin < 0.01 ? '● SCHWARZSCHILD LIMIT' : '◉ FRAME DRAGGING',
+      status: spin < SCHWARZSCHILD_SPIN_LIMIT ? '● SCHWARZSCHILD LIMIT' : '◉ FRAME DRAGGING',
       stats,
     };
   }, [params, live]);

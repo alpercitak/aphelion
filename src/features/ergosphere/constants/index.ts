@@ -56,6 +56,9 @@ export const COLOR = {
   escape: [2.2, 2, 1.6],
 } as const;
 
+/** Below this spin the HUD labels the hole as Schwarzschild. */
+export const SCHWARZSCHILD_SPIN_LIMIT = 0.01;
+
 export const INITIAL_LIVE: LiveState = {
   events: 0,
   extracted: 0,
