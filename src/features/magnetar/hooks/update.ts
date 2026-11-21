@@ -27,7 +27,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     refs.core.scene.add(newLines);
     refs.entities.fieldLines = newLines;
-  }, [params.fieldStrength]);
+  }, [sceneRef, params.fieldStrength, params.showFieldLines]);
 
   // visibility toggles
   useEffect(() => {
@@ -37,7 +37,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     }
     refs.entities.fieldLines.visible = params.showFieldLines;
     refs.entities.fieldHalo.visible = params.showFieldDistortion;
-  }, [params.showFieldLines, params.showFieldDistortion]);
+  }, [sceneRef, params.showFieldLines, params.showFieldDistortion]);
 
   // gamma burst
   useEffect(() => {
@@ -46,5 +46,5 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
       return;
     }
     refs.entities.burstOpacity = params.burstIntensity * 0.4;
-  }, [params.showGammaBursts, params.burstIntensity]);
+  }, [sceneRef, params.showGammaBursts, params.burstIntensity]);
 };
