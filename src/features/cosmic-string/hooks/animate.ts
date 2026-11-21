@@ -32,12 +32,14 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
     // Rebuild core geometry
     refs.entities.stringScene.remove(refs.entities.stringCore);
     refs.entities.stringCore.geometry.dispose();
+    refs.entities.stringCore.material.dispose();
     refs.entities.stringCore = createStringMesh(curve, STRING_RADIUS, 0xffffff, 0.95);
     refs.entities.stringScene.add(refs.entities.stringCore);
 
     // Rebuild glow
     refs.entities.stringScene.remove(refs.entities.stringGlow);
     refs.entities.stringGlow.geometry.dispose();
+    refs.entities.stringGlow.material.dispose();
     refs.entities.stringGlow = createStringMesh(
       curve,
       GLOW_RADIUS,
@@ -51,6 +53,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
     if (refs.entities.coneMesh) {
       refs.entities.stringScene.remove(refs.entities.coneMesh);
       refs.entities.coneMesh.geometry.dispose();
+      refs.entities.coneMesh.material.dispose();
     }
     const newCone = createConeMesh(curve, params.linearDensity);
     newCone.visible = params.showCone;
