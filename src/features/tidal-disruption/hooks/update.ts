@@ -1,21 +1,17 @@
 import { useEffect } from 'react';
 import type { SceneRefType } from '@/types';
-import type { SceneParams, SceneRef } from '../types';
-import { horizonVisualRadius } from '../utils/physics';
+import type { RunParams, SceneParams, SceneRef } from '../types';
 
-export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams) => {
-  const { logMass, starMass, showTidal, showStars } = params;
+export const useUpdate = (
+  sceneRef: SceneRefType<SceneRef>,
+  params: SceneParams,
+  resetScene: (run: RunParams) => void,
+) => {
+  const { logMass, starMass, beta, showTidal, showOrbit, showStars } = params;
 
   useEffect(() => {
-    const refs = sceneRef.current;
-    if (!refs) {
-      return;
-    }
-    const { horizon, glow } = refs.entities;
-    const r = horizonVisualRadius({ logMass, starMass });
-    horizon.scale.setScalar(r);
-    glow.scale.setScalar(r);
-  }, [logMass, starMass, sceneRef]);
+    resetScene({ logMass, starMass, beta });
+  }, [logMass, starMass, beta, resetScene]);
 
   useEffect(() => {
     const refs = sceneRef.current;
@@ -23,6 +19,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
       return;
     }
     refs.entities.tidalSphere.visible = showTidal;
+    refs.entities.orbit.line.visible = showOrbit;
     refs.core.stars.visible = showStars;
-  }, [showTidal, showStars, sceneRef]);
+  }, [showTidal, showOrbit, showStars, sceneRef]);
 };
