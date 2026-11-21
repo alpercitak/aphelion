@@ -47,6 +47,13 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       },
     };
 
-    return () => dispose();
+    return () => {
+      // jets/disk are removed from the scene when toggled off; re-add so dispose() traverses them
+      const entities = sceneRef.current?.entities;
+      if (entities) {
+        scene.add(entities.jetsGroup, entities.diskGroup);
+      }
+      dispose();
+    };
   }, [canvasRef, sceneRef]);
 };
