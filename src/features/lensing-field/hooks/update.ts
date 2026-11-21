@@ -25,7 +25,7 @@ export const useUpdate = (
     return () => {
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [sceneRef]);
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
@@ -40,7 +40,7 @@ export const useUpdate = (
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
     };
-  }, []);
+  }, [params.mouseLens, lensStateRef]);
 
   useEffect(() => {
     const refs = sceneRef.current;
@@ -48,7 +48,6 @@ export const useUpdate = (
       return;
     }
     const { core, entities } = refs;
-    const { backgroundDensity } = params;
 
     // remove old
     core.scene.remove(core.stars);
@@ -61,11 +60,13 @@ export const useUpdate = (
     });
 
     // add new
-    const newStars = createBackground(backgroundDensity);
-    const newGalaxies = createGalaxies(backgroundDensity);
+    const newStars = createBackground(params.backgroundDensity);
+    const newGalaxies = createGalaxies(params.backgroundDensity);
     core.scene.add(newStars);
-    newGalaxies.forEach((g) => core.scene.add(g));
+    newGalaxies.forEach((g) => {
+      core.scene.add(g);
+    });
     core.stars = newStars;
     entities.galaxies = newGalaxies;
-  }, [params.backgroundDensity]);
+  }, [sceneRef, params.backgroundDensity]);
 };

@@ -43,7 +43,9 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     const stars = createBackground(SCENE_PARAMS.backgroundDensity);
     const galaxies = createGalaxies(SCENE_PARAMS.backgroundDensity);
     scene.add(stars);
-    galaxies.forEach((g) => scene.add(g));
+    galaxies.forEach((g) => {
+      scene.add(g);
+    });
 
     // ── Render target ────────────────────────────────────────────────────────
     const renderTarget = new WebGLRenderTarget(W, H, {
