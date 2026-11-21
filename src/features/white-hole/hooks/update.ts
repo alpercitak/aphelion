@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import type { Color, LineBasicMaterial, Vector3 } from 'three';
-import type { SceneRefType, UniformValue } from '@/types';
+import type { LineBasicMaterial } from 'three';
+import type { SceneRefType } from '@/types';
 import { massScale, tempToColor } from '@/utils/physics';
-import type { SceneParams, SceneRef } from '../types';
+import type { HaloUniforms, PhotonGlowUniforms, SceneParams, SceneRef } from '../types';
 import { createCentralBody } from '../utils/central-body';
 import { createEjectaHaze } from '../utils/ejecta-haze';
 import { createOuterHalo, createPhotonGlow } from '../utils/photon-glow';
@@ -49,13 +49,8 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.ejectaHaze = newHaze;
     entities.bodyRadius = massScale(params.mass) * 0.9;
 
-    entities.photonUniforms = newGlow.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
-    entities.haloUniforms = newHalo.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-    };
+    entities.photonUniforms = newGlow.material.uniforms as PhotonGlowUniforms;
+    entities.haloUniforms = newHalo.material.uniforms as HaloUniforms;
   }, [sceneRef, params.mass, params.showPhotonSphere, params.showEjectaHaze]);
 
   useEffect(() => {

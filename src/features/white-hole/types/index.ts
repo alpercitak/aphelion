@@ -25,16 +25,20 @@ export interface SceneRef extends BaseSceneRef {
     particles: Array<Particle>;
     trailGroup: Group;
     // typed uniform refs
-    photonUniforms: {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
-    haloUniforms: {
-      viewVector: UniformValue<Vector3>;
-    };
+    photonUniforms: PhotonGlowUniforms;
+    haloUniforms: HaloUniforms;
     bodyRadius: number;
   };
 }
+
+export type PhotonGlowUniforms = {
+  viewVector: UniformValue<Vector3>;
+  glowColor: UniformValue<Color>;
+};
+
+export type HaloUniforms = {
+  viewVector: UniformValue<Vector3>;
+};
 
 export type SceneParams = {
   mass: number;

@@ -3,19 +3,17 @@ import {
   AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
-  type Color,
   Group,
   Line,
   type LineBasicMaterial,
   Points,
   PointsMaterial,
-  type Vector3,
 } from 'three';
-import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
+import type { CanvasRefType, SceneRefType } from '@/types';
 import { massScale } from '@/utils/physics';
 import { setupScene } from '@/utils/setup';
 import { MAX_RADIUS, PARTICLE_POOL, SCENE_PARAMS } from '../constants';
-import type { Particle, SceneRef } from '../types';
+import type { HaloUniforms, Particle, PhotonGlowUniforms, SceneRef } from '../types';
 import { createCentralBody } from '../utils/central-body';
 import { createEjectaHaze } from '../utils/ejecta-haze';
 import { spawnParticle } from '../utils/particle';
@@ -82,13 +80,8 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     });
 
     // extract typed uniform refs
-    const photonUniforms = photonGlow.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
-    const haloUniforms = outerHalo.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-    };
+    const photonUniforms = photonGlow.material.uniforms as PhotonGlowUniforms;
+    const haloUniforms = outerHalo.material.uniforms as HaloUniforms;
 
     const core = { renderer, scene, camera, orbit, stars };
     const entities = {
