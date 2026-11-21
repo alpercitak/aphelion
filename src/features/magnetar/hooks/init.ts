@@ -17,7 +17,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       return;
     }
 
-    const { renderer, scene, camera, orbit, dispose } = setupScene({
+    const { renderer, scene, camera, orbit, stars, dispose } = setupScene({
       canvas,
       cameraPosition: [0, 1.5, 4.5],
       orbitOptions: { radius: 4.5, minRadius: 1.5, maxRadius: 18 },
@@ -35,7 +35,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     scene.add(body, innerGlow, outerGlow, fieldLines, fieldHalo, camera);
 
     sceneRef.current = {
-      core: { renderer, scene, camera, orbit },
+      core: { renderer, scene, camera, orbit, stars },
       entities: {
         body,
         innerGlow,
