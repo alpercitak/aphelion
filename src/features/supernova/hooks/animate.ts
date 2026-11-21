@@ -21,7 +21,7 @@ const animate = (
   const { core, entities } = refs;
 
   core.orbit.updateCamera(core.camera);
-  core.stars!.rotation.y = time * 0.001;
+  core.stars.rotation.y = time * 0.001;
 
   // Advance timeline
   if (params.autoPlay) {

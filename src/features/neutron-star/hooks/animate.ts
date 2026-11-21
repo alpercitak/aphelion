@@ -10,7 +10,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
 
   // core motion
   orbit.updateCamera(camera);
-  stars!.rotation.y = time * 0.002;
+  stars.rotation.y = time * 0.002;
 
   const radsPerSec = (params.rpm / 60) * Math.PI * 2;
   rotator.rotation.y = time * radsPerSec;

@@ -25,7 +25,7 @@ export const animate = (refs: SceneRef, params: SceneParams, time: number) => {
 
   orbit.updateCamera(camera);
 
-  stars!.rotation.y = time * 0.002;
+  stars.rotation.y = time * 0.002;
   destinationStars.rotation.y = -time * 0.003;
   destinationStars.rotation.x = time * 0.001;
 

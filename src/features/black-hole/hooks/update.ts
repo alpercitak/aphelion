@@ -50,7 +50,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const { stars, scene } = core;
     const { jetsGroup, diskGroup } = entities;
 
-    stars!.visible = params.showStars;
+    stars.visible = params.showStars;
 
     if (params.showJets) {
       scene.add(jetsGroup);

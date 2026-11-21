@@ -120,6 +120,6 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.lensingRings.forEach((ring) => {
       ring.visible = params.showLensingRings;
     });
-    core.stars!.visible = params.showStars;
+    core.stars.visible = params.showStars;
   }, [sceneRef, params.showExoticHalo, params.showLensingRings, params.showStars]);
 };

@@ -23,7 +23,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   const { orbit, camera, stars } = core;
 
   orbit.updateCamera(camera);
-  stars!.rotation.y = time * 0.001;
+  stars.rotation.y = time * 0.001;
 
   const rebuildString = (time: number, params: SceneParams) => {
     const pts = buildStringPoints(time, params.oscillationAmp, params.tension);

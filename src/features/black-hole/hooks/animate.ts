@@ -28,7 +28,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   outerGlow.material.uniforms.viewVector?.value.copy(camera.position);
 
   if (params.showStars) {
-    stars!.rotation.y = time * 0.003;
+    stars.rotation.y = time * 0.003;
   }
 
   // lensing rings face camera
