@@ -7,13 +7,15 @@ import {
   INSPIRAL_RATE,
   KIND,
   MAX_FRAME_DT,
+  PARTICLE_COUNT,
+  PENROSE_RATE,
   PLUNGE_SPEED,
   RESPAWN_R_MAX,
   RESPAWN_R_MIN,
   TIME_SCALE,
 } from '../constants';
 import type { ParticleSystem, SceneParams, StateRef } from '../types';
-import { clampAngularVelocity, horizonRadius, keplerianOmega } from './kerr';
+import { clampAngularVelocity, ergosphereRadius, horizonRadius, keplerianOmega, penroseEfficiency } from './kerr';
 import { respawnParticle } from './particles';
 
 const colorOf = (kind: number, omega: number) => {
@@ -66,14 +68,71 @@ const writeParticle = (sys: ParticleSystem, i: number, a: number, omega: number)
   sys.colors[i3 + 2] = c[2];
 };
 
+/** Uniformly picks one normal particle inside the ergosphere (reservoir sampling, no allocation). */
+const pickInsideErgosphere = (sys: ParticleSystem, a: number) => {
+  let chosen = -1;
+  let seen = 0;
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    if (sys.kind[i] !== KIND.NORMAL) {
+      continue;
+    }
+    const cosTheta = Math.cos(sys.theta[i] ?? 0);
+    if ((sys.r[i] ?? 0) >= ergosphereRadius(a, cosTheta)) {
+      continue;
+    }
+    seen++;
+    if (Math.random() * seen < 1) {
+      chosen = i;
+    }
+  }
+  return chosen;
+};
+
+const findDormantFragment = (sys: ParticleSystem) => {
+  for (let i = PARTICLE_COUNT; i < sys.kind.length; i++) {
+    if (sys.kind[i] === KIND.DORMANT) {
+      return i;
+    }
+  }
+  return -1;
+};
+
+/**
+ * Penrose split: a particle inside the ergosphere breaks in two. Fragment A (negative energy) takes the parent's
+ * slot and plunges. Fragment B takes a dormant slot, leaves with the parent's position and a boosted prograde
+ * velocity. Each event extracts η_max in units of the particle's energy.
+ */
+const splitParticle = (sys: ParticleSystem, state: StateRef, a: number) => {
+  const parent = pickInsideErgosphere(sys, a);
+  const child = findDormantFragment(sys);
+  if (parent < 0 || child < 0) {
+    return;
+  }
+  sys.kind[parent] = KIND.PLUNGE;
+  sys.r[child] = sys.r[parent] ?? 0;
+  sys.theta[child] = sys.theta[parent] ?? 0;
+  sys.phi[child] = sys.phi[parent] ?? 0;
+  sys.frac[child] = 1;
+  sys.kind[child] = KIND.ESCAPE;
+
+  state.events++;
+  state.extracted += penroseEfficiency(a);
+};
+
 /**
  * Advances every particle by one real frame. Each particle's Ω is its own orbital velocity clamped to the
  * frame-dragged range at its position, so inside the ergosphere it can no longer stand still or counter-rotate.
  */
-export const stepFrame = (sys: ParticleSystem, state: StateRef, params: Pick<SceneParams, 'spin'>, delta: number) => {
+export const stepFrame = (
+  sys: ParticleSystem,
+  state: StateRef,
+  params: Pick<SceneParams, 'spin' | 'showPenrose'>,
+  delta: number,
+) => {
   const a = params.spin;
   const rPlus = horizonRadius(a);
-  const h = Math.min(delta, MAX_FRAME_DT) * TIME_SCALE;
+  const dtReal = Math.min(delta, MAX_FRAME_DT);
+  const h = dtReal * TIME_SCALE;
 
   for (let i = 0; i < sys.kind.length; i++) {
     if (sys.kind[i] === KIND.DORMANT) {
@@ -87,6 +146,10 @@ export const stepFrame = (sys: ParticleSystem, state: StateRef, params: Pick<Sce
     const omega = clampAngularVelocity((sys.frac[i] ?? 0) * keplerianOmega(r, a), r, sys.theta[i] ?? 0, a);
     sys.phi[i] = (sys.phi[i] ?? 0) + omega * h;
     writeParticle(sys, i, a, omega);
+  }
+
+  if (params.showPenrose && Math.random() < PENROSE_RATE * dtReal) {
+    splitParticle(sys, state, a);
   }
 
   state.frame++;
