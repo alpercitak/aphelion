@@ -12,7 +12,7 @@ export default function ScenePage() {
   }
 
   const scene = getScene(sceneId);
-  if (!scene || !scene.component) {
+  if (!scene?.component) {
     return <SceneAlert text="Not found" />;
   }
 
