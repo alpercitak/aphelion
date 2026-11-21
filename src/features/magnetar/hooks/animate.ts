@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { type LineBasicMaterial, Mesh, MeshBasicMaterial, type PointsMaterial, Vector3 } from 'three';
+import { Mesh, MeshBasicMaterial, type PointsMaterial, Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import { NS_RADIUS, STARQUAKE_DURATION, STARQUAKE_RATE_MAP } from '../constants';
@@ -90,7 +90,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   activeCracks.forEach((crack) => {
     const age = time - crack.born;
     const opacity = Math.max(0, 1 - age / STARQUAKE_DURATION);
-    (crack.mesh.material as LineBasicMaterial).opacity = opacity;
+    crack.mesh.material.opacity = opacity;
     // Expand slightly as it fades
     const expand = 1 + age * 0.15;
     crack.mesh.scale.setScalar(expand);
@@ -99,6 +99,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   expiredCracks.forEach(({ mesh }) => {
     scene.remove(mesh);
     mesh.geometry.dispose();
+    mesh.material.dispose();
     entities.activeCracks = entities.activeCracks.filter((c) => c.mesh !== mesh);
   });
 

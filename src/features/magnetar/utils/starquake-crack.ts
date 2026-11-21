@@ -2,7 +2,7 @@ import { AdditiveBlending, BufferAttribute, BufferGeometry, LineBasicMaterial, L
 import { NS_RADIUS } from '../constants';
 
 // Starquake crack — LineSegments radiating from a point on the sphere surface
-export const createStarquakeCrack = (origin: Vector3): LineSegments => {
+export const createStarquakeCrack = (origin: Vector3): LineSegments<BufferGeometry, LineBasicMaterial> => {
   const segments = 6 + Math.floor(Math.random() * 6);
   const positions: number[] = [];
   const spread = 0.6 + Math.random() * 0.8;

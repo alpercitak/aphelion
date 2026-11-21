@@ -1,5 +1,7 @@
 import type {
+  BufferGeometry,
   Group,
+  LineBasicMaterial,
   LineSegments,
   Mesh,
   MeshBasicMaterial,
@@ -39,6 +41,6 @@ export type SceneParams = {
 export type StarquakeRate = 'off' | 'rare' | 'frequent';
 
 export type ActiveCrack = {
-  mesh: LineSegments;
+  mesh: LineSegments<BufferGeometry, LineBasicMaterial>;
   born: number;
 };
