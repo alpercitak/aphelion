@@ -13,8 +13,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     }
     const { entities } = refs;
     const { blackHole, photonSphere, outerGlow, photonRing, einsteinRing } = entities;
-    const { mass, spin } = params;
-    applyMassScale({ blackHole, photonSphere, outerGlow, photonRing, einsteinRing }, mass, spin);
+    applyMassScale({ blackHole, photonSphere, outerGlow, photonRing, einsteinRing }, params.mass, params.spin);
   }, [params.mass, params.spin, sceneRef]);
 
   useEffect(() => {
