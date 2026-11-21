@@ -15,8 +15,8 @@ export const tidalRadiusKm = ({ logMass, starMass }: MassParams) =>
 /** Horizon radius over tidal radius, from real values. */
 const horizonToTidal = (params: MassParams) => schwarzschildRadius(10 ** params.logMass) / tidalRadiusKm(params);
 
-/** Horizon at or above min(r_t, r_p): the star crosses the horizon before it can be torn apart. */
-export const isSwallowed = (params: RunParams) => horizonToTidal(params) * Math.max(1, params.beta) >= 1;
+/** Horizon at or above r_p = r_t / β: the star's periapsis lies inside the horizon. */
+export const isSwallowed = (params: RunParams) => horizonToTidal(params) * params.beta >= 1;
 
 /** Scene-unit horizon radius: real ratio applied to the visual tidal radius, clamped for visibility. */
 export const horizonVisualRadius = (params: MassParams) =>
