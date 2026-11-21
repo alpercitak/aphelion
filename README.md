@@ -90,7 +90,7 @@ Notable real equations in use:
 - Hawking temperature: `T = ℏc³ / (8πGMk)`
 - Gravitational wave inspiral: `ω ∝ √M / r^1.5` (Keplerian)
 - Gravitational lensing deflection: `δφ = 4GM / c²b`
-- Cosmic string deficit angle: `δ = 8πGµ`
+- Cosmic string deficit angle: `Δ = 8πGµ`, light deflection per side: `δ = 4πGµ`
 - Blackbody temperature → color: Wien's displacement law approximation
 - Chirp mass: `ℳ = (m₁m₂)^(3/5) / (m₁+m₂)^(1/5)`
 
