@@ -2,6 +2,7 @@ import {
   AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
+  type Color,
   DoubleSide,
   Group,
   Mesh,
@@ -43,7 +44,7 @@ const createDopplerDisk = (temp: number) => {
       const angle = (j / segments) * Math.PI * 2;
       const cosA = Math.cos(angle);
       const ringTemp = temp * (1 - t * 0.75);
-      let color;
+      let color: Color;
       if (cosA > 0) {
         color = tempToColor(ringTemp * (1 + cosA * 0.5));
         color.multiplyScalar(1 + cosA * 0.8);
