@@ -24,7 +24,7 @@ const BASE_HUD_PROPS = {
         {
           term: 'ERGOSPHERE',
           formula: 'r_E = M + √(M² − a² cos²θ)',
-          def: 'A region outside the horizon where the time coordinate is <em>spacelike</em>. Nothing can stay still relative to distant stars inside it. It touches the horizon at the poles and reaches <em>2M</em> at the equator.',
+          def: 'A region outside the horizon where the time direction of distant observers becomes <em>spacelike</em>. Nothing can stay still relative to distant stars inside it. It touches the horizon at the poles and reaches <em>2M</em> at the equator.',
         },
         {
           term: 'STATIC LIMIT',
@@ -38,7 +38,7 @@ const BASE_HUD_PROPS = {
         {
           term: 'FRAME DRAGGING',
           formula: 'ω = 2Mar / ((r² + a²)² − a²Δ sin²θ)',
-          def: 'Spinning mass drags spacetime around with it. The frame-dragging rate ω is largest near the horizon, where it equals <em>Ω_H = a / 2r₊</em>.',
+          def: 'Spinning mass drags spacetime around with it. The frame-dragging rate ω is largest near the horizon, where it equals <em>Ω_H = a / 2Mr₊</em>.',
         },
         {
           term: 'NO STANDING STILL',
@@ -51,8 +51,8 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'IRREDUCIBLE MASS',
-          formula: 'M_irr = √(2r₊) / 2',
-          def: 'The mass that can never be extracted. At most <em>29%</em> of a maximally spinning black hole can be turned into energy this way.',
+          formula: 'M_irr = √(2Mr₊) / 2',
+          def: 'The mass that can never be extracted. At most <em>29%</em> of the mass of a maximally spinning black hole can be extracted as energy.',
         },
         {
           term: 'SUPERRADIANCE',
