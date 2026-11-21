@@ -13,6 +13,7 @@ export const useSceneAnimation = (callback: SceneAnimationCallback) => {
   useEffect(() => {
     let raf: number;
     const timer = new Timer();
+    timer.connect(document);
 
     const loop = (timestamp: number) => {
       timer.update(timestamp);
@@ -25,6 +26,9 @@ export const useSceneAnimation = (callback: SceneAnimationCallback) => {
     };
 
     raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      timer.dispose();
+    };
   }, []);
 };
