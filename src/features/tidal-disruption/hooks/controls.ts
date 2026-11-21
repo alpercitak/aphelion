@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import type { ButtonProps } from '@/components/ui/button';
 import type { SliderProps } from '@/components/ui/slider';
 import type { ToggleProps } from '@/components/ui/toggle';
 import { useSceneControls } from '@/hooks/scene-controls';
@@ -9,7 +11,7 @@ interface SliderItem extends Partial<SliderProps> {
 }
 
 interface ToggleItem extends Partial<ToggleProps> {
-  id: keyof Pick<SceneParams, 'showTidal' | 'showStars'>;
+  id: keyof Pick<SceneParams, 'showTidal' | 'showOrbit' | 'showStars'>;
 }
 
 const SLIDER_ITEMS = [
@@ -46,13 +48,19 @@ const SLIDER_ITEMS = [
 
 const TOGGLE_ITEMS = [
   { id: 'showTidal', label: 'Tidal radius' },
+  { id: 'showOrbit', label: 'Orbit path' },
   { id: 'showStars', label: 'Star field' },
 ] as const satisfies ReadonlyArray<ToggleItem>;
 
-export const useControls = () => {
-  const { params, controls } = useSceneControls(SCENE_PARAMS, {
+export const useControls = (onReplay: () => void) => {
+  const buttons = useMemo<ReadonlyArray<ButtonProps>>(
+    () => [{ variant: 'secondary', onClick: onReplay, children: '↺ REPLAY' }],
+    [onReplay],
+  );
+  const { params, paramsRef, controls } = useSceneControls(SCENE_PARAMS, {
     sliders: SLIDER_ITEMS,
     toggles: TOGGLE_ITEMS,
+    buttons,
   });
-  return { params, controls };
+  return { params, paramsRef, controls };
 };

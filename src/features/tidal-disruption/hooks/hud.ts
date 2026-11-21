@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
-import { schwarzschildRadius } from '@/utils/physics';
-import type { SceneParams } from '../types';
+import { PHASE_LABEL_MAP } from '../constants';
+import type { LiveState, SceneParams } from '../types';
 import { kmToAu, tidalRadiusKm } from '../utils/physics';
 
 const BASE_HUD_PROPS = {
@@ -73,21 +73,33 @@ const BASE_HUD_PROPS = {
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
-export const useHud = (params: SceneParams) =>
+export const useHud = (params: SceneParams, live: LiveState) =>
   useMemo(() => {
     const rtAu = kmToAu(tidalRadiusKm(params));
-    const rsKm = schwarzschildRadius(10 ** params.logMass);
+    const hasDebris = live.phase !== 'approach' && live.phase !== 'swallowed';
+    const hasFallback = live.phase === 'fallback' || live.phase === 'disk';
+    const fallbackRate = (live.t / live.tMin) ** (-5 / 3);
 
     const stats = [
       { label: 'M', value: `10^${params.logMass.toFixed(1)}`, unit: 'M☉' },
-      { label: 'm★', value: params.starMass.toFixed(1), unit: 'M☉' },
       { label: 'r_t', value: rtAu.toFixed(2), unit: 'AU' },
       { label: 'β', value: params.beta.toFixed(1) },
-      { label: 'Rₛ', value: rsKm.toExponential(2), unit: 'km' },
+      { label: 'phase', value: live.phase.toUpperCase() },
+      {
+        label: 'bound',
+        value: hasDebris ? (live.boundFraction * 100).toFixed(0) : '—',
+        unit: hasDebris ? '%' : undefined,
+      },
+      {
+        label: 'fallback',
+        value: hasFallback ? fallbackRate.toFixed(2) : '—',
+        unit: hasFallback ? '× peak' : undefined,
+      },
     ];
 
     return {
       ...BASE_HUD_PROPS,
+      status: PHASE_LABEL_MAP[live.phase],
       stats,
     };
-  }, [params]);
+  }, [params, live]);

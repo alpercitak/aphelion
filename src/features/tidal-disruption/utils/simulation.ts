@@ -12,7 +12,7 @@ import {
   SUN_TEMPERATURE_K,
   TIME_SCALE,
 } from '../constants';
-import type { DebrisSystem, Phase, StateRef } from '../types';
+import type { DebrisSystem, LiveState, Phase, StateRef } from '../types';
 import { debrisTemperature, writeColor } from './debris';
 
 const SOFTENING_SQ = SOFTENING * SOFTENING;
@@ -220,6 +220,14 @@ const refreshDebrisColors = (debris: DebrisSystem, periapsis: number) => {
     writeColor(colors, i3, debrisTemperature(r, periapsis));
   }
 };
+
+export const toLiveState = (state: StateRef): LiveState => ({
+  phase: state.phase,
+  t: state.released ? state.elapsed - state.releaseTime : 0,
+  tMin: state.tMin,
+  boundFraction: state.boundFraction,
+  accreted: state.accreted,
+});
 
 /** Advances the simulation by one real frame: fixed sub-steps, then buffer and phase updates. */
 export const stepFrame = (debris: DebrisSystem, state: StateRef, delta: number) => {

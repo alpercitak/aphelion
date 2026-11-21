@@ -1,12 +1,16 @@
 import { type RefObject, useCallback } from 'react';
 import type { SceneRefType } from '@/types';
 import { R_TIDAL_VISUAL } from '../constants';
-import type { RunParams, SceneRef, StateRef } from '../types';
+import type { LiveState, RunParams, SceneRef, StateRef } from '../types';
 import { fillOrbitPath, periapsisOf, setParabolicState, startAnomaly } from '../utils/orbit';
 import { horizonVisualRadius, isSwallowed } from '../utils/physics';
-import { fallbackTimescale, resetParticles } from '../utils/simulation';
+import { fallbackTimescale, resetParticles, toLiveState } from '../utils/simulation';
 
-export const useReset = (sceneRef: SceneRefType<SceneRef>, stateRef: RefObject<StateRef>) =>
+export const useReset = (
+  sceneRef: SceneRefType<SceneRef>,
+  stateRef: RefObject<StateRef>,
+  setLive: (live: LiveState) => void,
+) =>
   useCallback(
     (run: RunParams) => {
       const s = stateRef.current;
@@ -38,6 +42,7 @@ export const useReset = (sceneRef: SceneRefType<SceneRef>, stateRef: RefObject<S
       fillOrbitPath(orbit.positions, periapsis, nu0);
       orbit.positionAttr.needsUpdate = true;
       resetParticles(debris, s);
+      setLive(toLiveState(s));
     },
-    [sceneRef, stateRef],
+    [sceneRef, stateRef, setLive],
   );

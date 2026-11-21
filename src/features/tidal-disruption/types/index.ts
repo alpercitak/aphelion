@@ -76,3 +76,13 @@ export type SceneParams = {
 export type MassParams = Pick<SceneParams, 'logMass' | 'starMass'>;
 
 export type RunParams = MassParams & Pick<SceneParams, 'beta'>;
+
+/** Run status shown in the HUD. Updated a few times per second, not every frame. */
+export interface LiveState {
+  phase: Phase;
+  /** Time since disruption (scene units). */
+  t: number;
+  tMin: number;
+  boundFraction: number;
+  accreted: number;
+}

@@ -1,5 +1,5 @@
 import { Vector3 } from 'three';
-import type { SceneParams, StateRef } from '../types';
+import type { LiveState, Phase, SceneParams, StateRef } from '../types';
 
 export const SCENE_PARAMS = {
   logMass: 6,
@@ -48,6 +48,22 @@ export const SUN_TEMPERATURE_K = 5800;
 export const COLOR_REFRESH_FRAMES = 4;
 export const LIVE_REFRESH_FRAMES = 10;
 export const ORBIT_SEGMENTS = 256;
+
+export const PHASE_LABEL_MAP = {
+  approach: '● STAR APPROACHING',
+  disruption: '◉ TIDAL DISRUPTION',
+  fallback: '◎ DEBRIS FALLBACK',
+  disk: '◎ DISK FORMED',
+  swallowed: '● SWALLOWED WHOLE',
+} as const satisfies Record<Phase, string>;
+
+export const INITIAL_LIVE: LiveState = {
+  phase: 'approach',
+  t: 0,
+  tMin: 1,
+  boundFraction: 0,
+  accreted: 0,
+};
 
 export const INITIAL_STATE: StateRef = {
   phase: 'approach',
