@@ -226,7 +226,6 @@ export const toLiveState = (state: StateRef): LiveState => ({
   t: state.released ? state.elapsed - state.releaseTime : 0,
   tMin: state.tMin,
   boundFraction: state.boundFraction,
-  accreted: state.accreted,
 });
 
 /** Advances the simulation by one real frame: fixed sub-steps, then buffer and phase updates. */

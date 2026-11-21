@@ -84,5 +84,4 @@ export interface LiveState {
   t: number;
   tMin: number;
   boundFraction: number;
-  accreted: number;
 }

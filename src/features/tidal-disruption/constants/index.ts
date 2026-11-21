@@ -62,7 +62,6 @@ export const INITIAL_LIVE: LiveState = {
   t: 0,
   tMin: 1,
   boundFraction: 0,
-  accreted: 0,
 };
 
 export const INITIAL_STATE: StateRef = {
