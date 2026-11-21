@@ -71,6 +71,13 @@ export const SCENES = [
     description: 'Stellar explosion sequence: collapse, shockwave, ejecta, and remnant.',
     component: lazy(() => import('@/features/supernova')),
   },
+  {
+    id: 'tidal-disruption',
+    title: 'Tidal Disruption',
+    subtitle: 'Spaghettification · Fallback',
+    description: 'A star torn apart by a supermassive black hole. Debris stream, fallback and accretion disk.',
+    component: lazy(() => import('@/features/tidal-disruption')),
+  },
 ];
 
 export const getScene = (id: string) => {
