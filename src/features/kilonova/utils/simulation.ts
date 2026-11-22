@@ -12,6 +12,7 @@ import {
   JET_OPACITY,
   JET_RISE,
   KILONOVA_DAYS,
+  MAX_INFALL_SPEED,
   MERGE_SEPARATION,
   MERGE_SNAP,
   MERGER_DURATION,
@@ -56,8 +57,12 @@ const spawnRingIfDue = (refs: SceneRef, params: SceneParams, state: StateRef) =>
 
 const stepInspiral = (refs: SceneRef, params: SceneParams, state: StateRef, dt: number) => {
   state.elapsed += dt;
-  // Clamped at contact so the merger starts exactly at a = 2 R_NS
-  state.separation = Math.max(MERGE_SEPARATION, separationAt(state.elapsed, inspiralTau(params)));
+  // Clamped at contact so the merger starts exactly at a = 2 R_NS. The infall speed is capped for display.
+  state.separation = Math.max(
+    MERGE_SEPARATION,
+    separationAt(state.elapsed, inspiralTau(params)),
+    state.separation - MAX_INFALL_SPEED * dt,
+  );
   state.angle += orbitalOmega(state.separation, totalMass(params)) * dt;
   placeBodies(refs, state);
   spawnRingIfDue(refs, params, state);

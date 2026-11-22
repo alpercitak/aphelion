@@ -31,6 +31,11 @@ export const NS_VISUAL_RADIUS = NS_RADIUS_KM / KM_PER_UNIT;
  * a(t) = a₀ (1 − t/τ)^(1/4). It scales as 1/(m₁m₂M) for other masses.
  */
 export const INSPIRAL_TAU = 6;
+/**
+ * Display cap on the infall speed (scene units/s). The Peters curve steepens near contact and would jump
+ * from a ≈ 2.3 to contact in one frame; capping the drop keeps the last approach visible.
+ */
+export const MAX_INFALL_SPEED = 6;
 /** Scene GM per M☉: orbital ω = √(GM/a³) with GM = ORBIT_GM_PER_MSUN · M. Normalised, not real units. */
 export const ORBIT_GM_PER_MSUN = 240;
 
