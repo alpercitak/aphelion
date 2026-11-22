@@ -23,7 +23,7 @@
 - Kilonova: the bolometric lightcurve is a fixed `(t/1 d)²` rise then `t^(-1.3)` decline, and the dominant component flips at a fixed 2.5 d. Cloud brightness uses separate band shapes (blue optical peak 1 d, red near-infrared peak 7 d). Ejecta mass only scales brightness; it does not change the decline or the color shift. Blue-to-red color is linear in time.
 - Kilonova: ejecta radius uses √day compression for the display, so the time axis is not physical. There is no opacity or temperature model for lanthanides, and no accretion disk after collapse.
 - Kilonova: with AUTO PLAY on, the timeline overrides slider scrubbing within about 10 frames. Turn it off to scrub.
-- Kilonova: the GRB jet is a fixed-length cone with no beaming, Lorentz factor or afterglow. Glow shaders use the camera position as the view vector, which is approximate for off-center bodies.
+- Kilonova: the GRB jet is a fixed-length cone with no beaming, Lorentz factor or afterglow. The glow shader takes the view-space z axis as the view direction, which is approximate for off-center bodies.
 
 ## Next scenes
 
