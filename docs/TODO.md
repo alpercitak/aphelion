@@ -3,7 +3,6 @@
 ## Open
 
 - Social preview image: upload a scene screenshot in GitHub repo settings.
-- Visibility toggles in magnetar, neutron-star, white-hole, and wormhole now rebuild geometry instead of only flipping `visible`; split rebuild and visibility effects if it shows up in profiling.
 - Shader uniforms are cast once at construction (`material.uniforms as XUniforms`); cast-free would mean factories returning `{ mesh, uniforms }`.
 - Large shared chunk: three.js is ~540 kB in the `setup` chunk (build warning).
 - Tidal disruption: debris is non-self-gravitating test particles on frozen-in star velocity; no spiral shocks, and circularization is a radial-velocity drag only, so the disk is not forced into a plane.

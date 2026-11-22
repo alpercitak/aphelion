@@ -38,8 +38,8 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const newHaze = createEjectaHaze(params.mass);
 
     // apply current visibility settings to new objects
-    newGlow.visible = params.showPhotonSphere;
-    newHaze.visible = params.showEjectaHaze;
+    newGlow.visible = photonGlow.visible;
+    newHaze.visible = ejectaHaze.visible;
     scene.add(newBody, newGlow, newHalo, newHaze);
 
     // update refs
@@ -51,7 +51,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     entities.photonUniforms = newGlow.material.uniforms as PhotonGlowUniforms;
     entities.haloUniforms = newHalo.material.uniforms as HaloUniforms;
-  }, [sceneRef, params.mass, params.showPhotonSphere, params.showEjectaHaze]);
+  }, [sceneRef, params.mass]);
 
   useEffect(() => {
     const refs = sceneRef.current;
@@ -64,12 +64,18 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     entities.photonGlow.visible = params.showPhotonSphere;
     entities.ejectaHaze.visible = params.showEjectaHaze;
     core.stars.visible = params.showStars;
+  }, [sceneRef, params.showPhotonSphere, params.showEjectaHaze, params.showStars]);
 
-    entities.particles.forEach((p) => {
+  useEffect(() => {
+    const refs = sceneRef.current;
+    if (!refs) {
+      return;
+    }
+    refs.entities.particles.forEach((p) => {
       p.color = tempToColor(params.temperature * (0.6 + Math.random() * 0.8));
       if (p.trailLine) {
         (p.trailLine.material as LineBasicMaterial).color = p.color;
       }
     });
-  }, [sceneRef, params.temperature, params.showPhotonSphere, params.showEjectaHaze, params.showStars]);
+  }, [sceneRef, params.temperature]);
 };

@@ -27,6 +27,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     const { entities } = refs;
     const { fieldTilt } = entities;
+    const { visible } = entities.beams;
 
     entities.beams.traverse((o) => {
       if (o instanceof Mesh || o instanceof Points) {
@@ -43,8 +44,8 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     fieldTilt.remove(entities.beams);
     const newBeams = createPulsarBeams(params.beamWidth);
-    newBeams.visible = params.showBeams;
+    newBeams.visible = visible;
     fieldTilt.add(newBeams);
     entities.beams = newBeams;
-  }, [sceneRef, params.beamWidth, params.showBeams]);
+  }, [sceneRef, params.beamWidth]);
 };

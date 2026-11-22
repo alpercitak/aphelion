@@ -12,6 +12,8 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
       return;
     }
 
+    const { visible } = refs.entities.fieldLines;
+
     // cleanup old lines
     refs.core.scene.remove(refs.entities.fieldLines);
     refs.entities.fieldLines.traverse((o) => {
@@ -23,11 +25,11 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     // create & swap
     const newLines = createFieldLines(params.fieldStrength);
-    newLines.visible = params.showFieldLines;
+    newLines.visible = visible;
 
     refs.core.scene.add(newLines);
     refs.entities.fieldLines = newLines;
-  }, [sceneRef, params.fieldStrength, params.showFieldLines]);
+  }, [sceneRef, params.fieldStrength]);
 
   // visibility toggles
   useEffect(() => {
