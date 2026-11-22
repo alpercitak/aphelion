@@ -51,7 +51,7 @@ const SLIDER_ITEMS = [
     step: 0.1,
     format: (v: number) => `${v.toFixed(1)} d`,
     tooltip:
-      'Days since the merger, during the kilonova. With AUTO PLAY on it advances by itself. Turn AUTO PLAY off to scrub.',
+      'Days since the merger, during the kilonova. With AUTO PLAY on it advances by itself from where you scrub.',
   },
 ] as const satisfies ReadonlyArray<SliderItem>;
 

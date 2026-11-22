@@ -9,19 +9,17 @@ export const useUpdate = (
   run: number,
   resetScene: (run: MassParams) => void,
 ) => {
-  const { m1, m2, days, autoPlay, starField } = params;
+  const { m1, m2, days, starField } = params;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: `run` is the replay trigger
   useEffect(() => {
     resetScene({ m1, m2 });
   }, [m1, m2, run, resetScene]);
 
-  // Scrubbing: with AUTO PLAY off the slider drives the kilonova clock
+  // Scrubbing: the slider drives the kilonova clock; AUTO PLAY continues from there
   useEffect(() => {
-    if (!autoPlay) {
-      stateRef.current.days = days;
-    }
-  }, [days, autoPlay, stateRef]);
+    stateRef.current.days = days;
+  }, [days, stateRef]);
 
   useEffect(() => {
     const refs = sceneRef.current;
