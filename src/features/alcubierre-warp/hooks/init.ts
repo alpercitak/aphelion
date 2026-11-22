@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {
   AdditiveBlending,
   type BufferGeometry,
+  HalfFloatType,
   type Material,
   Mesh,
   MeshBasicMaterial,
@@ -56,7 +57,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     fgScene.add(ship, yorkGrid.line, exoticMatter, bubbleWall);
 
     const resolution = renderer.getDrawingBufferSize(new Vector2());
-    const renderTarget = new WebGLRenderTarget(resolution.x, resolution.y);
+    const renderTarget = new WebGLRenderTarget(resolution.x, resolution.y, { type: HalfFloatType });
     const lensUniforms: LensUniforms = {
       backgroundTex: { value: renderTarget.texture },
       resolution: { value: resolution },

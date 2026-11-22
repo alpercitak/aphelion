@@ -79,8 +79,8 @@ export const STREAM_COLOR = 0xcfe0ff;
 
 // --- Lensing pass ---
 
-/** Peak screen displacement per unit of v_s, in aspect-corrected NDC. */
-export const LENS_STRENGTH = 0.006;
+/** Peak screen displacement per unit of v_s, as a fraction of the bubble's screen radius. */
+export const LENS_STRENGTH = 0.1;
 /** Above this speed the displacement stops growing. */
 export const LENS_V_CAP = 4;
 

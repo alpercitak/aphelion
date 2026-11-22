@@ -13,6 +13,8 @@ const VERTEX_SHADER = `
 // function f'(s) (bubble radius 1, sharpness sigma) weights a radial offset that is
 // antisymmetric in the motion axis, like York time: pulled in ahead of the bubble,
 // pushed out behind it. The offset vanishes inside, far outside and across the axis.
+// 2f'/sigma peaks near 1 for any wall, so thin walls don't blow up the offset, and
+// scaling by the screen radius keeps the effect the same size at any zoom.
 const FRAGMENT_SHADER = `
   varying vec2 vUv;
   uniform sampler2D backgroundTex;
@@ -40,9 +42,12 @@ const FRAGMENT_SHADER = `
     vec2 dir = p / max(r, 1e-6);
     float s = r / bubbleRadius;
     float along = dot(dir, motionDir);
-    vec2 displacement = dir * strength * shapeDerivative(s) * along;
+    vec2 displacement = dir * strength * bubbleRadius * (2.0 * shapeDerivative(s) / sigma) * along;
     vec2 sampleUv = clamp(vUv + displacement / (2.0 * aspectScale), 0.001, 0.999);
     gl_FragColor = texture2D(backgroundTex, sampleUv);
+    // the target holds linear, untone-mapped colour; finish it like a direct render
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
   }
 `;
 
