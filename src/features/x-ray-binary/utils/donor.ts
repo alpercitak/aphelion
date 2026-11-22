@@ -1,5 +1,5 @@
 import { Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
-import { DONOR_COLOR, DONOR_FILL, DONOR_GLOW_COLOR, GLOW_SCALE, SEPARATION } from '../constants';
+import { DONOR_COLOR, DONOR_FILL, DONOR_GLOW_COLOR, DONOR_GLOW_SCALE, SEPARATION } from '../constants';
 import type { Binary, Donor, Vec3 } from '../types';
 import { createGlow } from './glow';
 import { eggleton, lobeRadius } from './roche';
@@ -32,5 +32,5 @@ export const shapeDonor = ({ mesh, glow, unit }: Donor, binary: Binary) => {
   geometry.computeBoundingSphere();
 
   mesh.position.x = binary.x2;
-  glow.scale.setScalar(eggleton(binary.q) * SEPARATION * GLOW_SCALE);
+  glow.scale.setScalar(eggleton(binary.q) * SEPARATION * DONOR_GLOW_SCALE);
 };

@@ -50,6 +50,8 @@ export const NS_VISUAL_RADIUS = 0.25;
 export const BH_VISUAL_RADIUS = 0.35;
 export const BH_GLOW_COLOR = 0xff8a3d;
 export const GLOW_SCALE = 2.4;
+/** Donor glow as a multiple of its Roche lobe, so the halo hugs the lobe. */
+export const DONOR_GLOW_SCALE = 1.15;
 
 // --- Layout ---
 
