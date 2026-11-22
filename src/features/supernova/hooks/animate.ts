@@ -107,7 +107,6 @@ const animate = (
       0.5 + nebulaP * 0.2,
       0.8 + nebulaP * 0.2,
     );
-    (refs.entities.nebula.material as ShaderMaterial).uniforms['opacity']; // opacity controlled via glow intensity
   }
 
   // ── REMNANT ───────────────────────────────────────────────────────────

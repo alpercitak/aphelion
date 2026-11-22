@@ -3,7 +3,7 @@ import { Object3D } from 'three';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { SCENE_PARAMS } from '../constants';
-import type { BodyUniforms, SceneRef } from '../types';
+import type { SceneRef } from '../types';
 import { createAccretionDisk } from '../utils/accretion-disk';
 import { createBeamFlash } from '../utils/beam-flash';
 import { createFieldLines } from '../utils/field-lines';
@@ -56,7 +56,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
         outerGlow,
         rotator,
         fieldTilt,
-        bodyUniforms: starBody.material.uniforms as BodyUniforms,
+        bodyUniforms: starBody.material.uniforms,
         beams,
         fieldLines,
         accretionDisk,

@@ -1,4 +1,7 @@
-import { Mesh, ShaderMaterial, SphereGeometry } from 'three';
+import { Mesh, SphereGeometry } from 'three';
+import type { TypedShaderMaterial } from '@/types';
+import { createShaderMaterial } from '@/utils/shader';
+import type { StarUniforms } from '../types';
 
 const VERTEX_SHADER = `
   uniform float time;
@@ -63,12 +66,12 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-export const createProgenitorStar = (mass: number): Mesh<SphereGeometry, ShaderMaterial> => {
+export const createProgenitorStar = (mass: number): Mesh<SphereGeometry, TypedShaderMaterial<StarUniforms>> => {
   // Radius scales with mass — red supergiants are enormous
   const r = 0.8 + (mass / 150) * 1.2;
   return new Mesh(
     new SphereGeometry(r, 64, 64),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         time: { value: 0 },
         mass: { value: mass },

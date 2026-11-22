@@ -1,4 +1,7 @@
-import { AdditiveBlending, Color, Mesh, ShaderMaterial, type Side, SphereGeometry, type Vector3 } from 'three';
+import { AdditiveBlending, Color, Mesh, type Side, SphereGeometry, type Vector3 } from 'three';
+import type { TypedShaderMaterial } from '@/types';
+import { createShaderMaterial } from '@/utils/shader';
+import type { GlowUniforms } from '../types';
 
 const VERTEX_SHADER = `
   uniform vec3 viewVector;
@@ -24,10 +27,10 @@ export const createGlow = (
   color: number,
   radius: number,
   side: Side,
-): Mesh<SphereGeometry, ShaderMaterial> =>
+): Mesh<SphereGeometry, TypedShaderMaterial<GlowUniforms>> =>
   new Mesh(
     new SphereGeometry(radius, 48, 48),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         glowColor: { value: new Color(color) },
         viewVector: { value: cameraPos.clone() },

@@ -3,7 +3,6 @@
 ## Open
 
 - Social preview image: upload a scene screenshot in GitHub repo settings.
-- Shader uniforms are cast once at construction (`material.uniforms as XUniforms`); cast-free would mean factories returning `{ mesh, uniforms }`.
 - Large shared chunk: three.js is ~540 kB in the `setup` chunk (build warning).
 - Tidal disruption: debris is non-self-gravitating test particles on frozen-in star velocity; no spiral shocks, and circularization is a radial-velocity drag only, so the disk is not forced into a plane.
 - Tidal disruption: fallback peak `t_min` is an analytic estimate (energy spread `GM·R★/r²`), not measured from the debris. DISK starts at `2·t_min`, when ~37% of bound debris has returned.

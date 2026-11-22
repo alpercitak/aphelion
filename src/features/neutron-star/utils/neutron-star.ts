@@ -1,5 +1,8 @@
-import { Mesh, ShaderMaterial, SphereGeometry } from 'three';
+import { Mesh, SphereGeometry } from 'three';
+import type { TypedShaderMaterial } from '@/types';
+import { createShaderMaterial } from '@/utils/shader';
 import { NS_RADIUS } from '../constants';
+import type { BodyUniforms } from '../types';
 
 const VERTEX_SHADER = `
   uniform float time;
@@ -77,9 +80,9 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-export const createNeutronStarBody = (mass: number): Mesh<SphereGeometry, ShaderMaterial> => {
+export const createNeutronStarBody = (mass: number): Mesh<SphereGeometry, TypedShaderMaterial<BodyUniforms>> => {
   const geo = new SphereGeometry(NS_RADIUS, 64, 64);
-  const mat = new ShaderMaterial({
+  const mat = createShaderMaterial({
     uniforms: {
       time: { value: 0 },
       rpm: { value: 30 },

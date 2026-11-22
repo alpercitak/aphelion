@@ -1,4 +1,5 @@
-import { DoubleSide, Mesh, ShaderMaterial, SphereGeometry, type WebGLRenderTarget } from 'three';
+import { DoubleSide, Mesh, SphereGeometry, type WebGLRenderTarget } from 'three';
+import { createShaderMaterial } from '@/utils/shader';
 
 // Interior portal — samples the render target texture
 const VERTEX_SHADER = `
@@ -30,13 +31,10 @@ const FRAGMENT_SHADER = `
 `;
 
 // Portal disc — hemisphere showing the render target (other side view)
-export const createPortalDisc = (
-  radius: number,
-  renderTarget: WebGLRenderTarget,
-): Mesh<SphereGeometry, ShaderMaterial> => {
+export const createPortalDisc = (radius: number, renderTarget: WebGLRenderTarget) => {
   // Use a flat disc (SphereGeometry with small height segments gives good UVs)
   const geo = new SphereGeometry(radius * 0.98, 64, 32, 0, Math.PI * 2, 0, Math.PI * 0.5);
-  const mat = new ShaderMaterial({
+  const mat = createShaderMaterial({
     uniforms: {
       portalTexture: { value: renderTarget.texture },
       time: { value: 0 },

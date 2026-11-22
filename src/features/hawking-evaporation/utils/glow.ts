@@ -4,11 +4,11 @@ import {
   type Color,
   FrontSide,
   Mesh,
-  ShaderMaterial,
   type Side,
   SphereGeometry,
   type Vector3,
 } from 'three';
+import { createShaderMaterial } from '@/utils/shader';
 
 const VERTEX_SHADER = `
     uniform vec3 viewVector;
@@ -32,7 +32,7 @@ const FRAGMENT_SHADER = `
 const createGlowMesh = (radius: number, side: Side, cameraPos: Vector3, color: Color) =>
   new Mesh(
     new SphereGeometry(radius, 48, 48),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         glowColor: { value: color.clone() },
         viewVector: { value: cameraPos.clone() },

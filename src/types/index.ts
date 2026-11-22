@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import type { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import type { IUniform, Object3D, PerspectiveCamera, Scene, ShaderMaterial, WebGLRenderer } from 'three';
 import type { createOrbitControls } from '@/utils/camera';
 
 export interface BaseSceneRef {
@@ -19,3 +19,5 @@ export type SceneRefType<T> = RefObject<T | null>;
 export type UniformValue<T> = {
   value: T;
 };
+
+export type TypedShaderMaterial<U extends Record<string, IUniform>> = ShaderMaterial & { uniforms: U };

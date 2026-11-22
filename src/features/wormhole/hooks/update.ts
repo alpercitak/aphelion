@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { BackSide, type Color, FrontSide, type Material, type Vector3 } from 'three';
-import type { SceneRefType, UniformValue } from '@/types';
+import { BackSide, FrontSide, type Material } from 'three';
+import type { SceneRefType } from '@/types';
 import { DESTINATION_COLOR_MAP } from '../constants';
 import type { SceneParams, SceneRef } from '../types';
 import { createDestinationStars } from '../utils/destination-stars';
@@ -30,10 +30,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
 
     scene.add(newRim);
     entities.rim = newRim;
-    entities.rimUniforms = newRim.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
+    entities.rimUniforms = newRim.material.uniforms;
 
     // rebuild portal disc
     scene.remove(entities.portalDisc);
@@ -43,7 +40,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     newDisc.rotation.x = Math.PI * 0.5;
     scene.add(newDisc);
     entities.portalDisc = newDisc;
-    entities.portalUniforms = newDisc.material.uniforms as { time: { value: number }; distortion: { value: number } };
+    entities.portalUniforms = newDisc.material.uniforms;
 
     // rebuild glow
     scene.remove(entities.innerGlow, entities.outerGlow);
@@ -56,8 +53,8 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     scene.add(newInner, newOuter);
     entities.innerGlow = newInner;
     entities.outerGlow = newOuter;
-    entities.innerGlowUniforms = newInner.material.uniforms as { viewVector: UniformValue<Vector3> };
-    entities.outerGlowUniforms = newOuter.material.uniforms as { viewVector: UniformValue<Vector3> };
+    entities.innerGlowUniforms = newInner.material.uniforms;
+    entities.outerGlowUniforms = newOuter.material.uniforms;
   }, [sceneRef, params.throatRadius]);
 
   // rebuild lensing rings when throat radius or lensing strength changes

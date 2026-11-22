@@ -1,5 +1,8 @@
-import { Mesh, ShaderMaterial, SphereGeometry } from 'three';
+import { Mesh, SphereGeometry } from 'three';
+import type { TypedShaderMaterial } from '@/types';
+import { createShaderMaterial } from '@/utils/shader';
 import { NS_RADIUS } from '../constants';
+import type { BodyUniforms } from '../types';
 
 const VERTEX_SHADER = `
   uniform float time;
@@ -72,10 +75,10 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-export const createMagnetarBody = (): Mesh<SphereGeometry, ShaderMaterial> =>
+export const createMagnetarBody = (): Mesh<SphereGeometry, TypedShaderMaterial<BodyUniforms>> =>
   new Mesh(
     new SphereGeometry(NS_RADIUS, 64, 64),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         time: { value: 0 },
         fieldStrength: { value: 1.0 },

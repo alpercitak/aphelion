@@ -1,4 +1,5 @@
-import { AdditiveBlending, BackSide, type Color, Mesh, ShaderMaterial, SphereGeometry } from 'three';
+import { AdditiveBlending, BackSide, type Color, Mesh, SphereGeometry } from 'three';
+import { createShaderMaterial } from '@/utils/shader';
 
 const VERTEX_SHADER = `
   varying float vY;
@@ -19,14 +20,10 @@ const FRAGMENT_SHADER = `
 `;
 
 // Radiation halo — expanding sphere shell, driven by temp color
-export const createRadiationHalo = (
-  innerColor: Color,
-  outerColor: Color,
-  intensity: number,
-): Mesh<SphereGeometry, ShaderMaterial> =>
+export const createRadiationHalo = (innerColor: Color, outerColor: Color, intensity: number) =>
   new Mesh(
     new SphereGeometry(3.5, 48, 48),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         innerColor: { value: innerColor.clone() },
         outerColor: { value: outerColor.clone() },

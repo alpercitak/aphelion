@@ -1,14 +1,8 @@
-import {
-  AdditiveBlending,
-  BackSide,
-  Color,
-  FrontSide,
-  Mesh,
-  ShaderMaterial,
-  SphereGeometry,
-  type Vector3,
-} from 'three';
+import { AdditiveBlending, BackSide, Color, FrontSide, Mesh, SphereGeometry, type Vector3 } from 'three';
+import type { TypedShaderMaterial } from '@/types';
 import { massScale } from '@/utils/physics';
+import { createShaderMaterial } from '@/utils/shader';
+import type { HaloUniforms, PhotonGlowUniforms } from '../types';
 
 // Photon sphere glow — Fresnel but brighter on BackSide (outward facing)
 const VERTEX_SHADER = `
@@ -30,11 +24,14 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-export const createPhotonGlow = (mass: number, cameraPos: Vector3): Mesh<SphereGeometry, ShaderMaterial> => {
+export const createPhotonGlow = (
+  mass: number,
+  cameraPos: Vector3,
+): Mesh<SphereGeometry, TypedShaderMaterial<PhotonGlowUniforms>> => {
   const s = massScale(mass) * 0.9 * 1.5; // photon sphere at 1.5× body radius
   return new Mesh(
     new SphereGeometry(s, 64, 64),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         glowColor: { value: new Color(0xffdd88) },
         viewVector: { value: cameraPos.clone() },
@@ -49,11 +46,14 @@ export const createPhotonGlow = (mass: number, cameraPos: Vector3): Mesh<SphereG
   );
 };
 
-export const createOuterHalo = (mass: number, cameraPos: Vector3): Mesh<SphereGeometry, ShaderMaterial> => {
+export const createOuterHalo = (
+  mass: number,
+  cameraPos: Vector3,
+): Mesh<SphereGeometry, TypedShaderMaterial<HaloUniforms>> => {
   const s = massScale(mass) * 0.9 * 2.4;
   return new Mesh(
     new SphereGeometry(s, 64, 64),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         glowColor: { value: new Color(0xff8833) },
         viewVector: { value: cameraPos.clone() },

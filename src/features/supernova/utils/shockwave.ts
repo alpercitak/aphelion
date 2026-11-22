@@ -1,4 +1,7 @@
-import { AdditiveBlending, Color, DoubleSide, Mesh, ShaderMaterial, SphereGeometry } from 'three';
+import { AdditiveBlending, Color, DoubleSide, Mesh, SphereGeometry } from 'three';
+import type { TypedShaderMaterial } from '@/types';
+import { createShaderMaterial } from '@/utils/shader';
+import type { ShockUniforms } from '../types';
 
 // Shockwave ring — thin expanding shell
 const VERTEX_SHADER = `
@@ -21,10 +24,10 @@ const FRAGMENT_SHADER = `
   }
 `;
 
-export const createShockwave = (radius: number): Mesh<SphereGeometry, ShaderMaterial> => {
+export const createShockwave = (radius: number): Mesh<SphereGeometry, TypedShaderMaterial<ShockUniforms>> => {
   return new Mesh(
     new SphereGeometry(radius, 64, 32),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         innerColor: { value: new Color(0xffeedd) },
         outerColor: { value: new Color(0xff6600) },

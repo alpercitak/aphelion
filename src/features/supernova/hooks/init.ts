@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { SCENE_PARAMS } from '../constants';
-import type { NebulaUniforms, SceneRef, ShockUniforms, StarUniforms } from '../types';
+import type { SceneRef } from '../types';
 import { createEjectaParticles } from '../utils/ejecta-particles';
 import { createEjectaShell } from '../utils/ejecta-shell';
 import { createFlash } from '../utils/flash';
@@ -56,9 +56,9 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     scene.add(camera);
 
     // Typed uniform refs
-    const starUniforms = star.material.uniforms as StarUniforms;
-    const shockUniforms = shockwave.material.uniforms as ShockUniforms;
-    const nebulaUniforms = nebula.material.uniforms as NebulaUniforms;
+    const starUniforms = star.material.uniforms;
+    const shockUniforms = shockwave.material.uniforms;
+    const nebulaUniforms = nebula.material.uniforms;
 
     sceneRef.current = {
       core: { renderer, scene, camera, orbit, stars },

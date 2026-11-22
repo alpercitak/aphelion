@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { SceneRefType } from '@/types';
-import type { SceneParams, SceneRef, StarUniforms } from '../types';
+import type { SceneParams, SceneRef } from '../types';
 import { createProgenitorStar } from '../utils/progenitor-star';
 import { createRemnant, getRemnantType } from '../utils/remnant';
 
@@ -20,7 +20,7 @@ export const useUpdate = (sceneRef: SceneRefType<SceneRef>, params: SceneParams)
     const newStar = createProgenitorStar(params.progenitorMass);
     scene.add(newStar);
     entities.star = newStar;
-    entities.starUniforms = newStar.material.uniforms as StarUniforms;
+    entities.starUniforms = newStar.material.uniforms;
 
     // Rebuild remnant, keeping the old one's visibility (animate.ts re-applies it each frame)
     let remnantVisible = false;

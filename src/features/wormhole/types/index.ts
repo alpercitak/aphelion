@@ -2,6 +2,7 @@ import type {
   Mesh,
   PerspectiveCamera,
   Points,
+  RingGeometry,
   Scene,
   ShaderMaterial,
   SphereGeometry,
@@ -9,7 +10,7 @@ import type {
   Vector3,
   WebGLRenderTarget,
 } from 'three';
-import type { BaseSceneRef, UniformValue } from '@/types';
+import type { BaseSceneRef, TypedShaderMaterial, UniformValue } from '@/types';
 
 export interface SceneRef extends BaseSceneRef {
   entities: {
@@ -20,7 +21,7 @@ export interface SceneRef extends BaseSceneRef {
     portalDisc: Mesh<SphereGeometry, ShaderMaterial>;
     innerGlow: Mesh<SphereGeometry, ShaderMaterial>;
     outerGlow: Mesh<SphereGeometry, ShaderMaterial>;
-    lensingRings: Array<Mesh>;
+    lensingRings: Array<Mesh<RingGeometry, TypedShaderMaterial<LensingUniforms>>>;
     exoticHalo: Points;
     destinationStars: Points;
     rimUniforms: {
@@ -50,3 +51,7 @@ export type SceneParams = {
 };
 
 export type Destination = 'distant' | 'nebula';
+
+export type LensingUniforms = {
+  opacity: UniformValue<number>;
+};

@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
-import type { PointsMaterial, ShaderMaterial } from 'three';
+import type { PointsMaterial } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
-import type { SceneRefType, UniformValue } from '@/types';
+import type { SceneRefType } from '@/types';
 import type { SceneParams, SceneRef } from '../types';
 
 export const animate = (refs: SceneRef, params: SceneParams, time: number) => {
@@ -47,7 +47,7 @@ export const animate = (refs: SceneRef, params: SceneParams, time: number) => {
 
   lensingRings.forEach((ring, i) => {
     ring.lookAt(camera.position);
-    const { opacity } = (ring.material as ShaderMaterial).uniforms as { opacity: UniformValue<number> };
+    const { opacity } = ring.material.uniforms;
     opacity.value = (1 - (i + 1) / lensingRings.length) * 0.5 * params.lensingStrength;
   });
 

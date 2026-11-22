@@ -1,13 +1,5 @@
-import {
-  AdditiveBlending,
-  type BackSide,
-  Color,
-  type FrontSide,
-  Mesh,
-  ShaderMaterial,
-  SphereGeometry,
-  type Vector3,
-} from 'three';
+import { AdditiveBlending, type BackSide, Color, type FrontSide, Mesh, SphereGeometry, type Vector3 } from 'three';
+import { createShaderMaterial } from '@/utils/shader';
 import { FRESNEL_FRAGMENT_SHADER, FRESNEL_VERTEX_SHADER } from './constants';
 
 export const createFresnelGlow = (
@@ -16,10 +8,10 @@ export const createFresnelGlow = (
   radius: number,
   side: typeof FrontSide | typeof BackSide,
   power = 3.5,
-): Mesh<SphereGeometry, ShaderMaterial> =>
+) =>
   new Mesh(
     new SphereGeometry(radius, 64, 64),
-    new ShaderMaterial({
+    createShaderMaterial({
       uniforms: {
         glowColor: { value: new Color(color) },
         viewVector: { value: cameraPos.clone() },

@@ -11,6 +11,11 @@ import type {
 } from 'three';
 import type { BaseSceneRef, UniformValue } from '@/types';
 
+export type GlowUniforms = {
+  viewVector: UniformValue<Vector3>;
+  glowColor: UniformValue<Color>;
+};
+
 export type SceneParams = {
   initialMass: number; // 0.001–1 M☉
   timeCompression: TimeCompression;
@@ -32,14 +37,8 @@ export interface SceneRef extends BaseSceneRef {
     pairPoints: Points;
     pairGeo: BufferGeometry;
     // typed uniform refs
-    photonUniforms: {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
-    outerUniforms: {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
+    photonUniforms: GlowUniforms;
+    outerUniforms: GlowUniforms;
     haloUniforms: {
       innerColor: UniformValue<Color>;
       outerColor: UniformValue<Color>;

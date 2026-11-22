@@ -1,16 +1,6 @@
 import { useEffect } from 'react';
-import {
-  BackSide,
-  type Color,
-  FrontSide,
-  LinearFilter,
-  PerspectiveCamera,
-  RGBAFormat,
-  Scene,
-  type Vector3,
-  WebGLRenderTarget,
-} from 'three';
-import type { CanvasRefType, SceneRefType, UniformValue } from '@/types';
+import { BackSide, FrontSide, LinearFilter, PerspectiveCamera, RGBAFormat, Scene, WebGLRenderTarget } from 'three';
+import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
 import { DESTINATION_COLOR_MAP, SCENE_PARAMS } from '../constants';
 import type { SceneRef } from '../types';
@@ -75,20 +65,10 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     scene.add(exoticHalo);
 
     // extract typed uniform refs
-    const rimUniforms = rim.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-      glowColor: UniformValue<Color>;
-    };
-    const innerGlowUniforms = innerGlow.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-    };
-    const outerGlowUniforms = outerGlow.material.uniforms as {
-      viewVector: UniformValue<Vector3>;
-    };
-    const portalUniforms = portalDisc.material.uniforms as {
-      time: UniformValue<number>;
-      distortion: UniformValue<number>;
-    };
+    const rimUniforms = rim.material.uniforms;
+    const innerGlowUniforms = innerGlow.material.uniforms;
+    const outerGlowUniforms = outerGlow.material.uniforms;
+    const portalUniforms = portalDisc.material.uniforms;
 
     sceneRef.current = {
       core: { renderer, scene, camera, orbit, stars },
