@@ -102,6 +102,14 @@ export const SCENES = [
       'A donor star fills its Roche lobe and feeds a compact companion through an accretion disk that glows in X-rays.',
     component: lazy(() => import('@/features/x-ray-binary')),
   },
+  {
+    id: 'alcubierre-warp',
+    title: 'Alcubierre Warp',
+    subtitle: 'Warp Bubble · Exotic Matter',
+    description:
+      'A ship rides inside a bubble of flat spacetime that contracts ahead and expands behind. Holding it open takes negative energy.',
+    component: lazy(() => import('@/features/alcubierre-warp')),
+  },
 ];
 
 export const getScene = (id: string) => {
