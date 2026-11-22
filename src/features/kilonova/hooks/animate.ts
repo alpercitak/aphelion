@@ -20,7 +20,7 @@ export const useAnimate = (
     const state = stateRef.current;
     const params = paramsRef.current;
     refs.core.orbit.updateCamera(refs.core.camera);
-    stepFrame(refs, params, state, Math.min(delta, MAX_FRAME_DT));
+    stepFrame(refs, params, state, Math.min(delta, MAX_FRAME_DT), setDays);
     refs.core.stars.rotation.y = time * 0.002;
 
     state.frame++;

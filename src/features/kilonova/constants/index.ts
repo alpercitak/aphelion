@@ -49,6 +49,7 @@ export const MIN_BH_VISUAL_RADIUS = 0.3;
 
 // --- Merger ---
 
+export const FLASH_PEAK_OPACITY = 0.7;
 /** Time for the two bodies to converge (s). */
 export const MERGE_SNAP = 0.6;
 /** Merger phase length before the kilonova timeline starts (s). */
