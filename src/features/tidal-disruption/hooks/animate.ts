@@ -12,7 +12,9 @@ const animate = (refs: SceneRef, state: StateRef, delta: number, speed: number) 
   entities.glow.material.uniforms.viewVector?.value.copy(core.camera.position);
   const { brightness } = entities.glow.material.uniforms;
   if (brightness) {
-    const flare = state.released ? fallbackShape((state.elapsed - state.releaseTime) / state.tMin) : 0;
+    const flare = state.released
+      ? state.releasedFraction * fallbackShape((state.elapsed - state.releaseTime) / state.tMin)
+      : 0;
     brightness.value = GLOW_BASE + GLOW_FLARE * flare;
   }
   stepFrame(entities.debris, state, delta, speed);

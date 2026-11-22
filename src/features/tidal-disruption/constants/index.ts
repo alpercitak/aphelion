@@ -77,6 +77,7 @@ export const INITIAL_LIVE: LiveState = {
   t: 0,
   tMin: 1,
   boundFraction: 0,
+  releasedFraction: 0,
 };
 
 export const INITIAL_STATE: StateRef = {
@@ -89,6 +90,7 @@ export const INITIAL_STATE: StateRef = {
   released: false,
   releaseTime: 0,
   boundFraction: 0,
+  releasedFraction: 0,
   accreted: 0,
   prevRadialDot: 0,
   frame: 0,

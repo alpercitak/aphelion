@@ -86,7 +86,7 @@ export const useHud = (params: SceneParams, live: LiveState) =>
     const hasFallback = live.phase === 'fallback' || live.phase === 'disk';
     const notSwallowed = live.phase !== 'swallowed';
     const tMinDays = fallbackDays(params);
-    const flareRatio = peakEddingtonRatio(params) * fallbackShape(live.t / live.tMin);
+    const flareRatio = peakEddingtonRatio(params) * live.releasedFraction * fallbackShape(live.t / live.tMin);
 
     const stats = [
       { label: 'M', value: `10^${params.logMass.toFixed(1)}`, unit: 'M☉' },

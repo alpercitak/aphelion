@@ -55,6 +55,8 @@ export interface StateRef {
   released: boolean;
   releaseTime: number;
   boundFraction: number;
+  /** Fraction of the star released as debris: 1 for a full disruption, less for a partial one. */
+  releasedFraction: number;
   accreted: number;
   prevRadialDot: number;
   frame: number;
@@ -84,4 +86,6 @@ export interface LiveState {
   t: number;
   tMin: number;
   boundFraction: number;
+  /** Fraction of the star released as debris: 1 for a full disruption, less for a partial one. */
+  releasedFraction: number;
 }

@@ -29,7 +29,7 @@ export const fallbackDays = (params: MassParams) => {
   return (41 * Math.sqrt(m6) * rStar ** 1.5) / params.starMass;
 };
 
-/** Peak luminosity over Eddington: L = η Ṁ_peak c², Ṁ_peak = m★ M☉ / (3 t_min), frozen-in estimate. */
+/** Peak luminosity over Eddington for a full disruption: L = η Ṁ_peak c², Ṁ_peak = m★ M☉ / (3 t_min), frozen-in estimate. */
 export const peakEddingtonRatio = (params: MassParams) => {
   const tMinS = fallbackDays(params) * DAY_S;
   const mdotPeak = (params.starMass * M_SUN_G) / (3 * tMinS);

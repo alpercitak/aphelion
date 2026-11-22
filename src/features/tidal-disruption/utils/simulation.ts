@@ -111,6 +111,7 @@ const releaseParticles = (debris: DebrisSystem, state: StateRef) => {
   state.released = true;
   state.releaseTime = state.elapsed;
   state.boundFraction = count > 0 ? bound / count : 0;
+  state.releasedFraction = count / status.length;
 };
 
 const accrete = (debris: DebrisSystem, state: StateRef, i: number) => {
@@ -226,6 +227,7 @@ export const toLiveState = (state: StateRef): LiveState => ({
   t: state.released ? state.elapsed - state.releaseTime : 0,
   tMin: state.tMin,
   boundFraction: state.boundFraction,
+  releasedFraction: state.releasedFraction,
 });
 
 /** Advances the simulation by one real frame: fixed sub-steps, then buffer and phase updates. */
