@@ -40,7 +40,6 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     scene.add(streamStars.points);
 
     const fgScene = new Scene();
-    const ship = createShip();
     const yorkGrid = createYorkGrid();
     const exoticMatter = createExoticMatter(SCENE_PARAMS);
     const bubbleWall = new Mesh(
@@ -54,7 +53,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
         depthWrite: false,
       }),
     );
-    fgScene.add(ship, yorkGrid.line, exoticMatter, bubbleWall);
+    fgScene.add(createShip(), yorkGrid.line, exoticMatter, bubbleWall);
 
     const resolution = renderer.getDrawingBufferSize(new Vector2());
     const renderTarget = new WebGLRenderTarget(resolution.x, resolution.y, { type: HalfFloatType });
@@ -83,7 +82,6 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       entities: {
         streamStars,
         fgScene,
-        ship,
         yorkGrid,
         exoticMatter,
         bubbleWall,

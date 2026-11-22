@@ -5,11 +5,7 @@ const PEAK_SAMPLES = 2048;
 
 const sech2 = (u: number) => 1 - Math.tanh(u) ** 2;
 
-/** Alcubierre shape function: about 1 inside the bubble, 0 outside. */
-export const shapeFunction = (r: number, radius: number, sigma: number) =>
-  (Math.tanh(sigma * (r + radius)) - Math.tanh(sigma * (r - radius))) / (2 * Math.tanh(sigma * radius));
-
-/** Radial derivative of the shape function; negative at the wall. */
+/** Radial derivative of the Alcubierre shape function f (1 inside, 0 outside); negative at the wall. */
 export const shapeDerivative = (r: number, radius: number, sigma: number) =>
   (sigma * (sech2(sigma * (r + radius)) - sech2(sigma * (r - radius)))) / (2 * Math.tanh(sigma * radius));
 

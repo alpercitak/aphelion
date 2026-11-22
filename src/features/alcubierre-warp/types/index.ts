@@ -1,7 +1,6 @@
 import type {
   BufferAttribute,
   BufferGeometry,
-  Group,
   LineBasicMaterial,
   LineSegments,
   Mesh,
@@ -55,7 +54,6 @@ export interface SceneRef extends BaseSceneRef {
   entities: {
     streamStars: StreamStars;
     fgScene: Scene;
-    ship: Group;
     yorkGrid: YorkGrid;
     exoticMatter: Mesh<TorusGeometry, MeshBasicMaterial>;
     bubbleWall: Mesh<SphereGeometry, MeshBasicMaterial>;
