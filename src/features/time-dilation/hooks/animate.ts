@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+import { Color, Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
 import {
@@ -11,8 +12,20 @@ import {
   TAU,
 } from '../constants';
 import type { LiveState, SceneParams, SceneRef, StateRef } from '../types';
-import { canOrbit, clockRadius, clockRate, orbitOmega, surfaceHeight } from '../utils/physics';
+import {
+  canOrbit,
+  clockRadius,
+  clockRate,
+  orbitDopplerRate,
+  orbitOmega,
+  orbitSpeed,
+  surfaceHeight,
+} from '../utils/physics';
 import { emitPulse, stepPulses } from '../utils/pulses';
+import { clockColor } from '../utils/spectrum';
+
+const toCamera = new Vector3();
+const scratchColor = new Color();
 
 export const useAnimate = (
   sceneRef: SceneRefType<SceneRef>,
@@ -41,6 +54,14 @@ export const useAnimate = (
 
       const azimuth = clock.bearing + clock.angle;
       clock.group.position.set(r * Math.cos(azimuth), surfaceHeight(r) + CLOCK_LIFT, r * Math.sin(azimuth));
+      if (params.orbiting && canOrbit(r)) {
+        toCamera.subVectors(core.camera.position, clock.group.position).normalize();
+        const vDotN = orbitSpeed(r) * (-Math.sin(azimuth) * toCamera.x + Math.cos(azimuth) * toCamera.z);
+        clockColor(orbitDopplerRate(r, vDotN), scratchColor);
+        clock.rim.material.color.copy(scratchColor);
+        clock.ticks.material.color.copy(scratchColor);
+        clock.hand.material.color.copy(scratchColor);
+      }
       clock.group.quaternion.copy(core.camera.quaternion);
       clock.hand.rotation.z = -(TAU * clock.tau) / CLOCK_PERIOD;
 

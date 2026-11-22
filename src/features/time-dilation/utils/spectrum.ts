@@ -1,13 +1,16 @@
 import type { Color } from 'three';
-import { EMITTED_WAVELENGTH_NM, INFRARED_RED, VISIBLE_MAX_NM } from '../constants';
+import { EMITTED_WAVELENGTH_NM, INFRARED_RED, ULTRAVIOLET_VIOLET, VISIBLE_MAX_NM, VISIBLE_MIN_NM } from '../constants';
 
 /**
  * Bruton's piecewise-linear approximation of the visible spectrum (380–780 nm), written into `target`.
- * Wavelengths beyond the visible range return a dim deep red.
+ * Wavelengths beyond the visible range return a dim deep red (infrared) or dim violet (ultraviolet).
  */
 export const wavelengthToColor = (nm: number, target: Color) => {
   if (nm > VISIBLE_MAX_NM) {
     return target.setRGB(INFRARED_RED, 0, 0);
+  }
+  if (nm < VISIBLE_MIN_NM) {
+    return target.setRGB(ULTRAVIOLET_VIOLET * 0.6, 0, ULTRAVIOLET_VIOLET);
   }
   let r = 0;
   let g = 0;
@@ -44,7 +47,8 @@ export const wavelengthToColor = (nm: number, target: Color) => {
 /**
  * Colour of a clock's light as seen from far away. The emitted line is stretched by 1 + z = 1/rate and
  * dimmed by rate = 1/(1+z). Physical surface brightness falls as (1+z)⁻⁴; one power keeps the clocks readable.
- * For orbiting clocks the rate includes the transverse Doppler shift but not the line-of-sight Doppler term.
+ * `rate` is the frequency ratio ν_obs/ν_em: dτ/dt for static clocks, and for orbiting clocks it also includes the
+ * line-of-sight Doppler term.
  */
 export const clockColor = (rate: number, target: Color) =>
   wavelengthToColor(EMITTED_WAVELENGTH_NM / rate, target).multiplyScalar(rate);

@@ -6,6 +6,18 @@ export const staticRate = (r: number) => Math.sqrt(1 - 1 / r);
 /** Rate of a clock on a circular orbit, dτ/dt = √(1 − 3Rₛ/2r). Only defined outside the photon sphere. */
 export const orbitRate = (r: number) => Math.sqrt(1 - 3 / (2 * r));
 
+/** Locally measured (static observer) speed of a circular orbit, v = √(1/(2(r − Rₛ))). */
+export const orbitSpeed = (r: number) => Math.sqrt(1 / (2 * (r - 1)));
+
+/**
+ * Frequency ratio ν_obs/ν_em seen by a distant observer from a clock on a circular orbit, √(1 − Rₛ/r) / (γ(1 − v·n̂)).
+ * `vDotN` is v·n̂ with n̂ the unit vector from the clock toward the camera. Light bending is ignored.
+ */
+export const orbitDopplerRate = (r: number, vDotN: number) => {
+  const v = orbitSpeed(r);
+  return (staticRate(r) * Math.sqrt(1 - v * v)) / (1 - vDotN);
+};
+
 export const canOrbit = (r: number) => r > PHOTON_SPHERE_RADIUS;
 
 /** Clocks inside the photon sphere cannot orbit, so they stay static in orbit mode. */

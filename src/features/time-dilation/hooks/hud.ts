@@ -48,6 +48,11 @@ const BASE_HUD_PROPS = {
           def: 'An orbiting clock also runs slow from its motion. Circular orbits exist only outside the photon sphere at <em>1.5 Rₛ</em>, where light itself can circle the hole, and are unstable inside the innermost stable circular orbit at <em>3 Rₛ</em>.',
         },
         {
+          term: 'RELATIVISTIC DOPPLER',
+          formula: 'ν_obs/ν_em = √(1 − Rₛ/r) / γ(1 − v·n̂)',
+          def: "An orbiting clock's light is blueshifted on the side moving toward you and redshifted on the side moving away. The γ term is the special-relativistic time dilation already in dτ/dt. Light bending is ignored.",
+        },
+        {
           term: 'SHAPIRO DELAY',
           def: 'Light passing a massive body takes longer than in flat space. Its coordinate speed, as a distant observer reckons it, drops near the mass; measured locally it is always <em>c</em>.',
         },

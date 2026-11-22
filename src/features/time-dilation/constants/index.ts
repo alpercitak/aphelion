@@ -68,9 +68,11 @@ export const PULSE_MAX_RADIUS = 40;
 // --- Light ---
 
 export const EMITTED_WAVELENGTH_NM = 500;
+export const VISIBLE_MIN_NM = 380;
 export const VISIBLE_MAX_NM = 780;
-/** Brightness of wavelengths beyond the visible range, so infrared clocks stay faintly visible. */
+/** Brightness of wavelengths beyond the visible range, so infrared and ultraviolet clocks stay faintly visible. */
 export const INFRARED_RED = 0.15;
+export const ULTRAVIOLET_VIOLET = 0.15;
 
 export const INITIAL_STATE: StateRef = { t: 0, frame: 0 };
 export const INITIAL_LIVE: LiveState = { t: 0, tau: Array.from({ length: CLOCK_COUNT }, () => 0) };
