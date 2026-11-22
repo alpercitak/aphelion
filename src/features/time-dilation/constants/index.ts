@@ -42,16 +42,16 @@ export const PHOTON_RING_OPACITY = 0.35;
 
 // --- Clocks ---
 
-export const CLOCK_LIFT = 0.6;
+export const CLOCK_LIFT = 1.2;
 /** Proper seconds per revolution of the hand. */
 export const CLOCK_PERIOD = 4;
-export const CLOCK_RIM_RADIUS = 0.45;
-export const CLOCK_RIM_WIDTH = 0.04;
+export const CLOCK_RIM_RADIUS = 1;
+export const CLOCK_RIM_WIDTH = 0.08;
 export const CLOCK_TICKS = 12;
-export const CLOCK_TICK_INNER = 0.34;
-export const CLOCK_TICK_OUTER = 0.4;
-export const CLOCK_HAND_LENGTH = 0.36;
-export const CLOCK_HAND_WIDTH = 0.05;
+export const CLOCK_TICK_INNER = 0.76;
+export const CLOCK_TICK_OUTER = 0.9;
+export const CLOCK_HAND_LENGTH = 0.8;
+export const CLOCK_HAND_WIDTH = 0.1;
 
 // --- Light pulses ---
 

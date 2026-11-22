@@ -29,7 +29,8 @@ const SLIDER_ITEMS = [
     id: 'innerRadius',
     label: 'INNER CLOCK',
     min: 1.1,
-    max: 4,
+    // The outermost clock sits at 8× this radius; 2 keeps it on the 16 Rₛ grid
+    max: 2,
     step: 0.05,
     format: (v: number) => `${v.toFixed(2)} Rₛ`,
     tooltip: 'Radius of the innermost clock. The others sit at twice, four and eight times this radius.',
