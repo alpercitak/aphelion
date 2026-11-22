@@ -1,0 +1,58 @@
+import type { SceneParams } from '../types';
+
+/** Mass transfer rate (log10 M☉/yr) at which the disk has its reference brightness. */
+export const MDOT_REF_LOG = -8.5;
+
+export const SCENE_PARAMS = {
+  accretorMass: 1.4,
+  donorMass: 0.6,
+  mdotLog: MDOT_REF_LOG,
+  rocheLobes: true,
+  starField: true,
+} as const satisfies SceneParams;
+
+// --- Binary geometry (scene units) ---
+
+/** Separation of the two stars. */
+export const SEPARATION = 10;
+/** Orbital angular velocity of the default system (rad/s). */
+export const ORBIT_OMEGA_REF = 0.25;
+/** Scene gravitational constant, chosen so the default system orbits at ORBIT_OMEGA_REF. */
+export const G_SCENE = (ORBIT_OMEGA_REF ** 2 * SEPARATION ** 3) / (SCENE_PARAMS.accretorMass + SCENE_PARAMS.donorMass);
+/** Share of the donor's Roche lobe that the surface fills, so it stays just inside. */
+export const DONOR_FILL = 0.995;
+/** Disk outer edge as a share of the accretor's Roche lobe (tidal truncation). */
+export const DISK_TIDAL_FRACTION = 0.8;
+export const LOBE_SEGMENTS = 256;
+export const LOBE_COLOR = 0x4fc3f7;
+export const LOBE_OPACITY = 0.5;
+
+// --- Disk ---
+
+export const DISK_RING_COUNT = 14;
+/** Inner disk edge as a share of the outer edge. */
+export const DISK_INNER_FRACTION = 0.06;
+/** Display temperature (K) at the inner edge, used for ring colours. */
+export const DISK_T_IN_DISPLAY = 30000;
+/** Thin-disk temperature index: T ∝ r^(−3/4). */
+export const DISK_TEMP_EXPONENT = -0.75;
+export const DISK_OPACITY = 0.6;
+/** Disk brightness scales as (Ṁ / Ṁ_ref)^exponent, capped at 1. */
+export const DISK_BRIGHTNESS_EXPONENT = 0.25;
+
+// --- Bodies & colours ---
+
+export const DONOR_COLOR = 0xffa060;
+export const DONOR_GLOW_COLOR = 0xffb070;
+export const NS_COLOR = 0xcfe8ff;
+export const NS_GLOW_COLOR = 0x9fd8ff;
+export const NS_VISUAL_RADIUS = 0.25;
+export const BH_VISUAL_RADIUS = 0.35;
+export const BH_GLOW_COLOR = 0xff8a3d;
+export const GLOW_SCALE = 2.4;
+
+// --- Layout ---
+
+export const CAMERA_RADIUS = 26;
+/** Largest real frame delta that is simulated (s). */
+export const MAX_FRAME_DT = 1 / 20;
