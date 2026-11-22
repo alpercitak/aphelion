@@ -18,6 +18,7 @@ import {
   CLOCK_TICK_INNER,
   CLOCK_TICK_OUTER,
   CLOCK_TICKS,
+  PULSE_INTERVAL,
   TAU,
 } from '../constants';
 import type { Clock } from '../types';
@@ -48,7 +49,7 @@ export const createClock = (bearing: number): Clock => {
   const hand = new Mesh(handGeometry, new MeshBasicMaterial());
 
   group.add(rim, ticks, hand);
-  return { bearing, angle: 0, tau: 0, group, rim, ticks, hand };
+  return { bearing, angle: 0, tau: 0, nextTick: PULSE_INTERVAL, group, rim, ticks, hand };
 };
 
 export const setClockColor = (clock: Clock, color: Color) => {

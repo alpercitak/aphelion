@@ -1,9 +1,11 @@
 import { type RefObject, useEffect } from 'react';
 import { Color } from 'three';
 import type { SceneRefType } from '@/types';
+import { PULSE_INTERVAL } from '../constants';
 import type { SceneParams, SceneRef, StateRef } from '../types';
 import { setClockColor } from '../utils/clock';
 import { clockRadius, clockRate } from '../utils/physics';
+import { clearPulses } from '../utils/pulses';
 import { clockColor } from '../utils/spectrum';
 
 export const useUpdate = (
@@ -12,7 +14,7 @@ export const useUpdate = (
   params: SceneParams,
   run: number,
 ) => {
-  const { innerRadius, orbiting, wellGrid, starField } = params;
+  const { innerRadius, orbiting, signals, wellGrid, starField } = params;
 
   useEffect(() => {
     const refs = sceneRef.current;
@@ -37,7 +39,9 @@ export const useUpdate = (
     for (const clock of refs.entities.clocks) {
       clock.tau = 0;
       clock.angle = 0;
+      clock.nextTick = PULSE_INTERVAL;
     }
+    clearPulses(refs.entities.pulses);
   }, [innerRadius, orbiting, run, sceneRef, stateRef]);
 
   useEffect(() => {
@@ -46,6 +50,7 @@ export const useUpdate = (
       return;
     }
     refs.entities.well.visible = wellGrid;
+    refs.entities.pulses.points.visible = signals;
     refs.core.stars.visible = starField;
-  }, [wellGrid, starField, sceneRef]);
+  }, [wellGrid, signals, starField, sceneRef]);
 };

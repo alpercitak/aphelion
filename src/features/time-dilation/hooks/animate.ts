@@ -1,9 +1,18 @@
 import type { RefObject } from 'react';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
-import { CLOCK_LIFT, CLOCK_PERIOD, LIVE_REFRESH_FRAMES, MAX_FRAME_DT, ORBIT_DISPLAY_SCALE, TAU } from '../constants';
+import {
+  CLOCK_LIFT,
+  CLOCK_PERIOD,
+  LIVE_REFRESH_FRAMES,
+  MAX_FRAME_DT,
+  ORBIT_DISPLAY_SCALE,
+  PULSE_INTERVAL,
+  TAU,
+} from '../constants';
 import type { LiveState, SceneParams, SceneRef, StateRef } from '../types';
 import { canOrbit, clockRadius, clockRate, orbitOmega, surfaceHeight } from '../utils/physics';
+import { emitPulse, stepPulses } from '../utils/pulses';
 
 export const useAnimate = (
   sceneRef: SceneRefType<SceneRef>,
@@ -34,7 +43,15 @@ export const useAnimate = (
       clock.group.position.set(r * Math.cos(azimuth), surfaceHeight(r) + CLOCK_LIFT, r * Math.sin(azimuth));
       clock.group.quaternion.copy(core.camera.quaternion);
       clock.hand.rotation.z = -(TAU * clock.tau) / CLOCK_PERIOD;
+
+      while (clock.tau >= clock.nextTick) {
+        if (params.signals) {
+          emitPulse(entities.pulses, r, azimuth, clock.rim.material.color);
+        }
+        clock.nextTick += PULSE_INTERVAL;
+      }
     });
+    stepPulses(entities.pulses, dt);
 
     state.frame++;
     if (state.frame % LIVE_REFRESH_FRAMES === 0) {

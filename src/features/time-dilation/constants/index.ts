@@ -53,6 +53,15 @@ export const CLOCK_TICK_OUTER = 0.4;
 export const CLOCK_HAND_LENGTH = 0.36;
 export const CLOCK_HAND_WIDTH = 0.05;
 
+// --- Light pulses ---
+
+export const PULSE_COUNT = 400;
+/** Proper seconds between the pulses each clock emits. */
+export const PULSE_INTERVAL = 1;
+/** Radial speed at infinity, in scene units per display second (scaled by 1 − Rₛ/r). */
+export const PULSE_SPEED = 3;
+export const PULSE_SIZE = 4;
+
 // --- Light ---
 
 export const EMITTED_WAVELENGTH_NM = 500;

@@ -4,6 +4,7 @@ import { setupScene } from '@/utils/setup';
 import { CAMERA_RADIUS, CLOCK_COUNT, TAU } from '../constants';
 import type { SceneRef } from '../types';
 import { createClock } from '../utils/clock';
+import { createPulses } from '../utils/pulses';
 import { createBlackHole, createPhotonRing, createWell } from '../utils/well';
 
 export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRef>) => {
@@ -21,11 +22,12 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
 
     const well = createWell();
     const clocks = Array.from({ length: CLOCK_COUNT }, (_, i) => createClock((i * TAU) / CLOCK_COUNT));
-    scene.add(well, createBlackHole(), createPhotonRing(), ...clocks.map((clock) => clock.group));
+    const pulses = createPulses();
+    scene.add(well, createBlackHole(), createPhotonRing(), pulses.points, ...clocks.map((clock) => clock.group));
 
     sceneRef.current = {
       core: { renderer, scene, camera, orbit, stars },
-      entities: { clocks, well },
+      entities: { clocks, well, pulses },
     };
 
     return dispose;
