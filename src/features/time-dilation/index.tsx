@@ -21,7 +21,7 @@ export default function TimeDilation() {
   const hud = useHud(params, live);
 
   useInit(canvasRef, sceneRef);
-  useUpdate(sceneRef, stateRef, params, run);
+  useUpdate(sceneRef, stateRef, params, run, setLive);
   useAnimate(sceneRef, paramsRef, stateRef, setLive);
 
   return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
