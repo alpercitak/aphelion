@@ -10,7 +10,6 @@
 - Tidal disruption: fallback peak `t_min` is an analytic estimate (energy spread `GM·R★/r²`), not measured from the debris. DISK starts at `2·t_min`, when ~37% of bound debris has returned.
 - Tidal disruption: partial-disruption rule `|offset·r̂| > R★(1/β − 1)` is ad hoc; for β near 1 most of the star is released. Escaped debris is never removed.
 - Tidal disruption: the flare L/L_Edd is the frozen-in estimate (Ṁ_peak = m★/3t_min, η = 0.1, zero before t_min, then (t/t_min)^-5/3) with no Eddington cap, and partial disruptions use the full-disruption peak; scaling by the released fraction needs a new state field. Debris color uses a heuristic temperature, not viscous heating. Visual horizon is clamped to a minimum size below ~2×10⁶ M☉.
-- Tidal disruption: the HUD bound fraction reads ~93% at the defaults, where frozen-in debris should be ~50% bound; check the release energy test.
 - Tidal disruption: `t_min` is ~20 s for β ≥ 1 and ~90 s for β = 0.6 at SPEED 1. There is no scrubber, since the debris is integrated forward.
 - Ergosphere: test particles keep a fixed θ and only move in r and φ; no geodesic integration, so orbits are not exact Kerr geodesics.
 - Ergosphere: particle own velocity is a fixed fraction of the Keplerian value at the current r; it is clamped to [Ω₋, Ω₊] each frame, not integrated.
