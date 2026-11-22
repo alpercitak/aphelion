@@ -42,7 +42,7 @@ export const DISK_BRIGHTNESS_EXPONENT = 0.25;
 
 // --- Gas stream & disk particles ---
 
-export const GAS_PARTICLES = 2500;
+export const GAS_PARTICLES = 5000;
 export const GAS_POINT_SIZE = 0.12;
 export const STREAM_COLOR = 0xffb070;
 /** Stream spawn rate (particles/s) at MDOT_REF_LOG; scales linearly with Ṁ. */
@@ -57,7 +57,7 @@ export const GAS_MAX_SUBSTEP = 1 / 240;
 /** Stream particles beyond this many separations from the origin are freed. */
 export const GAS_ESCAPE_RANGE = 3;
 /** Time constant (s) of the viscous inward drift of disk gas. */
-export const DISK_DRIFT_TIME = 10;
+export const DISK_DRIFT_TIME = 5;
 /** Rate (1/s) at which disk gas settles onto the midplane. */
 export const DISK_SETTLE_RATE = 1;
 /** Entries in the disk colour lookup table. */
