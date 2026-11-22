@@ -94,6 +94,14 @@ export const SCENES = [
       'Two neutron stars spiral together and merge. Their r-process ejecta glows blue, then red, as heavy elements form.',
     component: lazy(() => import('@/features/kilonova')),
   },
+  {
+    id: 'x-ray-binary',
+    title: 'X-ray Binary',
+    subtitle: 'Roche-Lobe Overflow · Accretion',
+    description:
+      'A donor star fills its Roche lobe and feeds a compact companion through an accretion disk that glows in X-rays.',
+    component: lazy(() => import('@/features/x-ray-binary')),
+  },
 ];
 
 export const getScene = (id: string) => {
