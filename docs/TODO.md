@@ -34,6 +34,10 @@
 - Alcubierre Warp: lensing is a screen-space offset driven by f′ along the motion axis, not ray tracing through the metric; no aberration or Doppler shift, and it folds into mirrored slivers at high v·σR. It is subtle at the default star density.
 - Alcubierre Warp: streaming star speed is display-scaled and capped, not v_s; nothing shows the horizon or the blue-shifted particle build-up at the front wall.
 - Alcubierre Warp: the York grid is the y = 0 slice drawn at GRID_Y with θ in 1/scene-unit. The exotic-matter ring (tube 1.5/σ, opacity ∝ v²) is a hint, not a plot of ε(x, ρ).
+- Time Dilation: redshift for orbiting clocks ignores the line-of-sight Doppler term, so approaching and receding sides look the same colour. Circular orbits between 1.5 and 3 Rₛ are unstable in reality but shown as steady.
+- Time Dilation: clock brightness scales as (1+z)⁻¹ for readability; physical surface brightness falls as (1+z)⁻⁴. The emitted line is fixed at 500 nm (Bruton spectrum), and anything past 780 nm is the same dim red.
+- Time Dilation: the orbital angle runs 3× faster than coordinate time for visibility; τ and pulse timing are not scaled. Pulses travel strictly radially at coordinate speed (1 − Rₛ/r), with no light bending or aberration.
+- Time Dilation: the inner-clock slider stops at 2 Rₛ so the outermost clock (8×) stays on the 16 Rₛ grid. The black hole is drawn as a sphere at the paraboloid's throat; the embedding is undefined inside Rₛ.
 - Lensing field: the lens ShaderMaterial skips tone mapping and colour-space output, so its lensed background renders darker than other scenes (fixed the same way in alcubierre-warp's lens quad).
 
 ## Next scenes
@@ -42,4 +46,4 @@ Each follows the existing feature layout (`src/features/<scene>/`, registered in
 
 ### Later
 
-- **Time Dilation**: clocks at different radii in a gravity well with gravitational redshift; mostly HUD and physics utils.
+No scenes queued.
