@@ -57,10 +57,10 @@ export const createWell = () => {
   return new LineSegments(geometry, new LineBasicMaterial({ color: WELL_COLOR }));
 };
 
-/** Black sphere sitting in the bottom of the funnel. */
+/** Black sphere whose equator is the horizon circle at the paraboloid's throat (r = Rₛ). */
 export const createBlackHole = () => {
   const hole = new Mesh(new SphereGeometry(BLACK_HOLE_RADIUS, 48, 32), new MeshBasicMaterial({ color: 0x000000 }));
-  hole.position.y = surfaceHeight(1) + BLACK_HOLE_RADIUS;
+  hole.position.y = surfaceHeight(BLACK_HOLE_RADIUS);
   return hole;
 };
 
