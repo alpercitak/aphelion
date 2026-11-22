@@ -5,6 +5,7 @@ import { setupScene } from '@/utils/setup';
 import {
   BH_GLOW_COLOR,
   BLUE_EJECTA_COLOR,
+  BLUE_MASS_FRACTION,
   CAMERA_RADIUS,
   EJECTA_PARTICLES,
   FLASH_COLOR,
@@ -41,7 +42,6 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
       body.mesh.scale.setScalar(NS_VISUAL_RADIUS);
       body.mesh.visible = false;
     }
-    remnantNs.mesh.visible = false;
     remnantBh.mesh.visible = false;
 
     // Jet apex at the origin, pointing down; jetUp is the same cone flipped
@@ -68,8 +68,9 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     camera.add(flash);
     flash.position.z = -1;
 
-    const blueEjecta = createEjectaCloud(Math.round(EJECTA_PARTICLES * 0.4), BLUE_EJECTA_COLOR);
-    const redEjecta = createEjectaCloud(EJECTA_PARTICLES - Math.round(EJECTA_PARTICLES * 0.4), RED_EJECTA_COLOR);
+    const blueCount = Math.round(EJECTA_PARTICLES * BLUE_MASS_FRACTION);
+    const blueEjecta = createEjectaCloud(blueCount, BLUE_EJECTA_COLOR);
+    const redEjecta = createEjectaCloud(EJECTA_PARTICLES - blueCount, RED_EJECTA_COLOR);
     scene.add(
       bodyA.mesh,
       bodyB.mesh,
