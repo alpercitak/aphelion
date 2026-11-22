@@ -8,6 +8,7 @@ export const SCENE_PARAMS = {
   showTidal: true,
   showOrbit: true,
   showStars: true,
+  playbackSpeed: 1,
 } as const satisfies SceneParams;
 
 /** Scene units with G·M_bh = 1. */
@@ -53,6 +54,10 @@ export const SOFTENING = 0.05;
 export const CIRCULARIZATION_RATE = 0.5;
 /** Disk phase starts at this multiple of t_min, when ~37% of bound debris has returned (1 − (t/t_min)^(−2/3)). */
 export const DISK_AFTER_TMIN = 2;
+
+/** Glow brightness with no flare, and the extra brightness added at the flare peak. */
+export const GLOW_BASE = 1;
+export const GLOW_FLARE = 3;
 
 export const SUN_TEMPERATURE_K = 5800;
 export const COLOR_REFRESH_FRAMES = 4;

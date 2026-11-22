@@ -1,4 +1,5 @@
 import { AdditiveBlending, BackSide, Color, Mesh, ShaderMaterial, SphereGeometry, type Vector3 } from 'three';
+import { GLOW_BASE } from '../constants';
 
 const VERTEX_SHADER = `
   uniform vec3 viewVector;
@@ -13,9 +14,10 @@ const VERTEX_SHADER = `
 
 const FRAGMENT_SHADER = `
   uniform vec3 glowColor;
+  uniform float brightness;
   varying float intensity;
   void main() {
-    vec3 glow = glowColor * intensity;
+    vec3 glow = glowColor * intensity * brightness;
     gl_FragColor = vec4(glow, intensity * 0.5);
   }
 `;
@@ -25,6 +27,7 @@ export const createOuterGlow = (cameraPos: Vector3): Mesh<SphereGeometry, Shader
   const mat = new ShaderMaterial({
     uniforms: {
       glowColor: { value: new Color(0xff8a3d) },
+      brightness: { value: GLOW_BASE },
       viewVector: { value: cameraPos.clone() },
     },
     vertexShader: VERTEX_SHADER,

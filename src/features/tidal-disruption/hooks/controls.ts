@@ -7,7 +7,7 @@ import { SCENE_PARAMS } from '../constants';
 import type { SceneParams } from '../types';
 
 interface SliderItem extends Partial<SliderProps> {
-  id: keyof Pick<SceneParams, 'logMass' | 'starMass' | 'beta'>;
+  id: keyof Pick<SceneParams, 'logMass' | 'starMass' | 'beta' | 'playbackSpeed'>;
 }
 
 interface ToggleItem extends Partial<ToggleProps> {
@@ -43,6 +43,15 @@ const SLIDER_ITEMS = [
     format: (v: number) => v.toFixed(1),
     tooltip:
       'Penetration factor r_t / r_p. At 1 the star is fully torn apart. Above 1 it dives deeper. Below 1 only its outer layers are stripped.',
+  },
+  {
+    id: 'playbackSpeed',
+    label: 'SPEED',
+    min: 0.25,
+    max: 4,
+    step: 0.25,
+    format: (v: number) => `${v.toFixed(2)}×`,
+    tooltip: 'Playback speed. The real flare unfolds over months, compressed here to seconds.',
   },
 ] as const satisfies ReadonlyArray<SliderItem>;
 

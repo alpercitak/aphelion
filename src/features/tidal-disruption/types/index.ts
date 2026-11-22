@@ -70,6 +70,7 @@ export type SceneParams = {
   showTidal: boolean;
   showOrbit: boolean;
   showStars: boolean;
+  playbackSpeed: number;
 };
 
 export type MassParams = Pick<SceneParams, 'logMass' | 'starMass'>;

@@ -20,12 +20,12 @@ export default function TidalDisruption() {
   const [run, setRun] = useState(0);
   const replay = useCallback(() => setRun((n) => n + 1), []);
 
-  const { params, controls } = useControls(replay);
+  const { params, paramsRef, controls } = useControls(replay);
   const hud = useHud(params, live);
 
   useInit(canvasRef, sceneRef);
   useUpdate(sceneRef, params, run, resetScene);
-  useAnimate(sceneRef, stateRef, setLive);
+  useAnimate(sceneRef, stateRef, paramsRef, setLive);
 
   return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
 }

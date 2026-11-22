@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { PHASE_LABEL_MAP } from '../constants';
 import type { LiveState, SceneParams } from '../types';
-import { kmToAu, tidalRadiusKm } from '../utils/physics';
+import { fallbackDays, fallbackShape, kmToAu, peakEddingtonRatio, tidalRadiusKm } from '../utils/physics';
 
 const BASE_HUD_PROPS = {
   title: 'Tidal Disruption',
@@ -37,7 +37,12 @@ const BASE_HUD_PROPS = {
         {
           term: 'FALLBACK & THE t^-5/3 LAW',
           formula: 'Ṁ ∝ t^(-5/3)',
-          def: 'The rate at which debris returns peaks at <em>t_min</em>, one orbital period of the most bound debris, then falls as <em>t^(-5/3)</em>. The HUD shows the rate relative to its peak.',
+          def: 'The rate at which debris returns peaks at <em>t_min</em>, one orbital period of the most bound debris, then falls as <em>t^(-5/3)</em>. The flare luminosity in the HUD follows it.',
+        },
+        {
+          term: 'FLARE LUMINOSITY',
+          formula: 'L ≈ η Ṁ c²',
+          def: 'Accretion converts about a tenth of the rest-mass energy of returning debris into light. For a Sun-like star and a 10⁶ M☉ hole the peak fallback rate is above the Eddington limit, so real flares are probably capped near it and drive outflows.',
         },
         {
           term: 'CIRCULARIZATION',
@@ -70,6 +75,7 @@ const BASE_HUD_PROPS = {
   hints: [
     { title: 'TIDAL RADIUS', values: ['r_t = R★(M/m★)^(1/3)'] },
     { title: 'FALLBACK', values: ['Ṁ ∝ t^(-5/3)'] },
+    { title: 'FALLBACK TIME', values: ['t_min ≈ 41 d · M₆^½ m★^-1 r★^3/2'] },
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
@@ -78,7 +84,9 @@ export const useHud = (params: SceneParams, live: LiveState) =>
     const rtAu = kmToAu(tidalRadiusKm(params));
     const hasDebris = live.phase !== 'approach' && live.phase !== 'swallowed';
     const hasFallback = live.phase === 'fallback' || live.phase === 'disk';
-    const fallbackRate = (live.t / live.tMin) ** (-5 / 3);
+    const notSwallowed = live.phase !== 'swallowed';
+    const tMinDays = fallbackDays(params);
+    const flareRatio = peakEddingtonRatio(params) * fallbackShape(live.t / live.tMin);
 
     const stats = [
       { label: 'M', value: `10^${params.logMass.toFixed(1)}`, unit: 'M☉' },
@@ -90,9 +98,18 @@ export const useHud = (params: SceneParams, live: LiveState) =>
         unit: hasDebris ? '%' : undefined,
       },
       {
-        label: 'fallback',
-        value: hasFallback ? fallbackRate.toFixed(2) : '—',
-        unit: hasFallback ? '× peak' : undefined,
+        label: 't',
+        value: hasDebris ? ((live.t / live.tMin) * tMinDays).toFixed(0) : '—',
+        unit: hasDebris ? 'd' : undefined,
+      },
+      {
+        label: 't_min',
+        value: notSwallowed ? tMinDays.toFixed(0) : '—',
+        unit: notSwallowed ? 'd' : undefined,
+      },
+      {
+        label: 'L/L_Edd',
+        value: hasFallback ? flareRatio.toPrecision(2) : '—',
       },
     ];
 

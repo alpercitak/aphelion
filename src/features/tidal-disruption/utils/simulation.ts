@@ -229,8 +229,8 @@ export const toLiveState = (state: StateRef): LiveState => ({
 });
 
 /** Advances the simulation by one real frame: fixed sub-steps, then buffer and phase updates. */
-export const stepFrame = (debris: DebrisSystem, state: StateRef, delta: number) => {
-  const simDt = Math.min(delta, MAX_FRAME_DT) * TIME_SCALE;
+export const stepFrame = (debris: DebrisSystem, state: StateRef, delta: number, speed: number) => {
+  const simDt = Math.min(delta, MAX_FRAME_DT) * TIME_SCALE * speed;
   const substeps = Math.max(1, Math.ceil(simDt / MAX_SUBSTEP));
   const h = simDt / substeps;
 
