@@ -1,6 +1,5 @@
 import {
   BufferGeometry,
-  type Color,
   Float32BufferAttribute,
   Group,
   LineBasicMaterial,
@@ -50,10 +49,4 @@ export const createClock = (bearing: number): Clock => {
 
   group.add(rim, ticks, hand);
   return { bearing, angle: 0, tau: 0, nextTick: PULSE_INTERVAL, group, rim, ticks, hand };
-};
-
-export const setClockColor = (clock: Clock, color: Color) => {
-  clock.rim.material.color.copy(color);
-  clock.ticks.material.color.copy(color);
-  clock.hand.material.color.copy(color);
 };

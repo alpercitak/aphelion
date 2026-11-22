@@ -3,7 +3,6 @@ import { Color } from 'three';
 import type { SceneRefType } from '@/types';
 import { INITIAL_LIVE, PULSE_INTERVAL } from '../constants';
 import type { LiveState, SceneParams, SceneRef, StateRef } from '../types';
-import { setClockColor } from '../utils/clock';
 import { clockRadius, clockRate } from '../utils/physics';
 import { clearPulses } from '../utils/pulses';
 import { clockColor } from '../utils/spectrum';
@@ -24,7 +23,10 @@ export const useUpdate = (
     }
     const color = new Color();
     refs.entities.clocks.forEach((clock, i) => {
-      setClockColor(clock, clockColor(clockRate(clockRadius(innerRadius, i), orbiting), color));
+      clockColor(clockRate(clockRadius(innerRadius, i), orbiting), color);
+      clock.rim.material.color.copy(color);
+      clock.ticks.material.color.copy(color);
+      clock.hand.material.color.copy(color);
     });
   }, [innerRadius, orbiting, sceneRef]);
 

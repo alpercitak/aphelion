@@ -14,11 +14,8 @@ export const clockRate = (r: number, orbiting: boolean) => (orbiting && canOrbit
 /** Coordinate angular velocity of a circular orbit, Ω = √(1/(2r³)) with GM = 1/2. */
 export const orbitOmega = (r: number) => Math.sqrt(1 / (2 * r ** 3));
 
-/** Flamm's paraboloid, w(r) = 2√(r − Rₛ). */
-export const wellHeight = (r: number) => 2 * Math.sqrt(r - 1);
-
-/** Surface height, zero at the outer edge of the grid. */
-export const surfaceHeight = (r: number) => wellHeight(r) - wellHeight(R_EDGE);
+/** Flamm's paraboloid w(r) = 2√(r − Rₛ), shifted to zero at the outer edge of the grid. */
+export const surfaceHeight = (r: number) => 2 * (Math.sqrt(r - 1) - Math.sqrt(R_EDGE - 1));
 
 /** Radius of clock i: innerRadius · CLOCK_SPACING^i. */
 export const clockRadius = (innerRadius: number, index: number) => innerRadius * CLOCK_SPACING ** index;
