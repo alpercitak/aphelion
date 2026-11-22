@@ -14,6 +14,7 @@ import type { SceneRef } from '../types';
 import { createBody } from '../utils/bodies';
 import { createAccretionDisk } from '../utils/disk';
 import { createDonor } from '../utils/donor';
+import { createGas } from '../utils/gas';
 import { createRocheLobes } from '../utils/lobes';
 
 export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRef>) => {
@@ -37,12 +38,13 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     blackHole.mesh.scale.setScalar(BH_VISUAL_RADIUS);
     const lobes = createRocheLobes();
     const disk = createAccretionDisk();
-    system.add(donor.mesh, neutronStar.mesh, blackHole.mesh, lobes.group, disk.group);
+    const gas = createGas();
+    system.add(donor.mesh, neutronStar.mesh, blackHole.mesh, lobes.group, disk.group, gas.points);
     scene.add(system);
 
     sceneRef.current = {
       core: { scene, renderer, camera, orbit, stars },
-      entities: { system, donor, neutronStar, blackHole, lobes, disk },
+      entities: { system, donor, neutronStar, blackHole, lobes, disk, gas },
     };
 
     return () => dispose();

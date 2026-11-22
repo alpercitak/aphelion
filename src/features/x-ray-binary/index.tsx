@@ -12,12 +12,12 @@ export default function XRayBinary() {
   const sceneRef = useRef<SceneRef>(null);
   const stateRef = useRef<StateRef | null>(null);
 
-  const { params, controls } = useControls();
+  const { params, paramsRef, controls } = useControls();
   const hud = useHud(params);
 
   useInit(canvasRef, sceneRef);
   useUpdate(sceneRef, stateRef, params);
-  useAnimate(sceneRef, stateRef);
+  useAnimate(sceneRef, paramsRef, stateRef);
 
   return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
 }

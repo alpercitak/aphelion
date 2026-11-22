@@ -6,6 +6,8 @@ import type {
   LineLoop,
   Mesh,
   MeshBasicMaterial,
+  Points,
+  PointsMaterial,
   RingGeometry,
   ShaderMaterial,
   SphereGeometry,
@@ -74,6 +76,21 @@ export interface AccretionDisk {
   rings: Array<{ mesh: Mesh<RingGeometry, MeshBasicMaterial>; baseOpacity: number }>;
 }
 
+/** Gas parcels from L1 and in the disk, one slot per particle. */
+export interface Gas {
+  points: Points<BufferGeometry, PointsMaterial>;
+  /** 0 free, 1 stream, 2 disk. */
+  mode: Uint8Array;
+  positions: BufferAttribute;
+  /** Stream velocity. */
+  velocities: BufferAttribute;
+  /** Disk state as (r, φ, y): radius from the accretor, azimuth, height above the plane. */
+  disk: BufferAttribute;
+  colors: BufferAttribute;
+  /** Disk colour by radius (rgb), built once. */
+  lut: BufferAttribute;
+}
+
 export interface SceneRef extends BaseSceneRef {
   entities: {
     system: Group;
@@ -82,9 +99,14 @@ export interface SceneRef extends BaseSceneRef {
     blackHole: Body;
     lobes: RocheLobes;
     disk: AccretionDisk;
+    gas: Gas;
   };
 }
 
 export interface StateRef {
   binary: Binary;
+  /** Fractional stream particles not yet spawned. */
+  spawnCarry: number;
+  /** Frame counter, offsets the free-slot search when spawning. */
+  frame: number;
 }
