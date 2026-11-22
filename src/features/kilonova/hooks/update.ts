@@ -1,20 +1,20 @@
 import { type RefObject, useEffect } from 'react';
 import type { SceneRefType } from '@/types';
-import type { RunParams, SceneParams, SceneRef, StateRef } from '../types';
+import type { MassParams, SceneParams, SceneRef, StateRef } from '../types';
 
 export const useUpdate = (
   sceneRef: SceneRefType<SceneRef>,
   stateRef: RefObject<StateRef>,
   params: SceneParams,
   run: number,
-  resetScene: (run: RunParams) => void,
+  resetScene: (run: MassParams) => void,
 ) => {
-  const { m1, m2, ejectaMass, days, autoPlay, starField } = params;
+  const { m1, m2, days, autoPlay, starField } = params;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: `run` is the replay trigger
   useEffect(() => {
-    resetScene({ m1, m2, ejectaMass });
-  }, [m1, m2, ejectaMass, run, resetScene]);
+    resetScene({ m1, m2 });
+  }, [m1, m2, run, resetScene]);
 
   // Scrubbing: with AUTO PLAY off the slider drives the kilonova clock
   useEffect(() => {

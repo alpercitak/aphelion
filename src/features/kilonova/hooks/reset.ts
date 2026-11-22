@@ -1,7 +1,7 @@
 import { type RefObject, useCallback } from 'react';
 import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION } from '../constants';
-import type { LiveState, RunParams, SceneRef, StateRef } from '../types';
+import type { LiveState, MassParams, SceneRef, StateRef } from '../types';
 import { fillBlueEjecta, fillRedEjecta } from '../utils/ejecta';
 import { clearWaveRings } from '../utils/gw-rings';
 import { blackHoleVisualRadius, remnantType, totalMass } from '../utils/physics';
@@ -14,7 +14,7 @@ export const useReset = (
   setDays: (days: number) => void,
 ) =>
   useCallback(
-    (run: RunParams) => {
+    (run: MassParams) => {
       const s = stateRef.current;
       const mass = totalMass(run);
       s.phase = 'inspiral';

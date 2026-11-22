@@ -28,7 +28,6 @@ export type SceneParams = {
   starField: boolean;
 };
 
-export type RunParams = Pick<SceneParams, 'm1' | 'm2' | 'ejectaMass'>;
 export type MassParams = Pick<SceneParams, 'm1' | 'm2'>;
 
 export interface Body {
