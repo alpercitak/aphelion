@@ -8,19 +8,18 @@ import { stepGas } from '../utils/gas';
 export const useAnimate = (
   sceneRef: SceneRefType<SceneRef>,
   paramsRef: RefObject<SceneParams>,
-  stateRef: RefObject<StateRef | null>,
+  stateRef: RefObject<StateRef>,
 ) => {
   useSceneAnimation((_time, delta) => {
     const refs = sceneRef.current;
-    const state = stateRef.current;
-    if (!refs || !state) {
+    if (!refs) {
       return;
     }
+    const state = stateRef.current;
     refs.core.orbit.updateCamera(refs.core.camera);
     const dt = Math.min(delta, MAX_FRAME_DT);
     refs.entities.system.rotation.y += state.binary.omega * dt;
-    stepGas(refs.entities.gas, state.binary, paramsRef.current.mdotLog, dt, state);
-    state.frame++;
+    stepGas(refs.entities.gas, state, paramsRef.current.mdotLog, dt);
     refs.core.renderer.render(refs.core.scene, refs.core.camera);
   });
 };

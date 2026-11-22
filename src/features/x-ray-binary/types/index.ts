@@ -34,8 +34,6 @@ export interface Vec3 {
 
 /** Corotating-frame geometry of the binary, in scene units. */
 export interface Binary {
-  m1: number;
-  m2: number;
   /** Mass ratio m2 / m1. */
   q: number;
   x1: number;
@@ -107,6 +105,4 @@ export interface StateRef {
   binary: Binary;
   /** Fractional stream particles not yet spawned. */
   spawnCarry: number;
-  /** Frame counter, offsets the free-slot search when spawning. */
-  frame: number;
 }

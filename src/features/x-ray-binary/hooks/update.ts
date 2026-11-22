@@ -8,16 +8,12 @@ import { updateRocheLobes } from '../utils/lobes';
 import { accretorType } from '../utils/physics';
 import { computeBinary } from '../utils/roche';
 
-export const useUpdate = (
-  sceneRef: SceneRefType<SceneRef>,
-  stateRef: RefObject<StateRef | null>,
-  params: SceneParams,
-) => {
+export const useUpdate = (sceneRef: SceneRefType<SceneRef>, stateRef: RefObject<StateRef>, params: SceneParams) => {
   const { accretorMass, donorMass, mdotLog, rocheLobes, starField } = params;
 
   useEffect(() => {
     const binary = computeBinary({ accretorMass, donorMass });
-    stateRef.current = { binary, spawnCarry: 0, frame: 0 };
+    stateRef.current = { binary, spawnCarry: 0 };
 
     const refs = sceneRef.current;
     if (!refs) {

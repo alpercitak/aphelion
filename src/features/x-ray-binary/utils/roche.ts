@@ -40,8 +40,6 @@ export const computeBinary = ({ accretorMass, donorMass }: MassParams): Binary =
   const phiL1 = potential(field, l1x, 0, 0);
   const q = donorMass / accretorMass;
   return {
-    m1: accretorMass,
-    m2: donorMass,
     q,
     ...field,
     l1x,

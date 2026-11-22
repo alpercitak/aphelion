@@ -23,8 +23,6 @@ import {
 } from '../constants';
 import type { Binary, Gas, StateRef } from '../types';
 
-type SpawnState = Pick<StateRef, 'spawnCarry' | 'frame'>;
-
 const MODE_FREE = 0;
 const MODE_STREAM = 1;
 const MODE_DISK = 2;
@@ -91,17 +89,14 @@ const spawnStream = (gas: Gas, i: number, binary: Binary) => {
   gas.colors.setXYZ(i, STREAM_RGB.r, STREAM_RGB.g, STREAM_RGB.b);
 };
 
-const spawnParticles = (gas: Gas, binary: Binary, mdotLog: number, dt: number, spawn: SpawnState) => {
+const spawnParticles = (gas: Gas, state: StateRef, mdotLog: number, dt: number) => {
   const rate = Math.min(STREAM_RATE_MAX, STREAM_RATE_REF * 10 ** (mdotLog - MDOT_REF_LOG));
-  spawn.spawnCarry += rate * dt;
-  let count = Math.floor(spawn.spawnCarry);
-  spawn.spawnCarry -= count;
-  // Start the free-slot search at a moving offset so freed slots are reused evenly.
-  const start = spawn.frame % GAS_PARTICLES;
-  for (let k = 0; k < GAS_PARTICLES && count > 0; k++) {
-    const i = (start + k) % GAS_PARTICLES;
+  state.spawnCarry += rate * dt;
+  let count = Math.floor(state.spawnCarry);
+  state.spawnCarry -= count;
+  for (let i = 0; i < GAS_PARTICLES && count > 0; i++) {
     if (gas.mode[i] === MODE_FREE) {
-      spawnStream(gas, i, binary);
+      spawnStream(gas, i, state.binary);
       count--;
     }
   }
@@ -168,8 +163,9 @@ const stepDisk = (gas: Gas, i: number, binary: Binary, dt: number) => {
   gas.colors.setXYZ(i, gas.lut.getX(k), gas.lut.getY(k), gas.lut.getZ(k));
 };
 
-export const stepGas = (gas: Gas, binary: Binary, mdotLog: number, dt: number, spawn: SpawnState) => {
-  spawnParticles(gas, binary, mdotLog, dt, spawn);
+export const stepGas = (gas: Gas, state: StateRef, mdotLog: number, dt: number) => {
+  spawnParticles(gas, state, mdotLog, dt);
+  const { binary } = state;
 
   const substeps = Math.max(1, Math.ceil(dt / GAS_MAX_SUBSTEP));
   const h = dt / substeps;
