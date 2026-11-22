@@ -1,5 +1,5 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, type Color, Points, PointsMaterial } from 'three';
-import { CLOCK_LIFT, PULSE_COUNT, PULSE_SIZE, PULSE_SPEED, R_EDGE } from '../constants';
+import { CLOCK_LIFT, PULSE_COUNT, PULSE_MAX_RADIUS, PULSE_SIZE, PULSE_SPEED } from '../constants';
 import type { Pulse, Pulses } from '../types';
 import { surfaceHeight } from './physics';
 
@@ -44,21 +44,21 @@ export const emitPulse = (pulses: Pulses, r: number, bearing: number, color: Col
   }
 };
 
-/** Moves active pulses outward by dt (already scaled by the time rate) and frees those past the edge. */
+/** Moves active pulses outward by dt (already scaled by the time rate) and frees those past PULSE_MAX_RADIUS. */
 export const stepPulses = (pulses: Pulses, dt: number) => {
   const { list, colors } = pulses;
-  for (const [i, pulse] of list.entries()) {
+  list.forEach((pulse, i) => {
     if (!pulse.active) {
-      continue;
+      return;
     }
     pulse.r += PULSE_SPEED * (1 - 1 / pulse.r) * dt;
-    if (pulse.r > R_EDGE) {
+    if (pulse.r > PULSE_MAX_RADIUS) {
       pulse.active = false;
       colors.setXYZ(i, 0, 0, 0);
-      continue;
+      return;
     }
     place(pulses, i, pulse);
-  }
+  });
   pulses.positions.needsUpdate = true;
   colors.needsUpdate = true;
 };

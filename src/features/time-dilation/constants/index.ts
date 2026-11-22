@@ -55,12 +55,15 @@ export const CLOCK_HAND_WIDTH = 0.05;
 
 // --- Light pulses ---
 
-export const PULSE_COUNT = 400;
+/** Peak use is about 40 (inner clock at 1.5–2 Rₛ); the time rate does not change it. */
+export const PULSE_COUNT = 64;
 /** Proper seconds between the pulses each clock emits. */
 export const PULSE_INTERVAL = 1;
 /** Radial speed at infinity, in scene units per display second (scaled by 1 − Rₛ/r). */
 export const PULSE_SPEED = 3;
 export const PULSE_SIZE = 4;
+/** Pulses are freed here, past the outermost clock (4 · 2³ = 32 Rₛ), not at the grid edge. */
+export const PULSE_MAX_RADIUS = 40;
 
 // --- Light ---
 
