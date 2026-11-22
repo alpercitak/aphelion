@@ -22,7 +22,6 @@ export const useReset = (
       s.elapsed = 0;
       s.mergeT = 0;
       s.separation = INITIAL_SEPARATION;
-      s.mergeStartSeparation = INITIAL_SEPARATION;
       s.angle = 0;
       s.remnant = remnantType(mass);
       s.days = 0;

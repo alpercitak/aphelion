@@ -64,7 +64,6 @@ export interface StateRef {
   /** Seconds since the merger started. */
   mergeT: number;
   separation: number;
-  mergeStartSeparation: number;
   angle: number;
   remnant: RemnantType;
   /** Days since merger, on the kilonova timeline. */

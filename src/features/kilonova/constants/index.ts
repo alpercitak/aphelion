@@ -138,7 +138,6 @@ export const INITIAL_STATE: StateRef = {
   elapsed: 0,
   mergeT: 0,
   separation: INITIAL_SEPARATION,
-  mergeStartSeparation: INITIAL_SEPARATION,
   angle: 0,
   remnant: 'neutron-star',
   days: 0,

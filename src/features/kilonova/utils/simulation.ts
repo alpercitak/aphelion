@@ -56,24 +56,28 @@ const spawnRingIfDue = (refs: SceneRef, params: SceneParams, state: StateRef) =>
 
 const stepInspiral = (refs: SceneRef, params: SceneParams, state: StateRef, dt: number) => {
   state.elapsed += dt;
-  const separation = separationAt(state.elapsed);
-  if (separation <= MERGE_SEPARATION) {
-    // Bodies keep their last separation; the merger phase closes the gap from there
-    state.phase = 'merger';
-    state.mergeT = 0;
-    state.mergeStartSeparation = state.separation;
-    return;
-  }
-
-  state.separation = separation;
-  state.angle += orbitalOmega(separation, totalMass(params)) * dt;
+  // Clamped at contact so the merger starts exactly at a = 2 R_NS
+  state.separation = Math.max(MERGE_SEPARATION, separationAt(state.elapsed));
+  state.angle += orbitalOmega(state.separation, totalMass(params)) * dt;
   placeBodies(refs, state);
   spawnRingIfDue(refs, params, state);
+  if (state.separation === MERGE_SEPARATION) {
+    state.phase = 'merger';
+    state.mergeT = 0;
+  }
 };
 
-const stepMerger = (refs: SceneRef, params: SceneParams, state: StateRef, setDays: (days: number) => void) => {
+const stepMerger = (
+  refs: SceneRef,
+  params: SceneParams,
+  state: StateRef,
+  dt: number,
+  setDays: (days: number) => void,
+) => {
   const snap = Math.min(1, state.mergeT / MERGE_SNAP);
-  state.separation = state.mergeStartSeparation * (1 - snap * snap * (3 - 2 * snap));
+  state.separation = MERGE_SEPARATION * (1 - snap * snap * (3 - 2 * snap));
+  // Keep orbiting at the contact rate while the bodies close the gap
+  state.angle += orbitalOmega(MERGE_SEPARATION, totalMass(params)) * dt;
   placeBodies(refs, state);
   spawnRingIfDue(refs, params, state);
 
@@ -149,7 +153,7 @@ export const stepFrame = (
     state.elapsed += dt;
     state.mergeT += dt;
     if (state.phase === 'merger') {
-      stepMerger(refs, params, state, setDays);
+      stepMerger(refs, params, state, dt, setDays);
     }
   }
   updateFlash(refs, state);
