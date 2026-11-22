@@ -3,6 +3,7 @@ import type { SceneRefType } from '@/types';
 import { INITIAL_SEPARATION } from '../constants';
 import type { LiveState, RunParams, SceneRef, StateRef } from '../types';
 import { fillBlueEjecta, fillRedEjecta } from '../utils/ejecta';
+import { clearWaveRings } from '../utils/gw-rings';
 import { blackHoleVisualRadius, remnantType, totalMass } from '../utils/physics';
 import { toLiveState } from '../utils/simulation';
 
@@ -33,6 +34,7 @@ export const useReset = (
       }
       const { entities } = refs;
       entities.remnantBh.mesh.scale.setScalar(blackHoleVisualRadius(mass));
+      clearWaveRings(refs.core.scene, s.rings);
       fillBlueEjecta(entities.blueEjecta);
       fillRedEjecta(entities.redEjecta);
       setDays(0);

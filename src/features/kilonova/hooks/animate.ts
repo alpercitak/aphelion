@@ -1,9 +1,9 @@
 import type { RefObject } from 'react';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
-import { LIVE_REFRESH_FRAMES } from '../constants';
+import { LIVE_REFRESH_FRAMES, MAX_FRAME_DT } from '../constants';
 import type { LiveState, SceneParams, SceneRef, StateRef } from '../types';
-import { toLiveState } from '../utils/simulation';
+import { stepFrame, toLiveState } from '../utils/simulation';
 
 export const useAnimate = (
   sceneRef: SceneRefType<SceneRef>,
@@ -12,7 +12,7 @@ export const useAnimate = (
   setLive: (live: LiveState) => void,
   setDays: (days: number) => void,
 ) => {
-  useSceneAnimation((time) => {
+  useSceneAnimation((time, delta) => {
     const refs = sceneRef.current;
     if (!refs) {
       return;
@@ -20,6 +20,7 @@ export const useAnimate = (
     const state = stateRef.current;
     const params = paramsRef.current;
     refs.core.orbit.updateCamera(refs.core.camera);
+    stepFrame(refs, params, state, Math.min(delta, MAX_FRAME_DT));
     refs.core.stars.rotation.y = time * 0.002;
 
     state.frame++;
