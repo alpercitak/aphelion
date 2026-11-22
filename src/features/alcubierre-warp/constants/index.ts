@@ -39,7 +39,7 @@ export const YORK_CONTRACT_COLOR = 0x4fa8ff;
 /** Tube radius in units of 1/σ, so the wall thickness and the tube stay in step. */
 export const EXOTIC_TUBE = 1.5;
 export const EXOTIC_COLOR = 0xb06cff;
-export const EXOTIC_OPACITY = 0.7;
+export const EXOTIC_OPACITY = 0.35;
 /** Speed at which the ring is fully opaque; the energy grows as v_s². */
 export const EXOTIC_V_REF = 2;
 export const EXOTIC_RADIAL_SEGMENTS = 24;
@@ -74,7 +74,8 @@ export const STREAM_MIN_R = 6;
 /** Display speed (scene units/s) per unit of v_s, capped at STREAM_SPEED_MAX. */
 export const STREAM_SPEED_PER_C = 4;
 export const STREAM_SPEED_MAX = 30;
-export const STREAM_SIZE = 0.15;
+/** Point size in pixels, without distance attenuation, so stars passing near the camera stay points. */
+export const STREAM_SIZE = 2;
 export const STREAM_COLOR = 0xcfe0ff;
 
 // --- Lensing pass ---

@@ -33,6 +33,7 @@ export const createStreamStars = (): StreamStars => {
   const material = new PointsMaterial({
     color: STREAM_COLOR,
     size: STREAM_SIZE,
+    sizeAttenuation: false,
     transparent: true,
     blending: AdditiveBlending,
     depthWrite: false,
