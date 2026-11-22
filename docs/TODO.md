@@ -40,4 +40,11 @@ Each follows the existing feature layout (`src/features/<scene>/`, registered in
 
 ### Later
 
-No scenes queued.
+- **Frame Dragging**: gyroscopes in polar orbit around a spinning mass precess by the geodetic and Lense–Thirring effects; spin and orbit sliders, HUD in milliarcseconds per year with Gravity Probe B's measured values for Earth.
+- **Gravitational-Wave Detector**: an L-shaped interferometer whose arms stretch and squeeze as a wave passes; polarization (+/×) and sky-direction controls, a strain trace with a chirp from an inspiral, and the detector's antenna pattern.
+- **Relativistic Flight**: fly through a star field near light speed; aberration crowds stars forward, Doppler shifts their colour and beaming changes brightness, plus Terrell rotation of a passing object. Speed slider, HUD with γ and the forward-cone angle.
+- **Galaxy Rotation Curve**: a spiral galaxy with stars orbiting at the speed the visible mass predicts versus the observed flat curve; toggle a dark-matter halo, with a live v(r) plot in the HUD.
+- **Cosmic Expansion**: a comoving grid of galaxies receding with the scale factor a(t); Hubble's law, cosmological redshift of light in transit and the particle horizon, with Ωm, ΩΛ and H₀ sliders.
+- **White Dwarf**: mass–radius relation of a degenerate star; adding mass shrinks it until the Chandrasekhar limit (~1.4 M☉), with a cutaway showing electron degeneracy pressure and a collapse or Type Ia trigger at the limit.
+- **Pulsar Timing Array**: pulsars scattered around Earth with timing residuals from a gravitational-wave background; correlations between pulsar pairs follow the Hellings–Downs curve as more pairs are added.
+- **Penrose Diagram**: interactive conformal map of a Schwarzschild black hole; drop observers and light rays, show light cones tilting at the horizon and why the singularity is a moment in time, not a place.
