@@ -7,6 +7,7 @@ import {
   MIN_BH_VISUAL_RADIUS,
   NS_MAX_TOTAL_MASS,
   ORBIT_GM_PER_MSUN,
+  SCENE_PARAMS,
 } from '../constants';
 import type { MassParams, RemnantType } from '../types';
 
@@ -26,8 +27,13 @@ export const remnantType = (mass: number): RemnantType => {
   return mass < BH_PROMPT_TOTAL_MASS ? 'hypermassive' : 'black-hole';
 };
 
+const massProduct = ({ m1, m2 }: MassParams) => m1 * m2 * (m1 + m2);
+
+/** Peters coalescence time τ = (5/256) c⁵a₀⁴ / (G³m₁m₂M). With a₀ fixed it scales as 1/(m₁m₂M). */
+export const inspiralTau = (masses: MassParams) => (INSPIRAL_TAU * massProduct(SCENE_PARAMS)) / massProduct(masses);
+
 /** Peters inspiral a(t) = a₀ (1 − t/τ)^(1/4), in scene units. */
-export const separationAt = (t: number) => INITIAL_SEPARATION * Math.max(0, 1 - t / INSPIRAL_TAU) ** 0.25;
+export const separationAt = (t: number, tau: number) => INITIAL_SEPARATION * Math.max(0, 1 - t / tau) ** 0.25;
 
 /** Orbital angular velocity ω = √(GM/a³) in scene units. */
 export const orbitalOmega = (separation: number, mass: number) =>

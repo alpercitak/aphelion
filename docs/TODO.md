@@ -18,7 +18,7 @@
 - Ergosphere: spin is capped at 0.998, so the extremal case is not shown; no spin-down is applied as energy is extracted.
 - Ergosphere: the ergosphere is a single translucent surface with no meridian lines; the particle color only encodes the sign of Ω, not its magnitude.
 - Kilonova: the Peters decay has `a ∝ (1 − t/τ)^(1/4)`, so the last frame before contact still jumps a ≈ 2.3 → 0.8 scene units. During the merger the bodies orbit at the fixed contact rate.
-- Kilonova: `τ` is a fixed constant, not a function of mass or initial separation. Real coalescence time scales with M⁻³ and a₀⁴. The orbital ω uses a normalised GM = 240·M, so the visual orbit is not at real frequency; only the HUD f_GW is in real units.
+- Kilonova: `τ` scales as 1/(m₁m₂M) around 6 display seconds for the default masses (1.8–11 s across the slider range); a₀ is fixed, so there is no separation dependence. The orbital ω uses a normalised GM = 240·M, so the visual orbit is not at real frequency; only the HUD f_GW is in real units.
 - Kilonova: remnant thresholds (2.4 and 2.9 M☉) and the 1 s hypermassive collapse delay are fixed. They do not depend on the equation of state, and the remnant is not mass-loss corrected.
 - Kilonova: the bolometric lightcurve is a fixed `(t/1 d)²` rise then `t^(-1.3)` decline, and the dominant component flips at a fixed 2.5 d. Cloud brightness uses separate band shapes (blue optical peak 1 d, red near-infrared peak 7 d). Ejecta mass only scales brightness; it does not change the decline or the color shift. Blue-to-red color is linear in time.
 - Kilonova: ejecta radius uses √day compression for the display, so the time axis is not physical. There is no opacity or temperature model for lanthanides, and no accretion disk after collapse.

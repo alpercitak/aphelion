@@ -26,7 +26,10 @@ export const NS_VISUAL_RADIUS = NS_RADIUS_KM / KM_PER_UNIT;
 
 // --- Inspiral ---
 
-/** Peters decay timescale in display seconds (the real value from 300 km is ~30 s): a(t) = a₀ (1 − t/τ)^(1/4). */
+/**
+ * Peters decay timescale for the default masses, in display seconds (the real value from 300 km is ~30 s):
+ * a(t) = a₀ (1 − t/τ)^(1/4). It scales as 1/(m₁m₂M) for other masses.
+ */
 export const INSPIRAL_TAU = 6;
 /** Scene GM per M☉: orbital ω = √(GM/a³) with GM = ORBIT_GM_PER_MSUN · M. Normalised, not real units. */
 export const ORBIT_GM_PER_MSUN = 240;

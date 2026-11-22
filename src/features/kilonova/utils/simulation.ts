@@ -22,7 +22,7 @@ import type { LiveState, SceneParams, SceneRef, StateRef } from '../types';
 import { shiftBlueEjectaColor } from './ejecta';
 import { createWaveRing, updateWaveRings } from './gw-rings';
 import { componentShape, dominantComponent, relativeLuminosity } from './lightcurve';
-import { orbitalOmega, orbitalPositions, separationAt, totalMass } from './physics';
+import { inspiralTau, orbitalOmega, orbitalPositions, separationAt, totalMass } from './physics';
 
 export const toLiveState = (state: StateRef): LiveState => {
   const kilonova = state.phase === 'kilonova';
@@ -57,7 +57,7 @@ const spawnRingIfDue = (refs: SceneRef, params: SceneParams, state: StateRef) =>
 const stepInspiral = (refs: SceneRef, params: SceneParams, state: StateRef, dt: number) => {
   state.elapsed += dt;
   // Clamped at contact so the merger starts exactly at a = 2 R_NS
-  state.separation = Math.max(MERGE_SEPARATION, separationAt(state.elapsed));
+  state.separation = Math.max(MERGE_SEPARATION, separationAt(state.elapsed, inspiralTau(params)));
   state.angle += orbitalOmega(state.separation, totalMass(params)) * dt;
   placeBodies(refs, state);
   spawnRingIfDue(refs, params, state);
