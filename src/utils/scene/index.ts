@@ -110,6 +110,14 @@ export const SCENES = [
       'A ship rides inside a bubble of flat spacetime that contracts ahead and expands behind. Holding it open takes negative energy.',
     component: lazy(() => import('@/features/alcubierre-warp')),
   },
+  {
+    id: 'time-dilation',
+    title: 'Time Dilation',
+    subtitle: 'Gravitational Redshift · Schwarzschild',
+    description:
+      "Clocks hang at different depths in a black hole's gravity well. Deeper clocks tick slower, and their light reaches us redshifted.",
+    component: lazy(() => import('@/features/time-dilation')),
+  },
 ];
 
 export const getScene = (id: string) => {
