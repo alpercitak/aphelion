@@ -2,7 +2,14 @@ import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { PHASE_LABEL_MAP } from '../constants';
 import type { LiveState, SceneParams } from '../types';
-import { fallbackDays, fallbackShape, kmToAu, peakEddingtonRatio, tidalRadiusKm } from '../utils/physics';
+import {
+  eddingtonLimited,
+  fallbackDays,
+  fallbackShape,
+  kmToAu,
+  peakFallbackRatio,
+  tidalRadiusKm,
+} from '../utils/physics';
 
 const BASE_HUD_PROPS = {
   title: 'Tidal Disruption',
@@ -41,8 +48,8 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'FLARE LUMINOSITY',
-          formula: 'L ≈ η Ṁ c²',
-          def: 'Accretion converts about a tenth of the rest-mass energy of returning debris into light. For a Sun-like star and a 10⁶ M☉ hole the peak fallback rate is above the Eddington limit, so real flares are probably capped near it and drive outflows.',
+          formula: 'L ≈ L_Edd (1 + ln ṁ) for ṁ > 1',
+          def: 'Accretion converts about a tenth of the rest-mass energy of returning debris into light, <em>L = η Ṁ c²</em>. For a Sun-like star and a 10⁶ M☉ hole the peak fallback rate <em>ṁ</em> is about 130 times the Eddington rate L_Edd / ηc². A disk is not expected to radiate that much: photons are trapped in the inflow or blown out in winds, so the HUD caps L with the slim-disk estimate L_Edd (1 + ln ṁ), about 6 L_Edd at the peak.',
         },
         {
           term: 'CIRCULARIZATION',
@@ -79,6 +86,9 @@ const BASE_HUD_PROPS = {
   ],
 } satisfies Partial<SceneLayoutHudProps>;
 
+/** Two significant figures without switching to exponent notation above 100. */
+const formatRatio = (v: number) => (v >= 10 ? v.toFixed(0) : v.toPrecision(2));
+
 export const useHud = (params: SceneParams, live: LiveState) =>
   useMemo(() => {
     const rtAu = kmToAu(tidalRadiusKm(params));
@@ -86,7 +96,7 @@ export const useHud = (params: SceneParams, live: LiveState) =>
     const hasFallback = live.phase === 'fallback' || live.phase === 'disk';
     const notSwallowed = live.phase !== 'swallowed';
     const tMinDays = fallbackDays(params);
-    const flareRatio = peakEddingtonRatio(params) * live.releasedFraction * fallbackShape(live.t / live.tMin);
+    const mdot = peakFallbackRatio(params) * live.releasedFraction * fallbackShape(live.t / live.tMin);
 
     const stats = [
       { label: 'M', value: `10^${params.logMass.toFixed(1)}`, unit: 'M☉' },
@@ -108,8 +118,12 @@ export const useHud = (params: SceneParams, live: LiveState) =>
         unit: notSwallowed ? 'd' : undefined,
       },
       {
+        label: 'Ṁ/Ṁ_Edd',
+        value: hasFallback ? formatRatio(mdot) : '—',
+      },
+      {
         label: 'L/L_Edd',
-        value: hasFallback ? flareRatio.toPrecision(2) : '—',
+        value: hasFallback ? formatRatio(eddingtonLimited(mdot)) : '—',
       },
     ];
 
