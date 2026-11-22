@@ -115,7 +115,7 @@ export const SCENES = [
     title: 'Time Dilation',
     subtitle: 'Gravitational Redshift · Schwarzschild',
     description:
-      "Clocks hang at different depths in a black hole's gravity well. Deeper clocks tick slower, and their light reaches us redshifted.",
+      'Clocks hover at different distances from a black hole. Deeper clocks tick slower, and their light reaches us redshifted.',
     component: lazy(() => import('@/features/time-dilation')),
   },
 ];

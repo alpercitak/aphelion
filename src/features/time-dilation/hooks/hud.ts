@@ -44,11 +44,12 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'ORBITAL TIME DILATION',
-          def: 'Moving clocks also run slow. The photon sphere at <em>1.5 Rₛ</em> is where light can circle the hole, and the innermost stable orbit is at <em>3 Rₛ</em>.',
+          formula: 'dτ/dt = √(1 − 3Rₛ/2r)',
+          def: 'An orbiting clock also runs slow from its motion. Circular orbits exist only outside the photon sphere at <em>1.5 Rₛ</em>, where light itself can circle the hole, and are unstable inside the innermost stable circular orbit at <em>3 Rₛ</em>.',
         },
         {
           term: 'SHAPIRO DELAY',
-          def: 'Light passing a massive body takes longer than in flat space. Its coordinate speed drops near the mass.',
+          def: 'Light passing a massive body takes longer than in flat space. Its coordinate speed, as a distant observer reckons it, drops near the mass; measured locally it is always <em>c</em>.',
         },
       ],
     },
@@ -75,9 +76,9 @@ const BASE_HUD_PROPS = {
 export const useHud = (params: SceneParams, live: LiveState) =>
   useMemo(() => {
     const stats = [
-      { label: 't', value: live.t.toFixed(1), unit: 's' },
       { label: 'M', value: params.mass.toFixed(1), unit: 'M☉' },
       { label: 'Rₛ', value: schwarzschildRadius(params.mass).toFixed(1), unit: 'km' },
+      { label: 't', value: live.t.toFixed(1), unit: 's' },
       ...live.tau.map((tau, i) => {
         const r = clockRadius(params.innerRadius, i);
         const rate = clockRate(r, params.orbiting);
