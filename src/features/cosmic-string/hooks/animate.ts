@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 import { Color, type MeshBasicMaterial, type PerspectiveCamera, Vector2, type Vector3 } from 'three';
 import { useSceneAnimation } from '@/hooks/scene-animation';
 import type { SceneRefType } from '@/types';
-import { CONTROL_POINTS, GLOW_RADIUS, LOOP_LIFETIME, REBUILD_INTERVAL, STRING_RADIUS } from '../constants';
+import { GLOW_RADIUS, LOOP_LIFETIME, REBUILD_INTERVAL, STRING_RADIUS } from '../constants';
 import type { CommutationLoop, SceneParams, SceneRef } from '../types';
 import { createCommutationLoop } from '../utils/commutation-loop';
 import { createConeMesh } from '../utils/cone-mesh';
@@ -61,8 +61,8 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
     refs.entities.coneMesh = newCone;
 
     // Update lensing uniforms — project string endpoints to NDC
-    const startWorld = pts[0]!;
-    const endWorld = pts[pts.length - 1]!;
+    const startWorld = curve.getPoint(0);
+    const endWorld = curve.getPoint(1);
 
     refs.entities.lensUniforms.stringA.value.copy(toNDC(startWorld, camera));
     refs.entities.lensUniforms.stringB.value.copy(toNDC(endWorld, camera));
@@ -79,8 +79,7 @@ const animate = (refs: SceneRef, params: SceneParams, time: number) => {
   // Intercommutation events — spawn loop near string midpoint
   const loopInterval = 4.0 - params.tension * 2.5;
   if (params.showIntercommutation && time - refs.entities.lastLoopTime > Math.max(1.0, loopInterval)) {
-    const midIdx = Math.floor(CONTROL_POINTS / 2);
-    const midPt = buildStringPoints(time, params.oscillationAmp, params.tension)[midIdx]!;
+    const midPt = buildCurve(buildStringPoints(time, params.oscillationAmp, params.tension)).getPoint(0.5);
     const loopR = 0.3 + Math.random() * 0.5;
     const loopMesh = createCommutationLoop(midPt, loopR);
     refs.entities.stringScene.add(loopMesh);

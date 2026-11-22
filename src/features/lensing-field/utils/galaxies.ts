@@ -10,7 +10,10 @@ export const createGalaxies = (density: BackgroundDensity): Array<Sprite> => {
   const canvas = document.createElement('canvas');
   canvas.width = 64;
   canvas.height = 64;
-  const ctx = canvas.getContext('2d')!;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    throw new Error('2D canvas context is unavailable');
+  }
   const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
   grad.addColorStop(0, 'rgba(180,200,255,0.9)');
   grad.addColorStop(0.3, 'rgba(140,160,220,0.5)');
@@ -23,7 +26,10 @@ export const createGalaxies = (density: BackgroundDensity): Array<Sprite> => {
   const ellipseCanvas = document.createElement('canvas');
   ellipseCanvas.width = 96;
   ellipseCanvas.height = 32;
-  const ectx = ellipseCanvas.getContext('2d')!;
+  const ectx = ellipseCanvas.getContext('2d');
+  if (!ectx) {
+    throw new Error('2D canvas context is unavailable');
+  }
   const egrad = ectx.createRadialGradient(48, 16, 0, 48, 16, 24);
   egrad.addColorStop(0, 'rgba(255,220,160,0.8)');
   egrad.addColorStop(0.4, 'rgba(220,180,120,0.3)');

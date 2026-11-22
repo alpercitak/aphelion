@@ -3,7 +3,7 @@ import { STAR_COUNT_MAP } from '../constants';
 import type { BackgroundDensity } from '../types';
 
 // star color palette: blue giants, white dwarfs, orange giants, red dwarfs
-const PALETTE: ReadonlyArray<[number, number, number]> = [
+const PALETTE: readonly [[number, number, number], ...Array<[number, number, number]>] = [
   [0.5, 0.6, 1.0], // blue-white
   [1.0, 1.0, 1.0], // white
   [1.0, 0.95, 0.8], // warm white
@@ -22,7 +22,7 @@ export const createBackground = (density: BackgroundDensity): Points<BufferGeome
     pos[i * 3 + 1] = (Math.random() - 0.5) * 20;
     pos[i * 3 + 2] = -5 + (Math.random() - 0.5) * 0.5;
 
-    const [r, g, b] = PALETTE[Math.floor(Math.random() * PALETTE.length)]!;
+    const [r, g, b] = PALETTE[Math.floor(Math.random() * PALETTE.length)] ?? PALETTE[0];
     const br = 0.5 + Math.random() * 0.5;
     colors[i * 3] = r * br;
     colors[i * 3 + 1] = g * br;

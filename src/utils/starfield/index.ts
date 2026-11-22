@@ -11,13 +11,13 @@ const STAR_SIZE = 0.18;
 const STAR_OPACITY = 0.85;
 
 // --- Colors ---
-const STAR_PALETTES: Array<[number, number, number]> = [
+const STAR_PALETTES: readonly [[number, number, number], ...Array<[number, number, number]>] = [
   [0.6, 0.7, 1.0], // Bluish
   [1.0, 1.0, 1.0], // White
   [1.0, 0.9, 0.7], // Yellowish
   [1.0, 0.7, 0.5], // Orange-Red
   [0.7, 0.8, 1.0], // Soft Blue
-] as const;
+];
 
 /**
  * Creates a spherical field of stars as a THREE.Points object.
@@ -46,7 +46,7 @@ export const createStarField = (count: number = DEFAULT_STAR_COUNT): Points => {
 
     // --- Color Selection ---
     const paletteIndex = Math.floor(Math.random() * STAR_PALETTES.length);
-    const [r_col, g_col, b_col] = STAR_PALETTES[paletteIndex]!;
+    const [r_col, g_col, b_col] = STAR_PALETTES[paletteIndex] ?? STAR_PALETTES[0];
 
     colors[i3] = r_col;
     colors[i3 + 1] = g_col;
