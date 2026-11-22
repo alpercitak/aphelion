@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { SceneLayoutHudProps } from '@/components/app/scene-layout';
 import { SCENE_UNIT_M } from '../constants';
 import type { SceneParams } from '../types';
-import { negativeEnergySolarMasses, peakYorkTheta } from '../utils/metric';
+import { negativeEnergySolarMasses, peakYorkTheta, wallThickness } from '../utils/metric';
 
 const BASE_HUD_PROPS = {
   title: 'Alcubierre Warp',
@@ -26,7 +26,7 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'YORK TIME',
-          def: 'The rate at which the volume of space around the bubble expands or contracts, as measured by observers at rest in the flat region.',
+          def: 'The rate at which small volumes of space expand or contract, as seen by Eulerian observers, who move at right angles to the slices of constant time.',
         },
       ],
     },
@@ -43,7 +43,7 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'HORIZONS',
-          def: 'For v_s > 1 the front of the bubble is causally disconnected from the ship. Signals from inside cannot reach the wall, so the bubble cannot be steered or switched off from inside.',
+          def: 'For v_s > 1 the front of the bubble is causally disconnected from the ship. Signals from the ship cannot reach the front wall, so the bubble cannot be steered or switched off from inside.',
         },
       ],
     },
@@ -52,11 +52,11 @@ const BASE_HUD_PROPS = {
       items: [
         {
           term: 'PFENNING & FORD',
-          def: 'A <em>1997</em> estimate. Thin walls, which make the bubble easier to steer, push the energy requirement up enormously.',
+          def: 'A <em>1997</em> estimate. The energy grows as <em>R²/Δ</em>, and quantum inequalities limit the wall to a few hundred Planck lengths, so a 100 m bubble needs far more than the mass of the visible universe.',
         },
         {
           term: 'VAN DEN BROECK',
-          def: 'A <em>1999</em> pocket-shaped geometry that shrinks the volume of spacetime carrying the energy, reducing the requirement.',
+          def: 'A <em>1999</em> geometry with a microscopic outer bubble around a large inner pocket, which cuts the requirement to a few solar masses.',
         },
         {
           term: 'NATÁRIO',
@@ -73,7 +73,7 @@ export const useHud = (params: SceneParams) =>
     const stats = [
       { label: 'v_s', value: velocity.toFixed(1), unit: 'c' },
       { label: 'R', value: (radius * SCENE_UNIT_M).toFixed(0), unit: 'm' },
-      { label: 'Δ', value: (SCENE_UNIT_M / sigma).toFixed(1), unit: 'm' },
+      { label: 'Δ', value: (wallThickness(radius, sigma) * SCENE_UNIT_M).toFixed(1), unit: 'm' },
       { label: 'θ_MAX', value: peakYorkTheta(params).toFixed(2) },
       { label: '−E', value: negativeEnergySolarMasses(params, SCENE_UNIT_M).toExponential(1), unit: 'M☉' },
       { label: 'INSIDE', value: 'FLAT' },

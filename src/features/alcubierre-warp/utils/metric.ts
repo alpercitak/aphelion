@@ -34,10 +34,16 @@ export const peakYorkTheta = (bubble: Bubble) => {
   return velocity * peak;
 };
 
-/** Pfenning & Ford thin-wall estimate of the total negative energy, as a mass in M☉. */
+/** Pfenning & Ford wall thickness: the inverse slope |f'(R)|⁻¹, about 2/σ for a thin wall. */
+export const wallThickness = (radius: number, sigma: number) => {
+  const t = Math.tanh(sigma * radius);
+  return (1 + t * t) ** 2 / (2 * sigma * t);
+};
+
+/** Pfenning & Ford thin-wall estimate E ≈ −(1/12) v_s² R²/Δ of the total negative energy, as a mass in M☉. */
 export const negativeEnergySolarMasses = ({ velocity, radius, sigma }: Bubble, metersPerUnit: number) => {
   const radiusM = radius * metersPerUnit;
-  const sigmaPerM = sigma / metersPerUnit;
-  const energyKg = (velocity ** 2 * radiusM ** 2 * sigmaPerM * SPEED_OF_LIGHT ** 2) / (12 * GRAVITATIONAL_CONSTANT);
+  const thicknessM = wallThickness(radius, sigma) * metersPerUnit;
+  const energyKg = (velocity ** 2 * radiusM ** 2 * SPEED_OF_LIGHT ** 2) / (12 * thicknessM * GRAVITATIONAL_CONSTANT);
   return energyKg / SOLAR_MASS_KG;
 };
