@@ -1,4 +1,9 @@
 import {
+  BLUE_PEAK_DAYS,
+  DAYS_PER_SECOND,
+  EJECTA_BRIGHTNESS,
+  EJECTA_DISPLAY_SCALE,
+  EJECTA_MASS_REF,
   FLASH_PEAK_OPACITY,
   HMNS_COLLAPSE_DELAY,
   JET_DELAY,
@@ -6,23 +11,30 @@ import {
   JET_LIFETIME,
   JET_OPACITY,
   JET_RISE,
+  KILONOVA_DAYS,
   MERGE_SEPARATION,
   MERGE_SNAP,
   MERGER_DURATION,
+  RED_PEAK_DAYS,
   RING_INTERVAL,
 } from '../constants';
 import type { LiveState, SceneParams, SceneRef, StateRef } from '../types';
+import { shiftBlueEjectaColor } from './ejecta';
 import { createWaveRing, updateWaveRings } from './gw-rings';
+import { componentShape, dominantComponent, relativeLuminosity } from './lightcurve';
 import { orbitalOmega, orbitalPositions, separationAt, totalMass } from './physics';
 
-export const toLiveState = (state: StateRef): LiveState => ({
-  phase: state.phase,
-  elapsed: state.elapsed,
-  separation: state.separation,
-  days: state.days,
-  luminosity: 0,
-  dominant: 'BLUE',
-});
+export const toLiveState = (state: StateRef): LiveState => {
+  const kilonova = state.phase === 'kilonova';
+  return {
+    phase: state.phase,
+    elapsed: state.elapsed,
+    separation: state.separation,
+    days: state.days,
+    luminosity: kilonova ? relativeLuminosity(state.days) : 0,
+    dominant: dominantComponent(state.days),
+  };
+};
 
 /** Places the bodies on their orbit. They hide once the merger has closed the gap. */
 const placeBodies = (refs: SceneRef, state: StateRef) => {
@@ -104,6 +116,25 @@ const updateJet = (refs: SceneRef, params: SceneParams, state: StateRef) => {
   jetDown.material.opacity = JET_OPACITY * (1 - since / JET_LIFETIME) ** 2;
 };
 
+/**
+ * Ejecta expand homologously, r = v t, with the time axis compressed to √day so the cloud stays on screen.
+ * Each cloud is scaled as a whole; particle speeds are fixed in the point positions.
+ */
+const updateEjecta = (refs: SceneRef, params: SceneParams, state: StateRef) => {
+  const { blueEjecta, redEjecta } = refs.entities;
+  const visible = state.phase === 'kilonova' && state.days > 0;
+  const radius = EJECTA_DISPLAY_SCALE * Math.sqrt(state.days);
+  const brightness = EJECTA_BRIGHTNESS * Math.sqrt(params.ejectaMass / EJECTA_MASS_REF);
+
+  blueEjecta.points.visible = visible;
+  redEjecta.points.visible = visible;
+  blueEjecta.points.scale.setScalar(radius);
+  redEjecta.points.scale.setScalar(radius);
+  blueEjecta.points.material.opacity = Math.min(1, brightness * componentShape(state.days, BLUE_PEAK_DAYS));
+  redEjecta.points.material.opacity = Math.min(1, brightness * componentShape(state.days, RED_PEAK_DAYS));
+  shiftBlueEjectaColor(blueEjecta, state.days);
+};
+
 /** Advances the run by one real frame of length dt (already clamped). */
 export const stepFrame = (
   refs: SceneRef,
@@ -124,5 +155,9 @@ export const stepFrame = (
   updateFlash(refs, state);
   updateRemnant(refs, state);
   updateJet(refs, params, state);
+  if (state.phase === 'kilonova' && params.autoPlay) {
+    state.days = Math.min(KILONOVA_DAYS, state.days + DAYS_PER_SECOND * dt);
+  }
+  updateEjecta(refs, params, state);
   updateWaveRings(refs.core.scene, state.rings, dt);
 };

@@ -1,8 +1,11 @@
-import { BufferAttribute, BufferGeometry, Points, PointsMaterial } from 'three';
+import { BufferAttribute, BufferGeometry, Color, Points, PointsMaterial } from 'three';
 import {
+  BLUE_EJECTA_COLOR,
   BLUE_POLAR_HALF_ANGLE,
   BLUE_SPEED_RANGE,
   EJECTA_POINT_SIZE,
+  LANTHANIDE_SHIFT_DAYS,
+  RED_EJECTA_COLOR,
   RED_SPEED_RANGE,
   RED_TORUS_HALF_HEIGHT,
   SPEED_REF,
@@ -59,4 +62,12 @@ export const fillRedEjecta = ({ positions, positionAttr }: EjectaCloud) => {
     writeParticle(positions, i3, Math.cos(lat) * Math.cos(phi), Math.sin(lat), Math.cos(lat) * Math.sin(phi), speed);
   }
   positionAttr.needsUpdate = true;
+};
+
+const BLUE_COLOR = new Color(BLUE_EJECTA_COLOR);
+const RED_COLOR = new Color(RED_EJECTA_COLOR);
+
+/** Blue ejecta turns red as lanthanides build up in its outer layers. */
+export const shiftBlueEjectaColor = (cloud: EjectaCloud, days: number) => {
+  cloud.points.material.color.lerpColors(BLUE_COLOR, RED_COLOR, Math.min(1, days / LANTHANIDE_SHIFT_DAYS));
 };
