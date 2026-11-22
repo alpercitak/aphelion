@@ -40,11 +40,11 @@ const BASE_HUD_PROPS = {
         {
           term: 'KILONOVA',
           formula: 'L ∝ t^(-1.3)',
-          def: 'Radioactive decay of the freshly made heavy nuclei heats the ejecta, which glows for days to weeks. The light is far fainter than a supernova. The brightness falls as <em>t^(-1.3)</em> after an initial rise.',
+          def: 'Radioactive decay of the freshly made heavy nuclei heats the ejecta, which glows for days to weeks. The light is far fainter than a supernova. The total luminosity peaks within about a day, then falls as <em>t^(-1.3)</em>.',
         },
         {
           term: 'BLUE VS RED',
-          def: 'Lanthanide-poor ejecta, mostly polar, is fast and emits blue light that peaks within about a day. Lanthanide-rich ejecta, in the equatorial plane, is slower and redder, peaking around a week. Lanthanide <em>opacity</em> is what turns the light red.',
+          def: 'Lanthanide-poor ejecta, mostly polar, is fast and emits blue light that peaks within about a day. Lanthanide-rich ejecta, in the equatorial plane, is slower and redder: it dominates after a few days and peaks in the near-infrared around a week, at a lower luminosity. Lanthanide <em>opacity</em> is what turns the light red.',
         },
         {
           term: 'SHORT GRB JET',

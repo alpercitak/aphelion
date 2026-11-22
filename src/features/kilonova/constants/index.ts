@@ -69,6 +69,11 @@ export const DAYS_PER_SECOND = 1;
 export const KILONOVA_DAYS = 21;
 /** Share of the ejecta mass in the lanthanide-poor blue component. The rest is red. */
 export const BLUE_MASS_FRACTION = 0.4;
+/** Bolometric peak (days). AT2017gfo was brightest within about a day, then faded as the heating rate. */
+export const BOLOMETRIC_PEAK_DAYS = 1;
+/** Days after which the red component outshines the blue one in the bolometric output. */
+export const RED_TAKEOVER_DAYS = 2.5;
+/** Band peaks that set each cloud's brightness: blue in the optical, red in the near-infrared. */
 export const BLUE_PEAK_DAYS = 1;
 export const RED_PEAK_DAYS = 7;
 /** Late-time heating slope: L ∝ t^(−1.3). */
