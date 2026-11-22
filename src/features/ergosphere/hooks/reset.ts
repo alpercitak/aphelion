@@ -9,16 +9,19 @@ export const useReset = (
   stateRef: RefObject<StateRef>,
   setLive: (live: LiveState) => void,
 ) =>
-  useCallback(() => {
-    const state = stateRef.current;
-    state.events = 0;
-    state.extracted = 0;
-    state.frame = 0;
+  useCallback(
+    (spin: number) => {
+      const state = stateRef.current;
+      state.events = 0;
+      state.extracted = 0;
+      state.frame = 0;
 
-    const refs = sceneRef.current;
-    if (!refs) {
-      return;
-    }
-    resetParticles(refs.entities.particles);
-    setLive(INITIAL_LIVE);
-  }, [sceneRef, stateRef, setLive]);
+      const refs = sceneRef.current;
+      if (!refs) {
+        return;
+      }
+      resetParticles(refs.entities.particles, spin);
+      setLive(INITIAL_LIVE);
+    },
+    [sceneRef, stateRef, setLive],
+  );

@@ -3,8 +3,6 @@ import {
   ESCAPE_R_MAX,
   ESCAPE_SPEED,
   HORIZON_MARGIN,
-  INSPIRAL_CURVATURE,
-  INSPIRAL_RATE,
   KIND,
   MAX_FRAME_DT,
   PARTICLE_COUNT,
@@ -15,7 +13,17 @@ import {
   TIME_SCALE,
 } from '../constants';
 import type { ParticleSystem, SceneParams, StateRef } from '../types';
-import { clampAngularVelocity, ergosphereRadius, horizonRadius, keplerianOmega, penroseEfficiency } from './kerr';
+import {
+  azimuthRate,
+  clampAngularVelocity,
+  ergosphereRadius,
+  horizonRadius,
+  keplerianOmega,
+  penroseEfficiency,
+  polarForce,
+  radialForce,
+  timeRate,
+} from './kerr';
 import { respawnParticle } from './particles';
 
 const colorOf = (kind: number, omega: number) => {
@@ -28,12 +36,65 @@ const colorOf = (kind: number, omega: number) => {
   return omega < 0 ? COLOR.retrograde : COLOR.prograde;
 };
 
-/** Radial motion: slow inspiral, fast plunge, outward escape, and replacement at the horizon. */
-const advanceRadius = (sys: ParticleSystem, i: number, rPlus: number, h: number) => {
-  const kind = sys.kind[i];
+type Force = (x: number, a: number, e: number, l: number, q: number) => number;
+
+/** Position and velocity written by rk4Step. */
+const rk4Out = { x: 0, v: 0 };
+
+/** One RK4 step in Mino time for x'' = force(x), leaving the new (x, v) in rk4Out. */
+const rk4Step = (force: Force, x: number, v: number, dl: number, a: number, e: number, l: number, q: number) => {
+  const a1 = force(x, a, e, l, q);
+  const x2 = x + (dl / 2) * v;
+  const v2 = v + (dl / 2) * a1;
+  const a2 = force(x2, a, e, l, q);
+  const x3 = x + (dl / 2) * v2;
+  const v3 = v + (dl / 2) * a2;
+  const a3 = force(x3, a, e, l, q);
+  const x4 = x + dl * v3;
+  const v4 = v + dl * a3;
+  const a4 = force(x4, a, e, l, q);
+  rk4Out.x = x + (dl / 6) * (v + 2 * v2 + 2 * v3 + v4);
+  rk4Out.v = v + (dl / 6) * (a1 + 2 * a2 + 2 * a3 + a4);
+};
+
+/** Coordinate Ω = dφ/dt on the particle's current geodesic. */
+const geodesicOmega = (sys: ParticleSystem, i: number, a: number) => {
+  const r = sys.r[i] ?? 0;
+  const theta = sys.theta[i] ?? 0;
+  const e = sys.energy[i] ?? 0;
+  const l = sys.angMom[i] ?? 0;
+  return azimuthRate(r, theta, a, e, l) / timeRate(r, theta, a, e, l);
+};
+
+/** Advances a NORMAL particle one frame along its Kerr geodesic and respawns it once it falls in or escapes. */
+const stepGeodesic = (sys: ParticleSystem, i: number, a: number, rPlus: number, h: number) => {
+  const r = sys.r[i] ?? 0;
+  const theta = sys.theta[i] ?? 0;
+  const e = sys.energy[i] ?? 0;
+  const l = sys.angMom[i] ?? 0;
+  const q = sys.carter[i] ?? 0;
+  const dl = h / timeRate(r, theta, a, e, l);
+  sys.phi[i] = (sys.phi[i] ?? 0) + azimuthRate(r, theta, a, e, l) * dl;
+
+  rk4Step(radialForce, r, sys.rDot[i] ?? 0, dl, a, e, l, q);
+  sys.r[i] = rk4Out.x;
+  sys.rDot[i] = rk4Out.v;
+  rk4Step(polarForce, theta, sys.thetaDot[i] ?? 0, dl, a, e, l, q);
+  sys.theta[i] = rk4Out.x;
+  sys.thetaDot[i] = rk4Out.v;
+
+  const rNew = sys.r[i] ?? 0;
+  if (rNew <= rPlus + HORIZON_MARGIN || rNew > ESCAPE_R_MAX) {
+    respawnParticle(sys, i, RESPAWN_R_MIN, RESPAWN_R_MAX, a);
+  }
+  return geodesicOmega(sys, i, a);
+};
+
+/** Radial motion of a PLUNGE or ESCAPE fragment: fast plunge, outward escape, and replacement at the horizon. */
+const advanceRadius = (sys: ParticleSystem, i: number, a: number, rPlus: number, h: number) => {
   const r = sys.r[i] ?? 0;
 
-  if (kind === KIND.ESCAPE) {
+  if (sys.kind[i] === KIND.ESCAPE) {
     const rOut = r + ESCAPE_SPEED * h;
     sys.r[i] = rOut;
     if (rOut > ESCAPE_R_MAX) {
@@ -43,13 +104,27 @@ const advanceRadius = (sys: ParticleSystem, i: number, rPlus: number, h: number)
     return;
   }
 
-  const drift = kind === KIND.PLUNGE ? PLUNGE_SPEED : INSPIRAL_RATE * (1 + INSPIRAL_CURVATURE / r);
-  const rIn = r - drift * h;
+  const rIn = r - PLUNGE_SPEED * h;
   if (rIn <= rPlus + HORIZON_MARGIN) {
-    respawnParticle(sys, i, RESPAWN_R_MIN, RESPAWN_R_MAX);
+    respawnParticle(sys, i, RESPAWN_R_MIN, RESPAWN_R_MAX, a);
     return;
   }
   sys.r[i] = rIn;
+};
+
+/**
+ * Advances a PLUNGE or ESCAPE fragment one frame. Its Ω is its own orbital velocity clamped to the frame-dragged
+ * range at its position. A plunge that reaches the horizon respawns as a NORMAL particle, so its Ω is the geodesic one.
+ */
+const stepFragment = (sys: ParticleSystem, i: number, a: number, rPlus: number, h: number) => {
+  advanceRadius(sys, i, a, rPlus, h);
+  if (sys.kind[i] === KIND.NORMAL) {
+    return geodesicOmega(sys, i, a);
+  }
+  const r = sys.r[i] ?? 0;
+  const omega = clampAngularVelocity((sys.frac[i] ?? 0) * keplerianOmega(r, a), r, sys.theta[i] ?? 0, a);
+  sys.phi[i] = (sys.phi[i] ?? 0) + omega * h;
+  return omega;
 };
 
 const writeParticle = (sys: ParticleSystem, i: number, a: number, omega: number) => {
@@ -120,8 +195,8 @@ const splitParticle = (sys: ParticleSystem, state: StateRef, a: number) => {
 };
 
 /**
- * Advances every particle by one real frame. Each particle's Ω is its own orbital velocity clamped to the
- * frame-dragged range at its position, so inside the ergosphere it can no longer stand still or counter-rotate.
+ * Advances every particle by one real frame. NORMAL particles follow true timelike Kerr geodesics, one RK4 step in
+ * Mino time per frame. Penrose fragments keep the display kinematics in advanceRadius and clampAngularVelocity.
  */
 export const stepFrame = (
   sys: ParticleSystem,
@@ -138,13 +213,10 @@ export const stepFrame = (
     if (sys.kind[i] === KIND.DORMANT) {
       continue;
     }
-    advanceRadius(sys, i, rPlus, h);
+    const omega = sys.kind[i] === KIND.NORMAL ? stepGeodesic(sys, i, a, rPlus, h) : stepFragment(sys, i, a, rPlus, h);
     if (sys.kind[i] === KIND.DORMANT) {
       continue;
     }
-    const r = sys.r[i] ?? 0;
-    const omega = clampAngularVelocity((sys.frac[i] ?? 0) * keplerianOmega(r, a), r, sys.theta[i] ?? 0, a);
-    sys.phi[i] = (sys.phi[i] ?? 0) + omega * h;
     writeParticle(sys, i, a, omega);
   }
 

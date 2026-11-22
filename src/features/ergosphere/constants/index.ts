@@ -37,9 +37,7 @@ export const HORIZON_MARGIN = 0.05;
 export const TIME_SCALE = 3;
 /** Largest real frame delta that is simulated (seconds). */
 export const MAX_FRAME_DT = 1 / 20;
-/** Inspiral: dr/dt = −INSPIRAL_RATE · (1 + INSPIRAL_CURVATURE / r). */
-export const INSPIRAL_RATE = 0.03;
-export const INSPIRAL_CURVATURE = 2;
+/** Radial infall speed of PLUNGE fragments (display only). */
 export const PLUNGE_SPEED = 0.6;
 export const ESCAPE_SPEED = 2;
 export const ESCAPE_R_MAX = 14;

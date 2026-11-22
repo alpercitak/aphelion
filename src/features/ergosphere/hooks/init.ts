@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import type { CanvasRefType, SceneRefType } from '@/types';
 import { setupScene } from '@/utils/setup';
+import { SCENE_PARAMS } from '../constants';
 import type { SceneRef } from '../types';
 import { createParticleSystem } from '../utils/particles';
 import { createSurfaces } from '../utils/surfaces';
@@ -19,7 +20,7 @@ export const useInit = (canvasRef: CanvasRefType, sceneRef: SceneRefType<SceneRe
     });
 
     const { horizon, ergosphere, unit } = createSurfaces();
-    const particles = createParticleSystem();
+    const particles = createParticleSystem(SCENE_PARAMS.spin);
     scene.add(horizon, ergosphere, particles.points);
 
     sceneRef.current = {

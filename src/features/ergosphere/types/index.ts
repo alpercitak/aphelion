@@ -20,7 +20,17 @@ export interface ParticleSystem {
   r: Float64Array;
   theta: Float64Array;
   phi: Float64Array;
-  /** Own angular velocity as a fraction of the local Keplerian value, in [-1, 1]. Fixed per particle. */
+  /** Mino-time velocities dr/dλ and dθ/dλ of NORMAL particles. */
+  rDot: Float64Array;
+  thetaDot: Float64Array;
+  /** Geodesic constants E, L and Q of NORMAL particles. */
+  energy: Float64Array;
+  angMom: Float64Array;
+  carter: Float64Array;
+  /**
+   * Fraction in [-1, 1], fixed per particle. Scales L against the prograde circular L for NORMAL particles and
+   * the local Keplerian Ω for fragments.
+   */
   frac: Float64Array;
   /** KIND per particle. */
   kind: Uint8Array;

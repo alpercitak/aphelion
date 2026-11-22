@@ -32,3 +32,68 @@ export const penroseEfficiency = (a: number) => 0.5 * (Math.sqrt(2 / horizonRadi
 
 /** Extractable rotational energy fraction 1 − M_irr/M, with M_irr = √(2r₊)/2. */
 export const extractableFraction = (a: number) => 1 - Math.sqrt(2 * horizonRadius(a)) / 2;
+
+/*
+ * Timelike geodesics in Mino time λ (dτ = Σ dλ). Each particle has constants E (energy), L (axial angular momentum)
+ * and Q (Carter constant). Radial and polar motion decouple: (dr/dλ)² = R(r), (dθ/dλ)² = Θ(θ).
+ */
+
+/** R(r) = P² − Δ (r² + (L − aE)² + Q), with P = E (r² + a²) − aL and Δ = r² − 2r + a². */
+export const radialPotential = (r: number, a: number, e: number, l: number, q: number) => {
+  const p = e * (r * r + a * a) - a * l;
+  const delta = r * r - 2 * r + a * a;
+  return p * p - delta * (r * r + (l - a * e) ** 2 + q);
+};
+
+/** Θ(θ) = Q − cos²θ (a²(1 − E²) + L² / sin²θ). */
+export const polarPotential = (theta: number, a: number, e: number, l: number, q: number) => {
+  const sin2 = Math.sin(theta) ** 2;
+  return q - Math.cos(theta) ** 2 * (a * a * (1 - e * e) + (l * l) / sin2);
+};
+
+/** ½ R′(r): the Mino-time acceleration d²r/dλ². */
+export const radialForce = (r: number, a: number, e: number, l: number, q: number) => {
+  const p = e * (r * r + a * a) - a * l;
+  const delta = r * r - 2 * r + a * a;
+  return 2 * e * r * p - (r - 1) * (r * r + (l - a * e) ** 2 + q) - r * delta;
+};
+
+/** ½ Θ′(θ): the Mino-time acceleration d²θ/dλ². Independent of Q. */
+export const polarForce = (theta: number, a: number, e: number, l: number) => {
+  const sin = Math.sin(theta);
+  const cos = Math.cos(theta);
+  return a * a * (1 - e * e) * cos * sin + (l * l * cos) / sin ** 3;
+};
+
+/** dt/dλ = −a (aE sin²θ − L) + (r² + a²) P / Δ. */
+export const timeRate = (r: number, theta: number, a: number, e: number, l: number) => {
+  const p = e * (r * r + a * a) - a * l;
+  const delta = r * r - 2 * r + a * a;
+  return -a * (a * e * Math.sin(theta) ** 2 - l) + ((r * r + a * a) * p) / delta;
+};
+
+/** dφ/dλ = −(aE − L / sin²θ) + a P / Δ. */
+export const azimuthRate = (r: number, theta: number, a: number, e: number, l: number) => {
+  const p = e * (r * r + a * a) - a * l;
+  const delta = r * r - 2 * r + a * a;
+  return -(a * e - l / Math.sin(theta) ** 2) + (a * p) / delta;
+};
+
+/** Bardeen's prograde circular-orbit angular momentum, L = (r² − 2a√r + a²) / (r^¾ √(r^³/² − 3√r + 2a)). */
+export const circularAngularMomentum = (r: number, a: number) =>
+  (r * r - 2 * a * Math.sqrt(r) + a * a) / (r ** 0.75 * Math.sqrt(r ** 1.5 - 3 * Math.sqrt(r) + 2 * a));
+
+/**
+ * Larger root E of R(r) = 0 at a radial and polar turning point (ṙ = θ̇ = 0), with Q = Q(E, L, θ) substituted. With
+ * s = sin²θ and c = cos²θ, R(r) = A E² − 4arL E + C, where A = (r² + a²)² − Δ a² s and C = a²L² − Δ (r² + L²/s + c a²).
+ * Since dt/dλ = (A E − 2arL) / Δ, the larger root gives dt/dλ = √disc / Δ > 0: it is the future-directed one.
+ * NaN if there is no real root.
+ */
+export const turningPointEnergy = (r: number, theta: number, a: number, l: number) => {
+  const s = Math.sin(theta) ** 2;
+  const c = 1 - s;
+  const delta = r * r - 2 * r + a * a;
+  const A = (r * r + a * a) ** 2 - delta * a * a * s;
+  const C = a * a * l * l - delta * (r * r + (l * l) / s + c * a * a);
+  return (2 * a * r * l + Math.sqrt(4 * a * a * r * r * l * l - A * C)) / A;
+};

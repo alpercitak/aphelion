@@ -7,7 +7,7 @@ export const useUpdate = (
   sceneRef: SceneRefType<SceneRef>,
   params: SceneParams,
   run: number,
-  resetScene: () => void,
+  resetScene: (spin: number) => void,
 ) => {
   const { spin, showErgosphere, showStars } = params;
 
@@ -19,10 +19,11 @@ export const useUpdate = (
     shapeSurfaces(refs.entities, spin);
   }, [spin, sceneRef]);
 
+  // A new spin restarts the run: each particle's E, L and Q are only geodesic constants for the spin they were drawn with
   // biome-ignore lint/correctness/useExhaustiveDependencies: `run` is the replay trigger
   useEffect(() => {
-    resetScene();
-  }, [run, resetScene]);
+    resetScene(spin);
+  }, [spin, run, resetScene]);
 
   useEffect(() => {
     const refs = sceneRef.current;

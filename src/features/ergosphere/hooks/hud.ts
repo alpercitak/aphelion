@@ -43,7 +43,7 @@ const BASE_HUD_PROPS = {
         },
         {
           term: 'NO STANDING STILL',
-          def: 'Inside the ergosphere, the allowed orbital velocities are all prograde. Particles here are forced to co-rotate, which is why the retrograde dots flip to prograde on entry.',
+          def: 'Inside the ergosphere, the allowed orbital velocities are all prograde. Particles here are forced to co-rotate, which is why the retrograde dots turn prograde by the time they cross the static limit.',
         },
         {
           term: 'PENROSE PROCESS',
