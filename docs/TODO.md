@@ -23,6 +23,12 @@
 - Kilonova: the bolometric lightcurve is a fixed `(t/1 d)²` rise then `t^(-1.3)` decline, and the dominant component flips at a fixed 2.5 d. Cloud brightness uses separate band shapes (blue optical peak 1 d, red near-infrared peak 7 d). Ejecta mass only scales brightness; it does not change the decline or the color shift. Blue-to-red color is linear in time.
 - Kilonova: ejecta radius uses √day compression for the display, so the time axis is not physical. There is no opacity or temperature model for lanthanides, and no accretion disk after collapse.
 - Kilonova: the GRB jet is a fixed-length cone with no beaming, Lorentz factor or afterglow. The glow shader takes the view-space z axis as the view direction, which is approximate for off-center bodies.
+- X-ray Binary: the HUD period uses a fixed 3 R☉ separation, so P does not follow from the donor filling its lobe (no donor mass–radius relation). The scene ω grows with total mass, so heavy systems spin visibly faster.
+- X-ray Binary: stream parcels switch to circular disk orbits at the tidal radius; no hot-spot shock, rim splash or disk thickness. Disk gas drifts inward on a fixed 5 s e-folding time, not α-disk inflow.
+- X-ray Binary: displayed disk rotation is capped at 12 rad/s, so the inner ~20–30% of the disk turns rigidly. Disk colour and brightness are display mappings (T_in 30,000 K, brightness ∝ Ṁ^0.25), not tied to the HUD's kT_in.
+- X-ray Binary: L and kT_in are Newtonian (GMṀ/R for a neutron star, GMṀ/2R_ISCO for a black hole, T_max = 0.488 T*), with no GR, colour correction or spin.
+- X-ray Binary: steady Roche-lobe overflow only; no disk-instability outbursts, wind feeding (HMXB), jets or Eddington-limited outflow. The 5000-particle pool saturates above about Ṁ = 10^-8.2 M☉/yr.
+- X-ray Binary: not yet visually tuned in a foreground browser. Check gas point size (0.12 renders ~1 px at the default zoom), the gas pile-up at L1, and the donor glow, which is a sphere around the teardrop-shaped donor.
 
 ## Next scenes
 
@@ -30,6 +36,5 @@ Each follows the existing feature layout (`src/features/<scene>/`, registered in
 
 ### Later
 
-- **X-ray Binary**: Roche-lobe overflow stream onto a compact object; reuses neutron-star disk.
 - **Alcubierre Warp**: compressed/expanded spacetime shell around a ship with lensing; reuses lensing-field render passes.
 - **Time Dilation**: clocks at different radii in a gravity well with gravitational redshift; mostly HUD and physics utils.

@@ -5,7 +5,7 @@
 ![Build](https://img.shields.io/github/actions/workflow/status/alpercitak/aphelion/build.yaml?style=flat-square&label=&color=2ea44f)
 ![License](https://img.shields.io/badge/MIT-2ea44f?style=flat-square)
 
-Interactive deep-space physics renderer. Thirteen scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
+Interactive deep-space physics renderer. Fourteen scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
 
 **Live demo: [aphelion-app.pages.dev](https://aphelion-app.pages.dev/)**
 
@@ -15,21 +15,22 @@ Each scene is a self-contained physics simulation with real equations driving th
 
 ## Scenes
 
-| #   | Scene                   | What it shows                                                                                                                                                                              |
-| --- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 01  | **Black Hole**          | Schwarzschild metric, with Kerr spin approximated as horizon oblateness. Accretion disk with blackbody temperature coloring, relativistic jets, gravitational lensing, Doppler shift mode  |
-| 02  | **Binary Merger**       | Two black holes in decaying orbit. Spacetime grid deformed by gravitational wave equation. Three-phase state machine: inspiral → merger → ringdown                                         |
-| 03  | **Neutron Star**        | Rotating pulsar with dipole magnetic field lines, lighthouse beam sweep, beam flash detection via dot product alignment                                                                    |
-| 04  | **Magnetar**            | Chaotic multipole field topology, writhing field lines, starquake crack propagation, gamma ray burst flash                                                                                 |
-| 05  | **Wormhole**            | Two-pass render. Einstein-Rosen bridge with a live portal to a second scene via `WebGLRenderTarget`. Exotic matter halo, geometry-based lensing approximation                              |
-| 06  | **White Hole**          | Time-reversal of a black hole. Spherical particle ejecta with blackbody temperature coloring, photon sphere on the outward face                                                            |
-| 07  | **Hawking Evaporation** | Micro black hole shrinking in real time. `T = ℏc³/8πGMk` drives glow color and pair spawn rate. Virtual particle pairs at the horizon                                                      |
-| 08  | **Lensing Field**       | No visible object. Full-screen UV displacement shader sampling a `WebGLRenderTarget`. Mouse-interactive invisible mass, Einstein rings, dark matter mode                                   |
-| 09  | **Cosmic String**       | Three-pass render. `CatmullRomCurve3` oscillating filament, conical spacetime lensing shader, intercommutation loop events                                                                 |
-| 10  | **Supernova**           | Five-phase scrubbable timeline: progenitor → collapse → shock breakout → ejecta expansion → remnant. Neutrino burst, element-composition particle colors, mass-dependent remnant type      |
-| 11  | **Tidal Disruption**    | A star torn apart by a black hole. Parabolic orbit, free-particle debris stream, `t^(-5/3)` fallback and circularization into a disk. Penetration factor β sets full or partial disruption |
-| 12  | **Ergosphere**          | Kerr black hole with spin. Ergosphere, frame dragging with no standing still inside it, Penrose process energy extraction, irreducible mass limit                                          |
-| 13  | **Kilonova**            | Two neutron stars merge. Inspiral with Peters decay and GW rings, a merger with a remnant set by total mass, then blue and red r-process ejecta over 21 days. Optional GRB jet             |
+| #   | Scene                   | What it shows                                                                                                                                                                                    |
+| --- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 01  | **Black Hole**          | Schwarzschild metric, with Kerr spin approximated as horizon oblateness. Accretion disk with blackbody temperature coloring, relativistic jets, gravitational lensing, Doppler shift mode        |
+| 02  | **Binary Merger**       | Two black holes in decaying orbit. Spacetime grid deformed by gravitational wave equation. Three-phase state machine: inspiral → merger → ringdown                                               |
+| 03  | **Neutron Star**        | Rotating pulsar with dipole magnetic field lines, lighthouse beam sweep, beam flash detection via dot product alignment                                                                          |
+| 04  | **Magnetar**            | Chaotic multipole field topology, writhing field lines, starquake crack propagation, gamma ray burst flash                                                                                       |
+| 05  | **Wormhole**            | Two-pass render. Einstein-Rosen bridge with a live portal to a second scene via `WebGLRenderTarget`. Exotic matter halo, geometry-based lensing approximation                                    |
+| 06  | **White Hole**          | Time-reversal of a black hole. Spherical particle ejecta with blackbody temperature coloring, photon sphere on the outward face                                                                  |
+| 07  | **Hawking Evaporation** | Micro black hole shrinking in real time. `T = ℏc³/8πGMk` drives glow color and pair spawn rate. Virtual particle pairs at the horizon                                                            |
+| 08  | **Lensing Field**       | No visible object. Full-screen UV displacement shader sampling a `WebGLRenderTarget`. Mouse-interactive invisible mass, Einstein rings, dark matter mode                                         |
+| 09  | **Cosmic String**       | Three-pass render. `CatmullRomCurve3` oscillating filament, conical spacetime lensing shader, intercommutation loop events                                                                       |
+| 10  | **Supernova**           | Five-phase scrubbable timeline: progenitor → collapse → shock breakout → ejecta expansion → remnant. Neutrino burst, element-composition particle colors, mass-dependent remnant type            |
+| 11  | **Tidal Disruption**    | A star torn apart by a black hole. Parabolic orbit, free-particle debris stream, `t^(-5/3)` fallback and circularization into a disk. Penetration factor β sets full or partial disruption       |
+| 12  | **Ergosphere**          | Kerr black hole with spin. Ergosphere, frame dragging with no standing still inside it, Penrose process energy extraction, irreducible mass limit                                                |
+| 13  | **Kilonova**            | Two neutron stars merge. Inspiral with Peters decay and GW rings, a merger with a remnant set by total mass, then blue and red r-process ejecta over 21 days. Optional GRB jet                   |
+| 14  | **X-ray Binary**        | A donor star fills its Roche lobe and spills gas through L1. The stream is Coriolis-deflected onto an accretion disk around a neutron star or black hole. Eddington ratio and `kT_in` in the HUD |
 
 ## Controls
 
@@ -101,6 +102,8 @@ Notable real equations in use:
 - r-process heating (kilonova): `L ∝ t^(-1.3)`
 - Ergosphere radius: `r_E = M + √(M² − a² cos²θ)`
 - Penrose efficiency limit: `η_max = ½(√(2M/r₊) − 1)`
+- Roche lobe (Eggleton): `r_L/a = 0.49q^(2/3) / (0.6q^(2/3) + ln(1 + q^(1/3)))`
+- Accretion luminosity: `L = GMṀ/R`, Eddington `L_Edd ≈ 1.26×10³⁸ (M/M☉) erg/s`
 
 ---
 
