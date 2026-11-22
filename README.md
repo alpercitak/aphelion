@@ -5,7 +5,7 @@
 ![Build](https://img.shields.io/github/actions/workflow/status/alpercitak/aphelion/build.yaml?style=flat-square&label=&color=2ea44f)
 ![License](https://img.shields.io/badge/MIT-2ea44f?style=flat-square)
 
-Interactive deep-space physics renderer. Twelve scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
+Interactive deep-space physics renderer. Thirteen scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
 
 **Live demo: [aphelion-app.pages.dev](https://aphelion-app.pages.dev/)**
 
@@ -29,6 +29,7 @@ Each scene is a self-contained physics simulation with real equations driving th
 | 10  | **Supernova**           | Five-phase scrubbable timeline: progenitor → collapse → shock breakout → ejecta expansion → remnant. Neutrino burst, element-composition particle colors, mass-dependent remnant type      |
 | 11  | **Tidal Disruption**    | A star torn apart by a black hole. Parabolic orbit, free-particle debris stream, `t^(-5/3)` fallback and circularization into a disk. Penetration factor β sets full or partial disruption |
 | 12  | **Ergosphere**          | Kerr black hole with spin. Ergosphere, frame dragging with no standing still inside it, Penrose process energy extraction, irreducible mass limit                                          |
+| 13  | **Kilonova**            | Two neutron stars merge. Inspiral with Peters decay and GW rings, a merger with a remnant set by total mass, then blue and red r-process ejecta over 21 days. Optional GRB jet             |
 
 ## Controls
 
@@ -97,6 +98,7 @@ Notable real equations in use:
 - Chirp mass: `ℳ = (m₁m₂)^(3/5) / (m₁+m₂)^(1/5)`
 - Tidal radius: `r_t = R★ (M/m★)^(1/3)`
 - Fallback rate: `Ṁ ∝ t^(-5/3)`
+- r-process heating (kilonova): `L ∝ t^(-1.3)`
 - Ergosphere radius: `r_E = M + √(M² − a² cos²θ)`
 - Penrose efficiency limit: `η_max = ½(√(2M/r₊) − 1)`
 

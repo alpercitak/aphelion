@@ -17,20 +17,17 @@
 - Ergosphere: spin changes reshape the surfaces but do not reset particles; a replay is needed to clear the extracted-energy count.
 - Ergosphere: spin is capped at 0.998, so the extremal case is not shown; no spin-down is applied as energy is extracted.
 - Ergosphere: the ergosphere is a single translucent surface with no meridian lines; the particle color only encodes the sign of Ω, not its magnitude.
+- Kilonova: the Peters decay has `a ∝ (1 − t/τ)^(1/4)`, so the last ~0.01 s before contact covers a ≈ 2 → 0.8 scene units within one frame. The merger starts from the previous frame's separation, so the handover is not exact.
+- Kilonova: `τ` is a fixed constant, not a function of mass or initial separation. Real coalescence time scales with M⁻³ and a₀⁴. The orbital ω uses a normalised GM = 240·M, so the visual orbit is not at real frequency; only the HUD f_GW is in real units.
+- Kilonova: remnant thresholds (2.4 and 2.9 M☉) and the 1 s hypermassive collapse delay are fixed. They do not depend on the equation of state, and the remnant is not mass-loss corrected.
+- Kilonova: the lightcurve is a rise-then-decline shape with fixed peak times. Ejecta mass only scales brightness; it does not change the decline or the color shift. Blue-to-red color is linear in time.
+- Kilonova: ejecta radius uses √day compression for the display, so the time axis is not physical. There is no opacity or temperature model for lanthanides, and no accretion disk after collapse.
+- Kilonova: with AUTO PLAY on, the timeline overrides slider scrubbing within about 10 frames. Turn it off to scrub.
+- Kilonova: the GRB jet is a fixed-length cone with no beaming, Lorentz factor or afterglow. Glow shaders use the camera position as the view vector, which is approximate for off-center bodies.
 
 ## Next scenes
 
 Each follows the existing feature layout (`src/features/<scene>/`, registered in `src/utils/scene/index.ts`). Ordered by priority.
-
-### 13 · Kilonova
-
-Two neutron stars inspiral and merge; r-process ejecta glow blue then red as heavy elements form.
-
-- Physics: chirp mass (shared with binary merger), ejecta mass ~0.01–0.05 M☉, color shift from lanthanide-poor (blue, days) to lanthanide-rich (red, weeks).
-- Visuals: inspiral → merger flash → expanding ejecta shell shifting blue to red; optional short GRB jet.
-- Controls: component masses, timeline scrubber, jet toggle.
-- HUD: chirp mass, ejecta mass, elapsed time, dominant element group.
-- Reuses: binary-merger phase state machine and wave rings; supernova timeline and ejecta particles.
 
 ### Later
 
