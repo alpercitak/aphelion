@@ -5,7 +5,7 @@
 ![Build](https://img.shields.io/github/actions/workflow/status/alpercitak/aphelion/build.yaml?style=flat-square&label=&color=2ea44f)
 ![License](https://img.shields.io/badge/MIT-2ea44f?style=flat-square)
 
-Interactive deep-space physics renderer. Fourteen scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
+Interactive deep-space physics renderer. Fifteen scenes exploring the most extreme objects in the universe: black holes, gravitational waves, quantum evaporation, cosmic strings. Built with Three.js and React.
 
 **Live demo: [aphelion-app.pages.dev](https://aphelion-app.pages.dev/)**
 
@@ -31,6 +31,7 @@ Each scene is a self-contained physics simulation with real equations driving th
 | 12  | **Ergosphere**          | Kerr black hole with spin. Ergosphere, frame dragging with no standing still inside it, Penrose process energy extraction, irreducible mass limit                                                |
 | 13  | **Kilonova**            | Two neutron stars merge. Inspiral with Peters decay and GW rings, a merger with a remnant set by total mass, then blue and red r-process ejecta over 21 days. Optional GRB jet                   |
 | 14  | **X-ray Binary**        | A donor star fills its Roche lobe and spills gas through L1. The stream is Coriolis-deflected onto an accretion disk around a neutron star or black hole. Eddington ratio and `kT_in` in the HUD |
+| 15  | **Alcubierre Warp**     | A ship at rest in a warp bubble. York-time grid with contraction ahead and expansion behind, a negative-energy ring at the waist, streaming stars lensed at the bubble wall                      |
 
 ## Controls
 
@@ -103,6 +104,8 @@ Notable real equations in use:
 - Ergosphere radius: `r_E = M + √(M² − a² cos²θ)`
 - Penrose efficiency limit: `η_max = ½(√(2M/r₊) − 1)`
 - Roche lobe (Eggleton): `r_L/a = 0.49q^(2/3) / (0.6q^(2/3) + ln(1 + q^(1/3)))`
+- Alcubierre shape function: `f(r) = [tanh σ(r+R) − tanh σ(r−R)] / (2 tanh σR)`, York time `θ = v_s (x/r) df/dr`
+- Warp-bubble negative energy (Pfenning & Ford): `E ≈ −(1/12) v_s² R²/Δ`
 - Accretion luminosity: `L = GMṀ/R`, Eddington `L_Edd ≈ 1.26×10³⁸ (M/M☉) erg/s`
 
 ---

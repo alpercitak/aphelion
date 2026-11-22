@@ -29,6 +29,12 @@
 - X-ray Binary: L and kT_in are Newtonian (GMṀ/R for a neutron star, GMṀ/2R_ISCO for a black hole, T_max = 0.488 T*), with no GR, colour correction or spin.
 - X-ray Binary: steady Roche-lobe overflow only; no disk-instability outbursts, wind feeding (HMXB), jets or Eddington-limited outflow. The 5000-particle pool saturates above about Ṁ = 10^-8.2 M☉/yr.
 - X-ray Binary: disk gas spreads by a random walk in radius (viscous diffusion, display rate), not a real α-disk. The donor has linear limb darkening only; no irradiation by the X-ray source or gravity darkening.
+- Alcubierre Warp: the HUD energy is Pfenning & Ford's thin-wall estimate −(1/12) v² R²/Δ; the exact integral with the tanh shape function is about ⅔ of it, and the estimate fails for σR ≲ 3.
+- Alcubierre Warp: the wall thickness Δ comes from the shape function's slope at R, not the quantum-inequality bound (Δ ≲ 10² v L_Planck), so −E is far smaller than physical estimates.
+- Alcubierre Warp: lensing is a screen-space offset driven by f′ along the motion axis, not ray tracing through the metric; no aberration or Doppler shift, and it folds into mirrored slivers at high v·σR. It is subtle at the default star density.
+- Alcubierre Warp: streaming star speed is display-scaled and capped, not v_s; nothing shows the horizon or the blue-shifted particle build-up at the front wall.
+- Alcubierre Warp: the York grid is the y = 0 slice drawn at GRID_Y with θ in 1/scene-unit. The exotic-matter ring (tube 1.5/σ, opacity ∝ v²) is a hint, not a plot of ε(x, ρ).
+- Lensing field: the lens ShaderMaterial skips tone mapping and colour-space output, so its lensed background renders darker than other scenes (fixed the same way in alcubierre-warp's lens quad).
 
 ## Next scenes
 
@@ -36,5 +42,4 @@ Each follows the existing feature layout (`src/features/<scene>/`, registered in
 
 ### Later
 
-- **Alcubierre Warp**: compressed/expanded spacetime shell around a ship with lensing; reuses lensing-field render passes.
 - **Time Dilation**: clocks at different radii in a gravity well with gravitational redshift; mostly HUD and physics utils.
