@@ -58,6 +58,12 @@ export const GAS_MAX_SUBSTEP = 1 / 240;
 export const GAS_ESCAPE_RANGE = 3;
 /** Time constant (s) of the viscous inward drift of disk gas. */
 export const DISK_DRIFT_TIME = 5;
+/**
+ * Cap (rad/s) on the displayed Keplerian rate, so inner-disk gas moves a small step per frame
+ * instead of strobing (the inner edge orbits in ~0.1 s). Inside the radius where Kepler exceeds it,
+ * the gas turns rigidly.
+ */
+export const DISK_MAX_ANGULAR_RATE = 12;
 /** Rate (1/s) at which disk gas settles onto the midplane. */
 export const DISK_SETTLE_RATE = 1;
 /** Entries in the disk colour lookup table. */

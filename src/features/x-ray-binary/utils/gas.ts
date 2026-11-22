@@ -4,6 +4,7 @@ import {
   DISK_DRIFT_TIME,
   DISK_INNER_FRACTION,
   DISK_LUT_SIZE,
+  DISK_MAX_ANGULAR_RATE,
   DISK_SETTLE_RATE,
   DISK_T_IN_DISPLAY,
   DISK_TEMP_EXPONENT,
@@ -152,7 +153,7 @@ const stepStream = (gas: Gas, i: number, binary: Binary, substeps: number, h: nu
 const stepDisk = (gas: Gas, i: number, binary: Binary, dt: number) => {
   const { x1, gm1, omega, diskOuter } = binary;
   const r = gas.disk.getX(i);
-  const phi = gas.disk.getY(i) + (Math.sqrt(gm1 / (r * r * r)) - omega) * dt;
+  const phi = gas.disk.getY(i) + (Math.min(Math.sqrt(gm1 / (r * r * r)), DISK_MAX_ANGULAR_RATE) - omega) * dt;
   const nr = r - (r / DISK_DRIFT_TIME) * dt;
   if (nr < diskOuter * DISK_INNER_FRACTION) {
     freeParticle(gas, i);
