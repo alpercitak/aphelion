@@ -86,6 +86,14 @@ export const SCENES = [
       'A spinning black hole drags spacetime around. Inside the ergosphere nothing stands still, and energy can be extracted.',
     component: lazy(() => import('@/features/ergosphere')),
   },
+  {
+    id: 'kilonova',
+    title: 'Kilonova',
+    subtitle: 'Neutron Star Merger · r-Process',
+    description:
+      'Two neutron stars spiral together and merge. Their r-process ejecta glows blue, then red, as heavy elements form.',
+    component: lazy(() => import('@/features/kilonova')),
+  },
 ];
 
 export const getScene = (id: string) => {
