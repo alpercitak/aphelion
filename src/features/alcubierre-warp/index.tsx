@@ -11,12 +11,12 @@ export default function AlcubierreWarp() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<SceneRef>(null);
 
-  const { params, controls } = useControls();
+  const { params, paramsRef, controls } = useControls();
   const hud = useHud(params);
 
   useInit(canvasRef, sceneRef);
   useUpdate(sceneRef, params);
-  useAnimate(sceneRef);
+  useAnimate(sceneRef, paramsRef);
 
   return <SceneLayout canvasRef={canvasRef} hud={hud} controls={controls} />;
 }

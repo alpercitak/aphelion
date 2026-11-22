@@ -4,6 +4,9 @@ import { peakYorkTheta } from '../utils/metric';
 /** Metres per scene unit. */
 export const SCENE_UNIT_M = 40;
 
+/** Largest real frame delta that is simulated (s). */
+export const MAX_FRAME_DT = 1 / 20;
+
 export const SCENE_PARAMS = {
   velocity: 2,
   radius: 2.5,
@@ -59,6 +62,27 @@ export const SHIP_BODY_X = -0.35;
 export const ENGINE_COLOR = 0x6fb8ff;
 export const ENGINE_RADIUS = 0.1;
 export const ENGINE_X = -0.62;
+
+// --- Streaming stars ---
+
+export const STREAM_STAR_COUNT = 2500;
+/** Stars wrap between x = ±STREAM_BOX_X and stay within y, z = ±STREAM_BOX_YZ. */
+export const STREAM_BOX_X = 60;
+export const STREAM_BOX_YZ = 30;
+/** Stars start outside this radius so none sit on the ship. */
+export const STREAM_MIN_R = 6;
+/** Display speed (scene units/s) per unit of v_s, capped at STREAM_SPEED_MAX. */
+export const STREAM_SPEED_PER_C = 4;
+export const STREAM_SPEED_MAX = 30;
+export const STREAM_SIZE = 0.15;
+export const STREAM_COLOR = 0xcfe0ff;
+
+// --- Lensing pass ---
+
+/** Peak screen displacement per unit of v_s, in aspect-corrected NDC. */
+export const LENS_STRENGTH = 0.006;
+/** Above this speed the displacement stops growing. */
+export const LENS_V_CAP = 4;
 
 // --- Layout ---
 

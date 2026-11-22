@@ -51,9 +51,9 @@ const TOGGLE_ITEMS = [
 ] as const satisfies ReadonlyArray<ToggleItem>;
 
 export const useControls = () => {
-  const { params, controls } = useSceneControls(SCENE_PARAMS, {
+  const { params, paramsRef, controls } = useSceneControls(SCENE_PARAMS, {
     sliders: SLIDER_ITEMS,
     toggles: TOGGLE_ITEMS,
   });
-  return { params, controls };
+  return { params, paramsRef, controls };
 };

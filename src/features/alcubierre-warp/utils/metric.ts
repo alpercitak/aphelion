@@ -22,16 +22,6 @@ export const yorkTheta = (x: number, rho: number, { velocity, radius, sigma }: B
   return velocity * (x / r) * shapeDerivative(r, radius, sigma);
 };
 
-/** Eulerian energy density, always ≤ 0. */
-export const eulerianEnergy = (x: number, rho: number, { velocity, radius, sigma }: Bubble) => {
-  const r = Math.hypot(x, rho);
-  if (r === 0) {
-    return 0;
-  }
-  const fp = shapeDerivative(r, radius, sigma);
-  return (-(velocity ** 2) / (8 * Math.PI)) * ((rho * rho) / (4 * r * r)) * fp * fp;
-};
-
 /** Peak |θ|, which sits on the axis (ρ = 0) where |x/r| = 1, so it is v_s · max|f'|. */
 export const peakYorkTheta = (bubble: Bubble) => {
   const { velocity, radius, sigma } = bubble;
