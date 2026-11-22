@@ -75,6 +75,9 @@ const FRAGMENT_SHADER = `
     }
 
     gl_FragColor = col;
+
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
   }
 `;
 
