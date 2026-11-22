@@ -53,7 +53,8 @@ export interface Body {
   glow: Mesh<SphereGeometry, ShaderMaterial>;
 }
 
-export interface Donor extends Body {
+export interface Donor {
+  mesh: Mesh<SphereGeometry, ShaderMaterial>;
   /** Unit directions of the sphere vertices, kept so the donor can be reshaped repeatedly. */
   unit: Vec3[];
 }

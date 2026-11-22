@@ -45,6 +45,8 @@ export const DISK_BRIGHTNESS_EXPONENT = 0.25;
 export const GAS_PARTICLES = 5000;
 export const GAS_POINT_SIZE = 0.12;
 export const STREAM_COLOR = 0xffb070;
+/** Gas colour multiplier, so overlapping points under additive blending don't saturate to white. */
+export const GAS_BRIGHTNESS = 0.4;
 /** Stream spawn rate (particles/s) at MDOT_REF_LOG; scales linearly with Ṁ. */
 export const STREAM_RATE_REF = 220;
 export const STREAM_RATE_MAX = 1200;
@@ -64,6 +66,8 @@ export const DISK_DRIFT_TIME = 5;
  * the gas turns rigidly.
  */
 export const DISK_MAX_ANGULAR_RATE = 12;
+/** Random walk in radius per √s, as a share of r: viscous spreading that smears the spiral from the single entry point. */
+export const DISK_DIFFUSION = 0.15;
 /** Rate (1/s) at which disk gas settles onto the midplane. */
 export const DISK_SETTLE_RATE = 1;
 /** Entries in the disk colour lookup table. */
@@ -79,8 +83,10 @@ export const NS_VISUAL_RADIUS = 0.25;
 export const BH_VISUAL_RADIUS = 0.35;
 export const BH_GLOW_COLOR = 0xff8a3d;
 export const GLOW_SCALE = 2.4;
-/** Donor glow as a multiple of its Roche lobe, so the halo hugs the lobe. */
+/** Donor glow as a multiple of its surface, so the halo hugs the lobe. */
 export const DONOR_GLOW_SCALE = 1.15;
+/** Linear limb-darkening coefficient u; about 0.6 for a Sun-like star in the optical. */
+export const DONOR_LIMB_DARKENING = 0.6;
 
 // --- Layout ---
 

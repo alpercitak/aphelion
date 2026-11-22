@@ -28,7 +28,7 @@
 - X-ray Binary: displayed disk rotation is capped at 12 rad/s, so the inner ~20–30% of the disk turns rigidly. Disk colour and brightness are display mappings (T_in 30,000 K, brightness ∝ Ṁ^0.25), not tied to the HUD's kT_in.
 - X-ray Binary: L and kT_in are Newtonian (GMṀ/R for a neutron star, GMṀ/2R_ISCO for a black hole, T_max = 0.488 T*), with no GR, colour correction or spin.
 - X-ray Binary: steady Roche-lobe overflow only; no disk-instability outbursts, wind feeding (HMXB), jets or Eddington-limited outflow. The 5000-particle pool saturates above about Ṁ = 10^-8.2 M☉/yr.
-- X-ray Binary: not yet visually tuned in a foreground browser. Check gas point size (0.12 renders ~1 px at the default zoom), the gas pile-up at L1, and the donor glow, which is a sphere around the teardrop-shaped donor.
+- X-ray Binary: disk gas spreads by a random walk in radius (viscous diffusion, display rate), not a real α-disk. The donor has linear limb darkening only; no irradiation by the X-ray source or gravity darkening.
 
 ## Next scenes
 

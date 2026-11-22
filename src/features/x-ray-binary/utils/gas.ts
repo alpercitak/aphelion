@@ -1,6 +1,7 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial } from 'three';
 import { tempToColor } from '@/utils/physics';
 import {
+  DISK_DIFFUSION,
   DISK_DRIFT_TIME,
   DISK_INNER_FRACTION,
   DISK_LUT_SIZE,
@@ -8,6 +9,7 @@ import {
   DISK_SETTLE_RATE,
   DISK_T_IN_DISPLAY,
   DISK_TEMP_EXPONENT,
+  GAS_BRIGHTNESS,
   GAS_ESCAPE_RANGE,
   GAS_MAX_SUBSTEP,
   GAS_PARTICLES,
@@ -27,7 +29,7 @@ const MODE_FREE = 0;
 const MODE_STREAM = 1;
 const MODE_DISK = 2;
 
-const STREAM_RGB = new Color(STREAM_COLOR);
+const STREAM_RGB = new Color(STREAM_COLOR).multiplyScalar(GAS_BRIGHTNESS);
 
 const vec3Attribute = () => new BufferAttribute(new Float32Array(GAS_PARTICLES * 3), 3);
 
@@ -51,7 +53,9 @@ export const createGas = (): Gas => {
   const lut = new BufferAttribute(new Float32Array(DISK_LUT_SIZE * 3), 3);
   for (let k = 0; k < DISK_LUT_SIZE; k++) {
     const u = DISK_INNER_FRACTION + ((1 - DISK_INNER_FRACTION) * k) / (DISK_LUT_SIZE - 1);
-    const c = tempToColor(DISK_T_IN_DISPLAY * (u / DISK_INNER_FRACTION) ** DISK_TEMP_EXPONENT);
+    const c = tempToColor(DISK_T_IN_DISPLAY * (u / DISK_INNER_FRACTION) ** DISK_TEMP_EXPONENT).multiplyScalar(
+      GAS_BRIGHTNESS,
+    );
     lut.setXYZ(k, c.r, c.g, c.b);
   }
 
@@ -149,7 +153,7 @@ const stepDisk = (gas: Gas, i: number, binary: Binary, dt: number) => {
   const { x1, gm1, omega, diskOuter } = binary;
   const r = gas.disk.getX(i);
   const phi = gas.disk.getY(i) + (Math.min(Math.sqrt(gm1 / (r * r * r)), DISK_MAX_ANGULAR_RATE) - omega) * dt;
-  const nr = r - (r / DISK_DRIFT_TIME) * dt;
+  const nr = r * (1 - dt / DISK_DRIFT_TIME + jitter(DISK_DIFFUSION) * Math.sqrt(dt));
   if (nr < diskOuter * DISK_INNER_FRACTION) {
     freeParticle(gas, i);
     return;
